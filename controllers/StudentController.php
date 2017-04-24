@@ -8,7 +8,7 @@ class StudentController {
 			
 	public function run(){	
 
-		echo("StudentController.php");
+		include_once(PATH_VIEWS . "student.php");
 		
 	}
 	

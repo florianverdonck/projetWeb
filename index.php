@@ -30,11 +30,17 @@
 		define("LOGIN_URL", "index.php?page=login");
 	*/
 
-	function chargerClasse($classe) {
-		require_once(PATH_MODELS . $classe . '.class.php');
+
+	// Class autoloading
+	
+	function loadClass($class) {
+		require_once(PATH_MODELS . $class . '.class.php');
 	}
 	
-	spl_autoload_register('chargerClasse');
+	spl_autoload_register('loadClass');
+	
+	// Connection to database
+	$db = Db::getInstance();
 
 	$page = 'login';
 	
@@ -46,22 +52,22 @@
 		
 		case 'login':
 			require_once(PATH_CONTROLLERS . "LoginController.php");
-			$controller = new LoginController();
+			$controller = new LoginController($db);
 			break;
 	
 		case 'admin':
 			require_once(PATH_CONTROLLERS . "AdminController.php");
-			$controller = new AdminController();
+			$controller = new AdminController($db);
 			break;
 			
 		case 'professor':
 			require_once(PATH_CONTROLLERS . "ProfessorController.php");
-			$controller = new ProfessorController();
+			$controller = new ProfessorController($db);
 			break;
 			
 		case 'student':
 			require_once(PATH_CONTROLLERS . "StudentController.php");
-			$controller = new StudentController();
+			$controller = new StudentController($db);
 			break;
 			
 	}

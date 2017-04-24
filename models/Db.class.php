@@ -4,7 +4,7 @@ class Db {
 	private $_db;
 	private function __construct() {
 		try {
-			$this->_db = new PDO ( 'mysql:root=localhost;dbname=attendances;charset=utf8', 'root', '' );
+			$this->_db = new PDO ( 'mysql:root=localhost;dbname=TwizyX;charset=utf8', 'root', 'root' );
 			$this->_db->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 			$this->_db->setAttribute ( PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ );
 		} catch ( PDOException $e ) {
