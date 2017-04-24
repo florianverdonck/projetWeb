@@ -335,3 +335,7 @@ table .btn-default:hover {
 	width: 100%;
 	max-width: 600px;
 }
+
+.bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn){
+  width:100%;
+}
