@@ -330,3 +330,8 @@ table .btn-default:hover {
     background-color: #327fc3;
     border-color: #204d74;
 }
+
+#loginContainer .frontLogo {
+	width: 100%;
+	max-width: 600px;
+}

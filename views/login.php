@@ -5,8 +5,14 @@
   
 	<body>
 		<?php include_once(PATH_VIEWS . "navbar.php"); ?>
-		<div class="container">
+		<div class="container" id="loginContainer">
 			<div class="row pt50">
+				<div class="col-md-4 col-md-offset-4">
+					<img class="frontLogo" src="<?=PATH_IMAGES?>logo_vinci.jpeg" />
+				</div>
+			</div>
+			
+			<div class="row pt30">
 				<div class="col-md-4 col-md-offset-4">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
