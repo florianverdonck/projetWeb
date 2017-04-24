@@ -299,3 +299,34 @@
 
 .pl120 {
   padding-left: 120px; }
+  
+  
+// Custom CSS
+
+.table > tbody > tr > td {
+     vertical-align: middle;
+}
+
+table .btn-default.active {
+    color: #fff;
+    background-color: #286090;
+    border-color: #204d74;
+}
+
+table .btn-default.active:hover {
+    color: #fff;
+    background-color: #286090;
+    border-color: #204d74;
+}
+
+table .btn-default.active:focus {
+    color: #fff;
+    background-color: #286090;
+    border-color: #204d74;
+}
+
+table .btn-default:hover {
+    color: #fff;
+    background-color: #327fc3;
+    border-color: #204d74;
+}
