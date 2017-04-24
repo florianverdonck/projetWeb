@@ -54,33 +54,33 @@
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Matricule</th>
-									<th>Prénom</th>
-									<th>Nom de famille</th>
-									<th>Présence</th>
-									<th>Certificat</th>
+									<th>Mat<span class="hidden-xs">ricule</span></th>
+									<th>Pré<span class="hidden-xs">nom</span></th>
+									<th>Nom<span class="hidden-xs"> de famille</span></th>
+									<th>Prés<span class="hidden-xs">ence</span></th>
+									<th>Cert<span class="hidden-xs">ificat</span></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 									<th scope="row">2</th>
 									<td>281</td>
-									<td>Christopher</td>
+									<td>C<span class="hidden-xs">hristopher</span></td>
 									<td>Castel</td>
 									<td>
 										<div class="btn-group" data-toggle="buttons">
 										  <label class="btn btn-default active btn-sm">
-										    <input type="radio" name="options" id="option1" autocomplete="off"> Présent
+										    <input type="radio" name="options" id="option1" autocomplete="off"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Présent</span>
 										  </label>
 										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" id="option2" autocomplete="off" checked> Absent
+										    <input type="radio" name="options" id="option2" autocomplete="off" checked><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
 										  </label>
 										</div>
 									</td>
 									<td>
 										<div class="btn-group" data-toggle="buttons">
 										  <label class="btn btn-default btn-sm">
-										    <input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Justifié
+										    <input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span><span class="hidden-xs"> Justifié</span>
 										  </label>
 										</div>
 									</td>
@@ -88,22 +88,22 @@
 								<tr>
 									<th scope="row">3</th>
 									<td>121</td>
-									<td>Marco</td>
+									<td>M<span class="hidden-xs">arco</span></td>
 									<td>Amory</td>
 									<td>
 										<div class="btn-group" data-toggle="buttons">
 										  <label class="btn btn-default active btn-sm">
-										    <input type="radio" name="options" id="option1" autocomplete="off"> Présent
+										    <input type="radio" name="options" id="option1" autocomplete="off"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Présent</span>
 										  </label>
 										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" id="option2" autocomplete="off" checked> Absent
+										    <input type="radio" name="options" id="option2" autocomplete="off" checked><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
 										  </label>
 										</div>
 									</td>
 									<td>
 										<div class="btn-group" data-toggle="buttons">
 										  <label class="btn btn-default btn-sm">
-										    <input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Justifié
+										    <input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span><span class="hidden-xs"> Justifié</span>
 										  </label>
 										</div>
 									</td>
@@ -111,7 +111,7 @@
 								<tr>
 									<th scope="row">4</th>
 									<td>200</td>
-									<td>Florian</td>
+									<td>F<span class="hidden-xs">lorian</span></td>
 									<td>Verdonck</td>
 									<td>
 										<div class="btn-group" data-toggle="buttons">
@@ -122,33 +122,22 @@
 										    <input type="radio" name="options" id="option2" autocomplete="off"> 1
 										  </label>
 										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" id="option2" autocomplete="off"> 2
-										  </label>
-										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" id="option2" autocomplete="off"> 3
-										  </label>
-										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" id="option2" autocomplete="off"> 4
-										  </label>
-										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" id="option2" autocomplete="off"> 5
-										  </label>
-										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" id="option2" autocomplete="off" checked> Absent
+										    <input type="radio" name="options" id="option2" autocomplete="off" checked> Abs<span class="hidden-xs">ent</span>
 										  </label>
 										</div>
 									</td>
 									<td>
 										<div class="btn-group" data-toggle="buttons">
 										  <label class="btn btn-default btn-sm">
-										    <input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Justifié
+										    <input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span><span class="hidden-xs"> Justifié</span>
 										  </label>
 										</div>
-									</td>								</tr>
+									</td>
+								</tr>
 								<tr>
 									<th scope="row">4</th>
 									<td>200</td>
-									<td>Florian</td>
+									<td><span class="hidden-xs">Florian</span></td>
 									<td>Verdonck</td>
 									<td>
 										<div class="btn-group" data-toggle="buttons">
@@ -159,26 +148,14 @@
 										    <input type="radio" name="options" id="option2" autocomplete="off"> 1
 										  </label>
 										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" id="option2" autocomplete="off"> 2
-										  </label>
-										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" id="option2" autocomplete="off"> 3
-										  </label>
-										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" id="option2" autocomplete="off"> 4
-										  </label>
-										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" id="option2" autocomplete="off"> 5
-										  </label>
-										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" id="option2" autocomplete="off" checked> Absent
+										    <input type="radio" name="options" id="option2" autocomplete="off" checked> Abs<span class="hidden-xs">ent</span>
 										  </label>
 										</div>
 									</td>
 									<td>
 										<div class="btn-group" data-toggle="buttons">
 										  <label class="btn btn-default btn-sm">
-										    <input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Justifié
+										    <input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span><span class="hidden-xs"> Justifié</span>
 										  </label>
 										</div>
 									</td>
