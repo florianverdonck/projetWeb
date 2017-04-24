@@ -14,9 +14,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Gestionnaire de bloc<span class="sr-only">(current)</span></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Choisir un autre rôle<span class="caret"></span></a>
+	  <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gestionnaire de bloc<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Prise de présences</a></li>
             <li><a href="#">Gestionnaire de blocs</a></li>
@@ -26,10 +25,10 @@
      
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Florian VERDONCK <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Florian VERDONCK <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Mon compte</a></li>
-            <li><a href="#">Déconnexion</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Mon compte</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Déconnexion</a></li>
           </ul>
         </li>
       </ul>
