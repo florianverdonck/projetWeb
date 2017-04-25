@@ -6,9 +6,3 @@
 
 <!-- Bootstrap's JS -->
 <script src="<?=PATH_BS_JS; ?>bootstrap.min.js"></script>
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="<?=PATH_BS_JS; ?>bootstrap-select.min.js"></script>
-
-<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="<?=PATH_BS_JS; ?>defaults-fr_FR.min.js"></script>
