@@ -1,10 +1,17 @@
 <?php
+
 class Db {
+
+	
 	private static $instance = null;
 	private $_db;
+	
 	private function __construct() {
+		
+		require_once(PATH_MODELS . "DbLogins.php");
+		
 		try {
-			$this->_db = new PDO ( 'mysql:root=localhost;dbname=attendences;charset=utf8', 'root', 'root' );
+			$this->_db = new PDO ($DbHost, $DbUser, $DbPassword);
 			$this->_db->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 			$this->_db->setAttribute ( PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ );
 		} catch ( PDOException $e ) {
