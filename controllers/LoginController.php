@@ -12,7 +12,7 @@ class LoginController {
 			print_r($_POST);
 		}
 
-		include_once(PATH_VIEWS . "login.php");
+		require_once(PATH_VIEWS . "login.php");
 		
 	}
 	
