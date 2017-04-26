@@ -8,7 +8,8 @@ class BlocResponsibleController {
 		
 	public function run(){
 
-
+		require_once(PATH_VIEWS . "bloc_responsible.php");
+		
 	}
 
 }
