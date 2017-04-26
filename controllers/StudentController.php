@@ -8,8 +8,6 @@ class StudentController {
 			
 	public function run(){	
 
-		include_once(PATH_VIEWS . "student.php");
-		
-	}
-	
+		require_once(PATH_VIEWS . "student.php");
+	}	
 }

@@ -7,9 +7,7 @@ class ProfessorController {
 	}
 			
 	public function run(){	
-
-		echo("ProfessorController.php");
-		
-	}
 	
+		require_once(PATH_VIEWS . "professor.php");
+	}
 }
