@@ -1,9 +1,9 @@
 <?php
 	 
 class LoginController {
-	
-	public function __construct() {
-	
+	private $_db;
+	public function __construct($db) {
+		$this->_db = $db;
 	}
 			
 	public function run(){	
