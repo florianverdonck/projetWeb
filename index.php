@@ -2,7 +2,8 @@
 	
 	error_reporting(-1);
 	ini_set('display_errors', 'On');
-
+	session_start ();
+	
 	// GLOBAL VARS FOR MVC PATHS
 		
 	define("PATH_CONTROLLERS", "controllers/");
