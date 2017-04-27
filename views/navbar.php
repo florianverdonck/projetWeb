@@ -25,6 +25,8 @@
             	<li><a href="index.php?user=bloc_responsible&action=seance_templates">-> Gérer séances types</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="index.php?user=blocs_responsible">Gestionnaire de blocs</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="index.php?user=admin">Admin</a></li>                
           </ul>
         </li>
       </ul>
