@@ -2,7 +2,8 @@
 	
 	error_reporting(-1);
 	ini_set('display_errors', 'On');
-
+	session_start ();
+	
 	// GLOBAL VARS FOR MVC PATHS
 		
 	define("PATH_CONTROLLERS", "controllers/");
@@ -42,36 +43,24 @@
 	// Connection to database
 	$db = Db::getInstance();
 
-	$page = 'login';
-	
-	if (isset($_GET['page'])) {
-		$page = $_GET['page'];
-	}
-	
+	$action = (isset ( $_GET ['action'] )) ? htmlentities ( $_GET ['action'] ) : 'default';
 	switch ($page) {
-		
-		case 'login':
-			require_once(PATH_CONTROLLERS . "LoginController.php");
-			$controller = new LoginController($db);
-			break;
-	
 		case 'admin':
 			require_once(PATH_CONTROLLERS . "AdminController.php");
 			$controller = new AdminController($db);
-			break;
-			
+			break;	
 		case 'professor':
 			require_once(PATH_CONTROLLERS . "ProfessorController.php");
 			$controller = new ProfessorController($db);
-			break;
-			
+			break;	
 		case 'student':
 			require_once(PATH_CONTROLLERS . "StudentController.php");
 			$controller = new StudentController($db);
 			break;
-			
+		default: // LoginController selected by default
+			require_once(PATH_CONTROLLERS . "LoginController.php");
+			$controller = new AccueilController ();
+			break;
 	}
-	
 	$controller->run();
-	
 ?>

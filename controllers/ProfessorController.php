@@ -1,15 +1,13 @@
 <?php
 	 
 class ProfessorController {
-	
-	public function __construct() {
-	
+	private $_db;
+	public function __construct($db) {
+		$this->_db = $db;
 	}
 			
 	public function run(){	
-
-		echo("ProfessorController.php");
-		
-	}
 	
+		require_once(PATH_VIEWS . "professor.php");
+	}
 }

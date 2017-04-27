@@ -1,15 +1,13 @@
 <?php
 	 
 class StudentController {
-	
-	public function __construct() {
-	
+	private $_db;
+	public function __construct($db) {
+		$this->_db = $db;
 	}
 			
 	public function run(){	
 
-		include_once(PATH_VIEWS . "student.php");
-		
-	}
-	
+		require_once(PATH_VIEWS . "student.php");
+	}	
 }

@@ -1,3 +1,4 @@
+
 <?php $page="student"; ?>
 <!DOCTYPE html>
 <html lang="fr">
