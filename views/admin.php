@@ -20,7 +20,6 @@
 								<br>
 								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Créer l'agenda" name="form_agenda">
 							</form>
-							<p><?php echo $agenda_message?></p>
 						</div>
 					</div>
 				</div>
@@ -61,7 +60,6 @@
 								<br>
 								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Mettre à jour" name="form_professors">
 							</form>
-							<p><?php echo $professors_message?></p>
 						</div>
 					</div>
 				</div>

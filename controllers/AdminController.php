@@ -7,8 +7,7 @@ class AdminController {
 	}
 			
 	public function run(){	
-		$agenda_message = '';
-		$professors_message = '';
+		$update_message = '';
 		if (! empty ( $_POST ['form_agenda'] )) {
 			$update_message = $this->formAgenda ();
 		}
@@ -18,18 +17,29 @@ class AdminController {
 
 	private function formAgenda() {
 		if (! empty ( $_FILES ['userfile'] ['name'] )) {
+			// checks if file extension is properties 
 			if (! preg_match ( '/\.properties/', $_FILES ['userfile'] ['name'] )) {
-				return 'Le format est invalide.';
+				$update_message['error_code'] = 'danger';
+				$update_message['error_message'] = 'Le fichier doit avoir une extension .properties';
+				return $update_message;	
 			}
+			// saves agenda file to conf directory
 			$origine = $_FILES ['userfile'] ['tmp_name'];
 			$destination = 'conf/agenda.properties';
 			move_uploaded_file ( $origine, $destination );
 			$fcontents = file ( $destination );
+			// inserts each weeks in the db
 			foreach ( $fcontents as $i => $icontent ) {
 				preg_match ( '/^(.*)_(.*)=(.*)$/', $icontent, $result );
-				$this->_db->insert_week($result[2],$result[1],$result[3]);
+				if (!$this->_db->insert_week($result[2],$result[1],$result[3])){
+					$update_message['error_code'] = 'danger';
+					$update_message['error_message'] = 'L\'ajout n\'a pas pu être fait. Veuillez vérifier le contenu de votre fichier.';
+					return $update_message;
+				}
 			}
-			return 'Les semaines ont été ajoutées dans l\'agenda avec succès.';
+			$update_message['error_code'] = 'success';
+			$update_message['error_message'] = 'Les semaines ont été ajoutées dans l\'agenda avec succès';
+			return $update_message;
 		}
 	}	
 }
