@@ -23,9 +23,12 @@ class AdminController {
 			$origine = $_FILES ['userfile'] ['tmp_name'];
 			$destination = 'conf/agenda.properties';
 			move_uploaded_file ( $origine, $destination );
-			return 'ok';
+			$fcontents = file ( $destination );
+			foreach ( $fcontents as $i => $icontent ) {
+				preg_match ( '/^(.*)_(.*)=(.*)$/', $icontent, $result );
+				var_dump($result);
+				$this->_db->insert_week($result[2],$result[1],$result[3]);
+			}
 		}
-	}
-
-	
+	}	
 }
