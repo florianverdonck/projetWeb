@@ -20,7 +20,7 @@
 								<br>
 								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Soumettre" name="form_agenda">
 							</form>
-							<?php echo $update_message?>
+							<p><?php echo $update_message?></p>
 						</div>
 					</div>
 				</div>
