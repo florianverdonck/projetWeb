@@ -26,7 +26,6 @@ class AdminController {
 			$fcontents = file ( $destination );
 			foreach ( $fcontents as $i => $icontent ) {
 				preg_match ( '/^(.*)_(.*)=(.*)$/', $icontent, $result );
-				var_dump($result);
 				$this->_db->insert_week($result[2],$result[1],$result[3]);
 			}
 			return 'Les semaines ont été ajoutées dans l\'agenda avec succès.';
