@@ -43,3 +43,18 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+<?php	
+if (isset($update_message)) {
+?>
+	<div class="container">
+		<div class="alert alert-<?=$update_message['error_code'];?> alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<?=$update_message['error_message'];?>
+		</div>
+	</div>
+<?php
+}	
+?>
