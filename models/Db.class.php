@@ -24,11 +24,13 @@ class Db {
 		}
 		return self::$instance;
 	}
-	public function insert_week($term, $monday_date) {
-		$query = 'INSERT INTO weeks (term, monday_date) values (:term,:auteur)';
-		$ps = $this->_db->prepare($query);
-		$ps->bindValue(':term', $term);
-		$ps->bindValue(':monday_date', $monday_date);
+	public function insert_week($week_number, $term, $monday_date) {
+		$query = 'INSERT INTO weeks (week_number, term, monday_date) 
+				VALUES (:week_number, :term, :monday_date)';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue (':week_number', $week_number);
+		$ps->bindValue (':term', $term);
+		$ps->bindValue (':monday_date', $monday_date);
 		return $ps->execute ();
 	}
 	public function insert_professor($mail, $responsable, $name, $first_name) {
