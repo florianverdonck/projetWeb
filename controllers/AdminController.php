@@ -7,7 +7,8 @@ class AdminController {
 	}
 			
 	public function run(){	
-		$update_message = '';
+		$agenda_message = '';
+		$professors_message = '';
 		if (! empty ( $_POST ['form_agenda'] )) {
 			$update_message = $this->formAgenda ();
 		}
