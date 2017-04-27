@@ -83,7 +83,7 @@ class Db {
 		$ps = $this->_db->prepare ( $query );
 		$ps->execute ();
 		while ( $row = $ps->fetch () ) {
-			$array_professors [] = new Professor ( $row->mail, $row->pseudo, $row->photo );
+			$array_professors [] = new Professor ( $row->mail, $row->name, $row->first_name, $row->responsible );
 		}
 		return $array_professors;
 	}

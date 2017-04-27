@@ -38,19 +38,15 @@
 										<th>Resp<span class="hidden-xs">onsable</span></th>
 									</tr>
 								</thead>
-								<tbody>								
+								<tbody>		
+									<?php foreach ($array_professors as $professor) { ?>						
 									<tr>
-										<td>gregory.seront@vinci.be</td>
-										<td>Seront</td>
-										<td>Gregory</td>
-										<td>true</td>
+										<td><?php echo $professor->html_mail()?></td>
+										<td><?php echo $professor->html_name()?></td>
+										<td><?php echo $professor->html_first_name()?></td>
+										<td><?php echo $professor->html_responsible()?></td>
 									</tr>
-									<tr>
-										<td>gregory.seront@vinci.be</td>
-										<td>Seront</td>
-										<td>Gregory</td>
-										<td>true</td>
-									</tr>
+									<?php } ?>
 								</tbody>
 							</table>
 							<form action="index.php?user=admin" method="post" enctype="multipart/form-data">

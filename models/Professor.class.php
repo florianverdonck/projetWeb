@@ -33,6 +33,5 @@ class Professor {
 	}
 	public function html_responsible() {
 		return htmlspecialchars($this->_responsible);
-	}	
+	}
 }
-?>
