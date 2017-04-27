@@ -7,6 +7,10 @@ class AdminController {
 	}
 			
 	public function run(){	
+// 		if (empty ( $_SESSION ['admin'] )) {
+// 			header ( 'Location: index.php?action=login' );
+// 			die ();
+// 		}
 		$update_message = '';
 		if (! empty ( $_POST ['form_agenda'] )) {
 			$update_message = $this->formAgenda ();
@@ -62,8 +66,10 @@ class AdminController {
 			// inserts each professor in the db
 			foreach ( $fcontents as $icontent ) {
 					preg_match ( '/^(.*);(.*);(.*);(.*)$/', $icontent, $result );
-					if (!empty($result) && $result[1] != 'Mail')
-						$this->_db->insert_professor($result[1],$result[2],$result[3],$result[4]);				
+					if (!empty($result) && $result[2] !== 'Nom') {
+						if (!$this->_db->existing_professor($result[1]))
+							$this->_db->insert_professor($result[1],$result[2],$result[3],$result[4]);
+					}
 			}
 			$update_message['error_code'] = 'success';
 			$update_message['error_message'] = 'Les professeurs ont été ajoutés avec succès';
