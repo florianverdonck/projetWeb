@@ -13,7 +13,7 @@
 							<h3 class="panel-title">Enregistrez le nouvel agenda académique</h3>
 						</div>
 						<div class="panel-body">
-							<form action="index.php?action=admin" method="post" enctype="multipart/form-data">
+							<form action="index.php?user=admin" method="post" enctype="multipart/form-data">
 								<label for="file_agenda" class="control-label">Selectionnez un fichier agenda</label>
 								<input id="file_agenda" type="file" name="userfile" class="filestyle" data-buttonName="btn-primary">
 								<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
