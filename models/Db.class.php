@@ -82,10 +82,19 @@ class Db {
 		$query = 'SELECT mail, name, first_name, responsible FROM professors';
 		$ps = $this->_db->prepare ( $query );
 		$ps->execute ();
+		$array_professors = "";
 		while ( $row = $ps->fetch () ) {
 			$array_professors [] = new Professor ( $row->mail, $row->name, $row->first_name, $row->responsible );
 		}
 		return $array_professors;
+	}
+	// check if a professor is already inserted
+	public function existing_professor($mail) {
+		$query = 'SELECT mail from professors WHERE mail = :mail';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':mail', $mail );
+		$ps->execute ();
+		return $ps->rowcount () == 1;
 	}
 }
 

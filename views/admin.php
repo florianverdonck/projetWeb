@@ -65,14 +65,16 @@
 									</tr>
 								</thead>
 								<tbody>		
-									<?php foreach ($array_professors as $professor) { ?>						
+									<?php if($array_professors != null)  {
+											foreach ($array_professors as $professor) { ?>						
 									<tr>
 										<td><?php echo $professor->html_mail()?></td>
 										<td><?php echo $professor->html_name()?></td>
 										<td><?php echo $professor->html_first_name()?></td>
 										<td><?php echo $professor->html_responsible()?></td>
 									</tr>
-									<?php } ?>
+									<?php } 
+									} ?>
 								</tbody>
 							</table>
 						</div>
