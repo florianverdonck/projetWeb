@@ -45,7 +45,7 @@
 </nav>
 
 <?php	
-if (isset($update_message)) {
+if (!empty($update_message)) {
 ?>
 	<div class="container">
 		<div class="alert alert-<?=$update_message['error_code'];?> alert-dismissible" role="alert">
