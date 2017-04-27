@@ -65,6 +65,10 @@
 			require_once(PATH_CONTROLLERS . "StudentController.php");
 			$controller = new StudentController($db);
 			break;
+		case 'logout' :
+			require_once (PATH_CONTROLLERS . "LogoutController.php");
+			$controller = new LogoutController ();
+			break;
 		default: // LoginController selected by default
 			require_once(PATH_CONTROLLERS . "LoginController.php");
 			$controller = new LoginController ($db);
