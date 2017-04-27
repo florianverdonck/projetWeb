@@ -43,8 +43,8 @@
 	// Connection to database
 	$db = Db::getInstance();
 
-	$action = (isset ( $_GET ['action'] )) ? htmlentities ( $_GET ['action'] ) : 'default';
-	switch ($action) {
+	$user = (isset ( $_GET ['user'] )) ? htmlentities ( $_GET ['user'] ) : 'default';
+	switch ($user) {
 		case 'admin':
 			require_once(PATH_CONTROLLERS . "AdminController.php");
 			$controller = new AdminController($db);
@@ -52,7 +52,15 @@
 		case 'professor':
 			require_once(PATH_CONTROLLERS . "ProfessorController.php");
 			$controller = new ProfessorController($db);
+			break;
+		case 'bloc_responsible':
+			require_once(PATH_CONTROLLERS . "BlocResponsibleController.php");
+			$controller = new BlocResponsibleController($db);
 			break;	
+		case 'blocs_responsible':
+			require_once(PATH_CONTROLLERS . "BlocsResponsibleController.php");
+			$controller = new BlocsResponsibleController($db);
+			break;
 		case 'student':
 			require_once(PATH_CONTROLLERS . "StudentController.php");
 			$controller = new StudentController($db);
