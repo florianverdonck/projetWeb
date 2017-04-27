@@ -1,7 +1,6 @@
 <?php
 
 class Db {
-
 	
 	private static $instance = null;
 	private $_db;
