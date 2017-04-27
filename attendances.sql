@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
+-- version 4.6.4
+-- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 24 Avril 2017 à 13:15
--- Version du serveur :  5.6.17
--- Version de PHP :  5.5.12
+-- Généré le :  Jeu 27 Avril 2017 à 09:57
+-- Version du serveur :  5.7.14
+-- Version de PHP :  5.6.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de données :  `attendances`
@@ -26,15 +26,12 @@ SET time_zone = "+00:00";
 -- Structure de la table `attendances`
 --
 
-CREATE TABLE IF NOT EXISTS `attendances` (
-  `attendance_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `attendances` (
+  `attendance_id` int(11) NOT NULL,
   `attendance` varchar(15) NOT NULL,
   `student_id` int(11) NOT NULL,
-  `attendance_sheet_id` int(11) NOT NULL,
-  PRIMARY KEY (`attendance_id`),
-  KEY `student_id` (`student_id`),
-  KEY `attendance_sheet_id` (`attendance_sheet_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `attendance_sheet_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -42,16 +39,12 @@ CREATE TABLE IF NOT EXISTS `attendances` (
 -- Structure de la table `attendance_sheets`
 --
 
-CREATE TABLE IF NOT EXISTS `attendance_sheets` (
-  `attendance_sheet_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `attendance_sheets` (
+  `attendance_sheet_id` int(11) NOT NULL,
   `given_seance_id` int(11) NOT NULL,
   `mail` varchar(50) NOT NULL,
-  `week_number` int(11) NOT NULL,
-  PRIMARY KEY (`attendance_sheet_id`),
-  KEY `given_seance_id` (`given_seance_id`),
-  KEY `mail` (`mail`),
-  KEY `week_number` (`week_number`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `week_number` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -59,15 +52,14 @@ CREATE TABLE IF NOT EXISTS `attendance_sheets` (
 -- Structure de la table `courses`
 --
 
-CREATE TABLE IF NOT EXISTS `courses` (
+CREATE TABLE `courses` (
   `code` varchar(25) NOT NULL,
   `name` varchar(50) NOT NULL,
   `term` int(11) NOT NULL,
   `ECTs` int(11) NOT NULL,
   `bloc` int(11) NOT NULL,
   `abbreviation` varchar(20) DEFAULT NULL,
-  `course_unit_learning_activity` varchar(2) NOT NULL,
-  PRIMARY KEY (`code`)
+  `course_unit_learning_activity` varchar(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -84,14 +76,11 @@ INSERT INTO `courses` (`code`, `name`, `term`, `ECTs`, `bloc`, `abbreviation`, `
 -- Structure de la table `given_seances`
 --
 
-CREATE TABLE IF NOT EXISTS `given_seances` (
-  `given_seance_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `given_seances` (
+  `given_seance_id` int(11) NOT NULL,
   `seance_template_id` int(11) NOT NULL,
-  `serie_id` int(11) NOT NULL,
-  PRIMARY KEY (`given_seance_id`),
-  KEY `seance_template_id` (`seance_template_id`),
-  KEY `serie_id` (`serie_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `serie_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -99,19 +88,18 @@ CREATE TABLE IF NOT EXISTS `given_seances` (
 -- Structure de la table `professors`
 --
 
-CREATE TABLE IF NOT EXISTS `professors` (
+CREATE TABLE `professors` (
   `mail` varchar(50) NOT NULL,
-  `responsable` varchar(15) NOT NULL,
+  `responsible` varchar(15) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  PRIMARY KEY (`mail`)
+  `first_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `professors`
 --
 
-INSERT INTO `professors` (`mail`, `responsable`, `name`, `first_name`) VALUES
+INSERT INTO `professors` (`mail`, `responsible`, `name`, `first_name`) VALUES
 ('tes2t@test.te', 'true', 'test2', 'test2'),
 ('test@test.te', 'blocs', 'Test', 'Test');
 
@@ -121,14 +109,12 @@ INSERT INTO `professors` (`mail`, `responsable`, `name`, `first_name`) VALUES
 -- Structure de la table `seance_templates`
 --
 
-CREATE TABLE IF NOT EXISTS `seance_templates` (
-  `seance_template_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `seance_templates` (
+  `seance_template_id` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `attendance_type` varchar(10) NOT NULL,
-  `code` varchar(25) NOT NULL,
-  PRIMARY KEY (`seance_template_id`),
-  KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `code` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -136,12 +122,11 @@ CREATE TABLE IF NOT EXISTS `seance_templates` (
 -- Structure de la table `series`
 --
 
-CREATE TABLE IF NOT EXISTS `series` (
-  `serie_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `series` (
+  `serie_id` int(11) NOT NULL,
   `term` int(11) NOT NULL,
-  `serie_name` varchar(50) NOT NULL,
-  PRIMARY KEY (`serie_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+  `serie_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `series`
@@ -157,17 +142,14 @@ INSERT INTO `series` (`serie_id`, `term`, `serie_name`) VALUES
 -- Structure de la table `students`
 --
 
-CREATE TABLE IF NOT EXISTS `students` (
-  `student-id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `students` (
+  `student-id` int(11) NOT NULL,
   `mail` varchar(50) NOT NULL,
   `bloc` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `first_name` varchar(50) NOT NULL,
-  `serie_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`student-id`),
-  UNIQUE KEY `mail` (`mail`),
-  KEY `serie_id` (`serie_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+  `serie_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `students`
@@ -183,21 +165,128 @@ INSERT INTO `students` (`student-id`, `mail`, `bloc`, `name`, `first_name`, `ser
 -- Structure de la table `weeks`
 --
 
-CREATE TABLE IF NOT EXISTS `weeks` (
-  `week_number` int(11) NOT NULL AUTO_INCREMENT,
-  `term` int(11) NOT NULL,
-  `monday_date` date NOT NULL,
-  PRIMARY KEY (`week_number`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+CREATE TABLE `weeks` (
+  `week_id` int(11) NOT NULL,
+  `week_number` varchar(9) NOT NULL,
+  `term` varchar(2) NOT NULL,
+  `monday_date` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `weeks`
 --
 
-INSERT INTO `weeks` (`week_number`, `term`, `monday_date`) VALUES
-(1, 1, '2017-04-03'),
-(2, 1, '2017-04-10');
+INSERT INTO `weeks` (`week_id`, `week_number`, `term`, `monday_date`) VALUES
+(1, '', '1', '2017-04-03'),
+(2, '', '1', '2017-04-10');
 
+--
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `attendances`
+--
+ALTER TABLE `attendances`
+  ADD PRIMARY KEY (`attendance_id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `attendance_sheet_id` (`attendance_sheet_id`);
+
+--
+-- Index pour la table `attendance_sheets`
+--
+ALTER TABLE `attendance_sheets`
+  ADD PRIMARY KEY (`attendance_sheet_id`),
+  ADD KEY `given_seance_id` (`given_seance_id`),
+  ADD KEY `mail` (`mail`),
+  ADD KEY `week_number` (`week_number`);
+
+--
+-- Index pour la table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`code`);
+
+--
+-- Index pour la table `given_seances`
+--
+ALTER TABLE `given_seances`
+  ADD PRIMARY KEY (`given_seance_id`),
+  ADD KEY `seance_template_id` (`seance_template_id`),
+  ADD KEY `serie_id` (`serie_id`);
+
+--
+-- Index pour la table `professors`
+--
+ALTER TABLE `professors`
+  ADD PRIMARY KEY (`mail`);
+
+--
+-- Index pour la table `seance_templates`
+--
+ALTER TABLE `seance_templates`
+  ADD PRIMARY KEY (`seance_template_id`),
+  ADD KEY `code` (`code`);
+
+--
+-- Index pour la table `series`
+--
+ALTER TABLE `series`
+  ADD PRIMARY KEY (`serie_id`);
+
+--
+-- Index pour la table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`student-id`),
+  ADD UNIQUE KEY `mail` (`mail`),
+  ADD KEY `serie_id` (`serie_id`);
+
+--
+-- Index pour la table `weeks`
+--
+ALTER TABLE `weeks`
+  ADD PRIMARY KEY (`week_id`);
+
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `attendances`
+--
+ALTER TABLE `attendances`
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `attendance_sheets`
+--
+ALTER TABLE `attendance_sheets`
+  MODIFY `attendance_sheet_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `given_seances`
+--
+ALTER TABLE `given_seances`
+  MODIFY `given_seance_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `seance_templates`
+--
+ALTER TABLE `seance_templates`
+  MODIFY `seance_template_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `series`
+--
+ALTER TABLE `series`
+  MODIFY `serie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT pour la table `students`
+--
+ALTER TABLE `students`
+  MODIFY `student-id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT pour la table `weeks`
+--
+ALTER TABLE `weeks`
+  MODIFY `week_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Contraintes pour les tables exportées
 --
@@ -215,7 +304,7 @@ ALTER TABLE `attendances`
 ALTER TABLE `attendance_sheets`
   ADD CONSTRAINT `fk_given_seance_id` FOREIGN KEY (`given_seance_id`) REFERENCES `given_seances` (`given_seance_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_mail` FOREIGN KEY (`mail`) REFERENCES `professors` (`mail`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_week_number` FOREIGN KEY (`week_number`) REFERENCES `weeks` (`week_number`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_week_number` FOREIGN KEY (`week_number`) REFERENCES `weeks` (`week_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `given_seances`
