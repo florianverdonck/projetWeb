@@ -44,7 +44,7 @@
 	$db = Db::getInstance();
 
 	$action = (isset ( $_GET ['action'] )) ? htmlentities ( $_GET ['action'] ) : 'default';
-	switch ($page) {
+	switch ($action) {
 		case 'admin':
 			require_once(PATH_CONTROLLERS . "AdminController.php");
 			$controller = new AdminController($db);
@@ -59,7 +59,7 @@
 			break;
 		default: // LoginController selected by default
 			require_once(PATH_CONTROLLERS . "LoginController.php");
-			$controller = new AccueilController ();
+			$controller = new LoginController ($db);
 			break;
 	}
 	$controller->run();
