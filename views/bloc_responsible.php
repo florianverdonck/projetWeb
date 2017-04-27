@@ -33,7 +33,7 @@
 								</div><br><br>
 								
 								<label for="inputUEFile">Sélectionnez le fichier à importer </label><br>
-								<input type="file" id="inputUEFile" name="inputUEFile"><br>
+								<input class="pb10" type="file" id="inputUEFile" name="inputUEFile"><br>
 								
 								<button class="btn btn-lg btn-primary btn-block" name="formUEUpload" type="submit">Importer</button>
 							</form>
