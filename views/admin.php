@@ -35,8 +35,8 @@
 									<tr>
 										<th>Mail</th>
 										<th>Nom</th>
-										<th>Prenom</th>
-										<th>Responsable</th>
+										<th>Pré<span class="hidden-xs">nom</span></th>
+										<th>Resp<span class="hidden-xs">onsable</span></th>
 									</tr>
 								</thead>
 								<tbody>								
