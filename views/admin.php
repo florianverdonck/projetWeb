@@ -23,7 +23,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-8">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
 							<h3 class="panel-title">Liste des professeurs</h3>
