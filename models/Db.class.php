@@ -33,14 +33,14 @@ class Db {
 		$ps->bindValue (':monday_date', $monday_date);
 		return $ps->execute ();
 	}
-	public function insert_professor($mail, $responsable, $name, $first_name) {
-		$query = 'INSERT INTO professors (mail, responsable, name, first_name) 
-				VALUES (:mail, :responsable,: name:, :first_name)';
+	public function insert_professor($mail, $name, $first_name, $responsible) {
+		$query = 'INSERT INTO professors (mail, name, first_name, responsible) 
+				VALUES (:mail,:name, :first_name, :responsible)';
 		$ps = $this->_db->prepare($query);
 		$ps->bindValue(':mail', $mail);
-		$ps->bindValue(':responsable', $responsable);
 		$ps->bindValue('name', $name);
 		$ps->bindValue(':first_name', $first_name);
+		$ps->bindValue(':responsible', $responsible);
 		return $ps->execute ();
 	}
 	public function insert_course($code, $name, $term, $ETCs, $bloc, $abbreviation = '', $course_unit_learning_activity) {

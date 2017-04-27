@@ -54,8 +54,8 @@
 								</tbody>
 							</table>
 							<form action="index.php?user=admin" method="post" enctype="multipart/form-data">
-								<label for="file_agenda" class="control-label">Selectionnez un fichier professeurs</label>
-								<input id="file_agenda" type="file" name="userfile" class="filestyle" data-buttonName="btn-primary">
+								<label for="file_professors" class="control-label">Selectionnez un fichier professeurs</label>
+								<input id="file_professors" type="file" name="userfile" class="filestyle" data-buttonName="btn-primary">
 								<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 								<br>
 								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Mettre à jour" name="form_professors">
