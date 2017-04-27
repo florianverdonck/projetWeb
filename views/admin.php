@@ -10,12 +10,14 @@
 				<div class="col-md-4">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
-							<h3 class="panel-title">Filtrez ici pour voir vos présences</h3>
+							<h3 class="panel-title">Enregistrez le nouvel agenda académique</h3>
 						</div>
 						<div class="panel-body">
-							<form action="index.php?page=admin" method="post">
-								<br><br>
-								<button class="btn btn-lg btn-primary btn-block" type="submit">Filtrer</button>
+							<form action="index.php?action=admin" method="post">
+								<label for="file_agenda" class="control-label">Selectionnez un fichier agenda</label>
+								<input id="file_agenda" type="file" class="filestyle" data-buttonName="btn-primary">
+								<br>
+								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Soumettre" name="form_agenda">
 							</form>
 						</div>
 					</div>

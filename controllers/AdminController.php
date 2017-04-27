@@ -8,7 +8,6 @@ class AdminController {
 			
 	public function run(){	
 
-		echo("AdminController.php");
 		require_once (PATH_VIEWS . 'admin.php');
 		
 	}
