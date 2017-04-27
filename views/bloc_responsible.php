@@ -18,23 +18,25 @@
 							<h3 class="panel-title">Importer UE/AA</h3>
 						</div>
 						<div class="panel-body">
-							<label for="inputBlocSelect">Sélectionnez le bloc </label><br>
-							<div class="btn-group" data-toggle="buttons" id="inputBlocSelect">
-							  <label class="btn btn-default active btn-sm">
-							    <input type="radio" name="options">Bloc 1
-							  </label>
-							  <label class="btn btn-default btn-sm">
-							    <input type="radio" name="options">Bloc 2
-							  </label>
-							  <label class="btn btn-default btn-sm">
-							    <input type="radio" name="options">Bloc 3</span>
-							  </label>
-							</div><br><br>
-							
-							<label for="inputBlocFile">Sélectionnez le fichier à importer </label><br>
-							<input type="file" id="inputBlocFile"><br>
-							
-							<button class="btn btn-lg btn-primary btn-block" name="formUEUpload" type="submit">Importer</button>
+							<form action="index.php?user=bloc_responsible" method="POST" enctype='multipart/form-data'>
+								<label for="inputBlocSelect">Sélectionnez le bloc </label><br>
+								<div class="btn-group" data-toggle="buttons" id="inputBlocSelect">
+								  <label class="btn btn-default active btn-sm">
+								    <input type="radio" name="inputBloc" value="1" checked>Bloc 1
+								  </label>
+								  <label class="btn btn-default btn-sm">
+								    <input type="radio" name="inputBloc" value="2">Bloc 2
+								  </label>
+								  <label class="btn btn-default btn-sm">
+								    <input type="radio" name="inputBloc" value="3">Bloc 3</span>
+								  </label>
+								</div><br><br>
+								
+								<label for="inputUEFile">Sélectionnez le fichier à importer </label><br>
+								<input type="file" id="inputUEFile" name="inputUEFile"><br>
+								
+								<button class="btn btn-lg btn-primary btn-block" name="formUEUpload" type="submit">Importer</button>
+							</form>
 						</div>
 					</div>
 				</div>
