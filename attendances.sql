@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 27 Avril 2017 à 09:57
+-- Généré le :  Jeu 27 Avril 2017 à 18:31
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -33,6 +33,14 @@ CREATE TABLE `attendances` (
   `attendance_sheet_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Contenu de la table `attendances`
+--
+
+INSERT INTO `attendances` (`attendance_id`, `attendance`, `student_id`, `attendance_sheet_id`) VALUES
+(1, '15', 1, 2),
+(2, 'XO', 6, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -45,6 +53,14 @@ CREATE TABLE `attendance_sheets` (
   `mail` varchar(50) NOT NULL,
   `week_number` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `attendance_sheets`
+--
+
+INSERT INTO `attendance_sheets` (`attendance_sheet_id`, `given_seance_id`, `mail`, `week_number`) VALUES
+(2, 1, 'bernard.henriet@vinci.be', 172),
+(3, 1, 'emmeline.leconte@vinci.be', 182);
 
 -- --------------------------------------------------------
 
@@ -82,6 +98,14 @@ CREATE TABLE `given_seances` (
   `serie_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Contenu de la table `given_seances`
+--
+
+INSERT INTO `given_seances` (`given_seance_id`, `seance_template_id`, `serie_id`) VALUES
+(1, 1, 3),
+(2, 1, 4);
+
 -- --------------------------------------------------------
 
 --
@@ -90,18 +114,36 @@ CREATE TABLE `given_seances` (
 
 CREATE TABLE `professors` (
   `mail` varchar(50) NOT NULL,
-  `responsible` varchar(15) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `first_name` varchar(50) NOT NULL
+  `first_name` varchar(50) NOT NULL,
+  `responsible` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `professors`
 --
 
-INSERT INTO `professors` (`mail`, `responsible`, `name`, `first_name`) VALUES
-('tes2t@test.te', 'true', 'test2', 'test2'),
-('test@test.te', 'blocs', 'Test', 'Test');
+INSERT INTO `professors` (`mail`, `name`, `first_name`, `responsible`) VALUES
+('annick.dupont@vinci.be', 'Dupont', 'Annick', 'false\r'),
+('anthony.legrand@vinci.be', 'Legrand', 'Anthony', 'false\r'),
+('bernard.frank@vinci.be', 'Frank', 'Bernard', 'false\r'),
+('bernard.henriet@vinci.be', 'Henriet', 'Bernard', 'blocs\r'),
+('brigitte.binot@vinci.be', 'Binot', 'Brigitte', 'false\r'),
+('brigitte.lehmann@vinci.be', 'Lehmann', 'Brigitte', 'false\r'),
+('christophe.damas@vinci.be', 'Damas', 'Christophe', 'bloc2\r'),
+('colette.demuylder@vinci.be', 'De Muylder', 'Colette', 'false\r'),
+('donatien.grolaux@vinci.be', 'Grolaux', 'Donatien', 'bloc3\r'),
+('emmeline.leconte@vinci.be', 'Leconte', 'Emmeline', 'blocs\r'),
+('gregory.seront@vinci.be', 'Seront', 'Gregory', 'true\r'),
+('jeanluc.collinet@ipl.be', 'Collinet', 'Jean-Luc', 'bloc1\r'),
+('jose.vandermeulen@vinci.be', 'Vandermeulen', 'José', 'false\r'),
+('julien.federinov@vinci.be', 'Federinov', 'Julien', 'false\r'),
+('laurent.leleux@vinci.be', 'Leleux', 'Laurent', 'false\r'),
+('michel.debacker@vinci.be', 'Debacker', 'Michel', 'false\r'),
+('olivier.choquet@vinci.be', 'Choquet', 'Olivier', 'false\r'),
+('philippe.vaneerdenbrugghe@vinci.be', 'Vaneerdenbrugghe', 'Philippe', 'false\r'),
+('sonia.belina@vinci.be', 'Belina-Podgaetsky', 'Sonia', 'false\r'),
+('stephanie.ferneeuw@vinci.be', 'Ferneeuw', 'Stéphanie', 'false\r');
 
 -- --------------------------------------------------------
 
@@ -115,6 +157,15 @@ CREATE TABLE `seance_templates` (
   `attendance_type` varchar(10) NOT NULL,
   `code` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `seance_templates`
+--
+
+INSERT INTO `seance_templates` (`seance_template_id`, `name`, `attendance_type`, `code`) VALUES
+(1, 'algo1', 'XO', 'IE445LI'),
+(2, 'algo2', 'Notee', 'IE445LI'),
+(3, NULL, 'X', 'IL4545POI');
 
 -- --------------------------------------------------------
 
@@ -177,8 +228,32 @@ CREATE TABLE `weeks` (
 --
 
 INSERT INTO `weeks` (`week_id`, `week_number`, `term`, `monday_date`) VALUES
-(1, '', '1', '2017-04-03'),
-(2, '', '1', '2017-04-10');
+(168, 'semaine1', 'q1', '19/09/2016\r'),
+(169, 'semaine2', 'q1', '26/09/2016\r'),
+(170, 'semaine3', 'q1', '3/10/2016\r'),
+(171, 'semaine4', 'q1', '10/10/2016\r'),
+(172, 'semaine5', 'q1', '17/10/2016\r'),
+(173, 'semaine6', 'q1', '24/10/2016\r'),
+(174, 'semaine7', 'q2', '7/11/2016\r'),
+(175, 'semaine8', 'q1', '14/11/2016\r'),
+(176, 'semaine9', 'q1', '21/11/2016\r'),
+(177, 'semaine10', 'q1', '28/11/2016\r'),
+(178, 'semaine11', 'q1', '5/11/2016\r'),
+(179, 'semaine12', 'q1', '12/11/2016\r'),
+(180, 'semaine13', 'q1', '19/11/2016\r'),
+(181, 'semaine1', 'q2', '6/02/2017\r'),
+(182, 'semaine2', 'q2', '13/02/2017\r'),
+(183, 'semaine3', 'q2', '20/02/2017\r'),
+(184, 'semaine4', 'q2', '27/02/2017\r'),
+(185, 'semaine5', 'q2', '6/03/2017\r'),
+(186, 'semaine6', 'q2', '13/03/2017\r'),
+(187, 'semaine7', 'q2', '20/03/2017\r'),
+(188, 'semaine8', 'q2', '27/03/2017\r'),
+(189, 'semaine9', 'q2', '17/04/2017\r'),
+(190, 'semaine10', 'q2', '24/04/2017\r'),
+(191, 'semaine11', 'q2', '1/05/2017\r'),
+(192, 'semaine12', 'q2', '8/05/2017\r'),
+(193, 'semaine13', 'q2', '15/05/2017');
 
 --
 -- Index pour les tables exportées
@@ -256,22 +331,22 @@ ALTER TABLE `weeks`
 -- AUTO_INCREMENT pour la table `attendances`
 --
 ALTER TABLE `attendances`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `attendance_sheets`
 --
 ALTER TABLE `attendance_sheets`
-  MODIFY `attendance_sheet_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `attendance_sheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `given_seances`
 --
 ALTER TABLE `given_seances`
-  MODIFY `given_seance_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `given_seance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `seance_templates`
 --
 ALTER TABLE `seance_templates`
-  MODIFY `seance_template_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `seance_template_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `series`
 --
@@ -286,7 +361,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT pour la table `weeks`
 --
 ALTER TABLE `weeks`
-  MODIFY `week_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `week_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=194;
 --
 -- Contraintes pour les tables exportées
 --
