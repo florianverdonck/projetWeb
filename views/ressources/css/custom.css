@@ -339,3 +339,27 @@ table .btn-default:hover {
 .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn){
   width:100%;
 }
+
+
+@media(max-width:992px){
+	.mobileNotFixed {
+		position: relative;
+	}
+}
+
+.weekSeparator {
+	font-weight: bold;
+	font-size: large;
+}
+
+.weekSeparator p {
+	padding: 15px;
+}
+
+.floatRight {
+	float:right;
+}
+
+.floatLeft {
+	float: left;
+}
