@@ -17,8 +17,14 @@
 	  <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gestionnaire de bloc<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Prise de présences</a></li>
-            <li><a href="#">Gestionnaire de blocs</a></li>
+            <li><a href="index.php?user=professor">Prise de présences</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="index.php?user=bloc_responsible">Gestionnaire de bloc</a></li>
+            	<li><a href="index.php?user=bloc_responsible">-> Importer UE/AA</a></li>
+            	<li><a href="index.php?user=bloc_responsible&action=series">-> Créer/modifier séries</a></li>
+            	<li><a href="index.php?user=bloc_responsible&action=seance_templates">-> Gérer séances types</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="index.php?user=blocs_responsible">Gestionnaire de blocs</a></li>
           </ul>
         </li>
       </ul>
