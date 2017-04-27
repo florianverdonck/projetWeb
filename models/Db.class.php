@@ -35,7 +35,7 @@ class Db {
 	}
 	public function insert_professor($mail, $name, $first_name, $responsible) {
 		$query = 'INSERT INTO professors (mail, name, first_name, responsible) 
-				VALUES (:mail,:name, :first_name, :responsible)';
+				VALUES (:mail, :name, :first_name, :responsible)';
 		$ps = $this->_db->prepare($query);
 		$ps->bindValue(':mail', $mail);
 		$ps->bindValue('name', $name);
@@ -77,6 +77,15 @@ class Db {
 		$ps->bindValue(':name', $name);
 		$ps->bindValue(':first_name', $first_name);
 		return $ps->execute();
+	}
+	public function select_professors(){
+		$query = 'SELECT mail, name, first_name, responsible FROM professors';
+		$ps = $this->_db->prepare ( $query );
+		$ps->execute ();
+		while ( $row = $ps->fetch () ) {
+			$array_professors [] = new Professor ( $row->mail, $row->pseudo, $row->photo );
+		}
+		return $array_professors;
 	}
 }
 
