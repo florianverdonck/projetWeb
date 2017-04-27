@@ -78,6 +78,15 @@ class Db {
 		$ps->bindValue(':first_name', $first_name);
 		return $ps->execute();
 	}
+	public function insert_seance_template($name, $attendance_type, $code){
+		$query = 'INSERT INTO seance_templates (name, attendance_type, code)
+				VALUES (:name, :attendance_type, :code)';
+		$ps = $this->_db->prepare($query);
+		$ps->bindValue(':name', $name);
+		$ps->bindValue(':attendance_type', $attendance_type);
+		$ps->bindValue(':code', $code);
+		return $ps->execute();
+	}
 	public function select_professors(){
 		$query = 'SELECT mail, name, first_name, responsible FROM professors';
 		$ps = $this->_db->prepare ( $query );
