@@ -19,5 +19,9 @@ $metas = array(
 			"bloc_responsible_seance_templates" => array(
 					"title" => "IPL Présences - Edition des séances types",
 					"description" => "Gestionnaire de bloc : édition des séances types"
+			),
+			"admin" => array(
+					"title" => "IPL Gérer agenda/professeurs - Admin",
+					"description" => "Gérer l'ajout de l'agenda et des professeurs"
 			)
 		);
