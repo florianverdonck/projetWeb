@@ -7,5 +7,9 @@ $metas = array(
 			"student" => array(
 					"title" => "IPL Présences - Etudiant",
 					"description" => "Voir ses présences étudiant"
+			),
+			"admin" => array(
+					"title" => "IPL Gérer agenda/professeurs - Admin",
+					"description" => "Gérer l'ajout de l'agenda et des professeurs"
 			)
 		);
