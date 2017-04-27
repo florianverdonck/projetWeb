@@ -17,7 +17,7 @@ class AdminController {
 
 	private function formAgenda() {
 		if (! empty ( $_FILES ['userfile'] ['name'] )) {
-			if (! preg_match ( '/\.agenda/', $_FILES ['userfile'] ['name'] )) {
+			if (! preg_match ( '/\.properties/', $_FILES ['userfile'] ['name'] )) {
 				return 'Le format est invalide.';
 			}
 			$origine = $_FILES ['userfile'] ['tmp_name'];
