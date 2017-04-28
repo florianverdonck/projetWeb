@@ -6,7 +6,7 @@
 		<?php require_once(PATH_VIEWS . "navbar.php"); ?>
 		<div class="container">
 			<div class="row">
-				<div class="pt30 hidden-xs"></div>
+				
 				<div class="col-md-4">
 					<div class="panel panel-primary">
 						<div class="panel-heading">

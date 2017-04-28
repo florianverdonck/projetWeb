@@ -58,3 +58,5 @@ if (!empty($update_message)) {
 <?php
 }	
 ?>
+
+<div class="pt30 hidden-xs"></div>
