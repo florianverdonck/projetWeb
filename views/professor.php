@@ -10,10 +10,10 @@
 				<div class="col-md-4">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
-							<h3 class="panel-title">Filtrez ici pour voir vos présences</h3>
+							<h3 class="panel-title">Filtrez ici pour voir les présences</h3>
 						</div>
 						<div class="panel-body">
-							<form class="" action="index.php?page=professor" method="post">
+							<form class="" action="index.php?user=professor" method="post">
 								<label for="inputBlocSelect">Sélectionnez le bloc </label><br>
 								<div class="btn-group" data-toggle="buttons" id="inputBlocSelect">
 									<label class="btn btn-default active btn-sm">
@@ -28,10 +28,14 @@
 								</div>
 								<br><br>
 								<label for="inputTermSelect">Sélectionnez le quadrimestre </label><br>
-								<select class="selectpicker" id="inputTermSelect">
-									<option>1</option>
-									<option>2</option>
-								</select>
+								<div class="btn-group" data-toggle="buttons" id="inputBlocSelect">
+									<label class="btn btn-default active btn-sm">
+										<input type="radio" name="inputTerm" value="1" checked>Quadrimestre 1
+									</label>
+									<label class="btn btn-default btn-sm">
+										<input type="radio" name="inputTerm" value="2">Quadrimestre 2
+									</label>
+								</div>
 								<br><br>
 								<label for="inputWeekSelect">Sélectionnez la semaine </label><br>
 								<select class="selectpicker" id="inputWeekSelect">
@@ -47,12 +51,18 @@
 									<option>Math EX I</option>
 								</select>
 								<br><br>
-								<label for="typeOfPresenceSelect">Sélectionnez le type de présence </label><br>
-								<select class="selectpicker" id="typeOfPresenceSelect">
-									<option>X</option>
-									<option>XO</option>
-									<option>Notée</option>
-								</select>
+								<label for="inputAttendanceType">Sélectionnez le type de présence </label><br>
+								<div class="btn-group" data-toggle="buttons" id="inputAttendanceType">
+									<label class="btn btn-default active btn-sm">
+										<input type="radio" name="inputTerm" value="X" checked>X
+									</label>
+									<label class="btn btn-default btn-sm">
+										<input type="radio" name="inputTerm" value="XO">XO
+									</label>
+									<label class="btn btn-default btn-sm">
+										<input type="radio" name="inputTerm" value="Noted">Noté
+									</label>
+								</div>
 								<br><br>
 								<button class="btn btn-lg btn-primary btn-block" type="submit">Filtrer</button>
 							</form>
