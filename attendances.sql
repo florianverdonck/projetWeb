@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 27 Avril 2017 à 18:31
+-- Généré le :  Ven 28 Avril 2017 à 10:44
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -38,8 +38,7 @@ CREATE TABLE `attendances` (
 --
 
 INSERT INTO `attendances` (`attendance_id`, `attendance`, `student_id`, `attendance_sheet_id`) VALUES
-(1, '15', 1, 2),
-(2, 'XO', 6, 2);
+(3, '17', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -51,16 +50,17 @@ CREATE TABLE `attendance_sheets` (
   `attendance_sheet_id` int(11) NOT NULL,
   `given_seance_id` int(11) NOT NULL,
   `mail` varchar(50) NOT NULL,
-  `week_number` int(11) NOT NULL
+  `week_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `attendance_sheets`
 --
 
-INSERT INTO `attendance_sheets` (`attendance_sheet_id`, `given_seance_id`, `mail`, `week_number`) VALUES
-(2, 1, 'bernard.henriet@vinci.be', 172),
-(3, 1, 'emmeline.leconte@vinci.be', 182);
+INSERT INTO `attendance_sheets` (`attendance_sheet_id`, `given_seance_id`, `mail`, `week_id`) VALUES
+(4, 4, 'brigitte.lehmann@vinci.be', 174),
+(5, 5, 'christophe.damas@vinci.be', 170),
+(6, 3, 'anthony.legrand@vinci.be', 168);
 
 -- --------------------------------------------------------
 
@@ -103,8 +103,10 @@ CREATE TABLE `given_seances` (
 --
 
 INSERT INTO `given_seances` (`given_seance_id`, `seance_template_id`, `serie_id`) VALUES
-(1, 1, 3),
-(2, 1, 4);
+(3, 2, 6),
+(4, 2, 6),
+(5, 1, 5),
+(6, 2, 5);
 
 -- --------------------------------------------------------
 
@@ -176,16 +178,18 @@ INSERT INTO `seance_templates` (`seance_template_id`, `name`, `attendance_type`,
 CREATE TABLE `series` (
   `serie_id` int(11) NOT NULL,
   `term` int(11) NOT NULL,
-  `serie_name` varchar(50) NOT NULL
+  `serie_numero` int(50) NOT NULL,
+  `bloc` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `series`
 --
 
-INSERT INTO `series` (`serie_id`, `term`, `serie_name`) VALUES
-(3, 2, 'serie_1_bloc_1'),
-(4, 2, 'serie_2_bloc_3');
+INSERT INTO `series` (`serie_id`, `term`, `serie_numero`, `bloc`) VALUES
+(5, 2, 2, 1),
+(6, 2, 2, 1),
+(7, 2, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -207,8 +211,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`student-id`, `mail`, `bloc`, `name`, `first_name`, `serie_id`) VALUES
-(1, 'student1@mail.vinci', 1, 'stud1', 'stud1', NULL),
-(6, 'teeest@test.te', 2, 'Teston', 'Teste', 3);
+(1, 'student1@mail.vinci', 1, 'stud1', 'stud1', NULL);
 
 -- --------------------------------------------------------
 
@@ -274,7 +277,7 @@ ALTER TABLE `attendance_sheets`
   ADD PRIMARY KEY (`attendance_sheet_id`),
   ADD KEY `given_seance_id` (`given_seance_id`),
   ADD KEY `mail` (`mail`),
-  ADD KEY `week_number` (`week_number`);
+  ADD KEY `week_number` (`week_id`);
 
 --
 -- Index pour la table `courses`
@@ -331,17 +334,17 @@ ALTER TABLE `weeks`
 -- AUTO_INCREMENT pour la table `attendances`
 --
 ALTER TABLE `attendances`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `attendance_sheets`
 --
 ALTER TABLE `attendance_sheets`
-  MODIFY `attendance_sheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `attendance_sheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `given_seances`
 --
 ALTER TABLE `given_seances`
-  MODIFY `given_seance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `given_seance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `seance_templates`
 --
@@ -351,7 +354,7 @@ ALTER TABLE `seance_templates`
 -- AUTO_INCREMENT pour la table `series`
 --
 ALTER TABLE `series`
-  MODIFY `serie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `serie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT pour la table `students`
 --
@@ -379,7 +382,7 @@ ALTER TABLE `attendances`
 ALTER TABLE `attendance_sheets`
   ADD CONSTRAINT `fk_given_seance_id` FOREIGN KEY (`given_seance_id`) REFERENCES `given_seances` (`given_seance_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_mail` FOREIGN KEY (`mail`) REFERENCES `professors` (`mail`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_week_number` FOREIGN KEY (`week_number`) REFERENCES `weeks` (`week_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_week_id` FOREIGN KEY (`week_id`) REFERENCES `weeks` (`week_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `given_seances`
