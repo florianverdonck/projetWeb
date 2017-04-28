@@ -23,15 +23,15 @@ class Professor {
 		return $this->_responsible;
 	}
 	public function html_mail() {
-		return htmlspecialchars ($this->_mail);
+		return htmlspecialchars ( $this->_mail );
 	}
 	public function html_name() {
-		return htmlspecialchars ($this->_name);
+		return htmlspecialchars ( $this->_name );
 	}
 	public function html_first_name() {
-		return htmlspecialchars($this->_first_name);
+		return htmlspecialchars ( $this->_first_name );
 	}
 	public function html_responsible() {
-		return htmlspecialchars($this->_responsible);
+		return htmlspecialchars ( $this->_responsible );
 	}
 }
