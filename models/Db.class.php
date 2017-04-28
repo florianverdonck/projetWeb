@@ -61,11 +61,12 @@ class Db {
 		$ps->bindValue(':course_unit_learning_activity', $course_unit_learning_activity);
 		return $ps->execute ();
 	}
-	public function insert_serie($term, $serie_name) {
-		$query = 'INSERT INTO series (term, serie_name) VALUES (:term, :serie_name)';
+	public function insert_serie($term, $bloc, $serie_numero) {
+		$query = 'INSERT INTO series (term, bloc, serie_numero) VALUES (:term, :bloc, :serie_numero)';
 		$ps = $this->_db->prepare($query);
 		$ps->bindValue(':term', $term);
-		$ps->bindValue(':serie_name', $serie_name);
+		$ps->bindValue(':bloc', $bloc);
+		$ps->bindValue(':serie_numero', $serie_numero);
 		return $ps->execute ();
 	}
 	public function insert_student($mail, $bloc, $name, $first_name) { 
