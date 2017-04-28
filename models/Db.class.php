@@ -42,20 +42,21 @@ class Db {
 		$ps->bindValue(':responsible', $responsible);
 		return $ps->execute ();
 	}
-	public function insert_course($code, $name, $term, $ETCs, $bloc, $abbreviation = '', $course_unit_learning_activity) {
+	public function insert_course($code, $name, $term, $ECTs, $bloc, $abbreviation, $course_unit_learning_activity) {
 		if ($abbreviation = ! '') {
-			$query = 'INSERT INTO courses (code, name, term, ETCs, bloc, abbreviation, course_unit_learning_activity)
-				VALUES (:code, :name, :term, :ETCs:, :bloc, :abbreviation, :course_unit_learning_activity)';
+			$query = 'INSERT INTO courses (code, name, term, ECTs, bloc, abbreviation, course_unit_learning_activity)
+				VALUES (:code, :name, :term, :ECTs, :bloc, :abbreviation, :course_unit_learning_activity)';
 			$ps = $this->_db->prepare($query);
 			$ps->bindValue(':abbreviation', $abbreviation);
 		} else {
-			$query = 'INSERT INTO courses (code, name, term, ETCs, bloc, course_unit_learning_activity)
-				VALUES (:code, :name, :term, :ETCs:, :bloc, :course_unit_learning_activity)';
+			$query = 'INSERT INTO courses (code, name, term, ECTs, bloc, course_unit_learning_activity)
+				VALUES (:code, :name, :term, :ECTs, :bloc, :course_unit_learning_activity)';
 			$ps = $this->_db->prepare($query);
 		}
 		$ps->bindValue(':code', $code);
 		$ps->bindValue(':name', $name);
-		$ps->bindValue(':ECTS', $ECTs);
+		$ps->bindValue(':term', $term);
+		$ps->bindValue(':ECTs', $ECTs);
 		$ps->bindValue(':bloc', $bloc);
 		$ps->bindValue(':course_unit_learning_activity', $course_unit_learning_activity);
 		return $ps->execute ();
@@ -69,7 +70,7 @@ class Db {
 	}
 	public function insert_student($mail, $bloc, $name, $first_name) { 
 		$query = 'INSERT INTO students (mail, bloc, name, first_name)
-				VALUES (:mail, :bloc, :name, :first_name, :serie_id)';
+				VALUES (:mail, :bloc, :name, :first_name)';
 		$ps = $this->_db->prepare($query);
 		$ps->bindValue(':mail', $mail);
 		$ps->bindValue(':bloc', $bloc);
@@ -95,6 +96,16 @@ class Db {
 			$array_professors [] = new Professor ( $row->mail, $row->name, $row->first_name, $row->responsible );
 		}
 		return $array_professors;
+	}
+	public function select_weeks(){
+		$query = 'SELECT week_id, week_number, term, monday_date FROM weeks';
+		$ps = $this->_db->prepare ( $query );
+		$ps->execute ();
+		$array_weeks = "";
+		while ( $row = $ps->fetch () ) {
+			$array_weeks [] = new Week ( $row->week_id, $row->week_number, $row->term, $row->monday_date );
+		}
+		return $array_weeks;
 	}
 	// check if a professor is already inserted
 	public function existing_professor($mail) {
