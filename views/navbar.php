@@ -36,7 +36,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Florian VERDONCK <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Mon compte</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Déconnexion</a></li>
+            <li><a href="index.php?user=logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Déconnexion</a></li>
           </ul>
         </li>
       </ul>
