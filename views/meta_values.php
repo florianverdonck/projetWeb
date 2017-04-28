@@ -21,7 +21,11 @@ $metas = array(
 					"description" => "Gestionnaire de bloc : édition des séances types"
 			),
 			"admin" => array(
-					"title" => "IPL Gérer agenda/professeurs - Admin",
+					"title" => "IPL Présences - Admin",
 					"description" => "Gérer l'ajout de l'agenda et des professeurs"
+			),
+			"professor" => array(
+					"title" => "IPL Présences - Gestion des présences",
+					"description" => "Professeurs : Gérer les absences et certificats"
 			)
 		);
