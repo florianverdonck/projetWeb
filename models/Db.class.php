@@ -132,6 +132,32 @@ class Db {
 		}
 		return $array_weeks;
 	}
+	public function select_professor($mail) {
+		$query = 'SELECT mail, name, first_name, responsible FROM professors
+				WHERE mail = :mail';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':mail', $mail );
+		$ps->execute ();
+		$row = $ps->fetch ();
+		$professor == '';
+		if (!empty($row)) {
+			$professor = new Professor ( $row->mail, $row->name, $row->first_name, $row->responsible );
+		}
+		return $professor;
+	}
+	public function select_student($mail) {
+		$query = 'SELECT mail, name, first_name, bloc FROM students
+				WHERE mail = :mail';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':mail', $mail );
+		$ps->execute ();
+		$row = $ps->fetch ();
+		$student == '';
+		if (!empty($row)) {
+			$professor = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+		}
+		return $student;
+	}
 	// check if a professor is already inserted
 	public function existing_professor($mail) {
 		$query = 'SELECT mail from professors WHERE mail = :mail';

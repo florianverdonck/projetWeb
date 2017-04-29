@@ -8,7 +8,7 @@ class Student {
 		$this->_mail = $mail;
 		$this->_name = $name;
 		$this->_first_name = $first_name;
-		$this->_responsible = $bloc;
+		$this->_bloc = $bloc;
 	}
 	public function mail() {
 		return $this->_mail;
@@ -19,8 +19,8 @@ class Student {
 	public function first_name() {
 		return $this->_first_name;
 	}
-	public function responsible() {
-		return $this->_bloc;
+	public function bloc() {
+		return $this->bloc;
 	}
 	public function html_mail() {
 		return htmlspecialchars ( $this->_mail );
@@ -32,6 +32,6 @@ class Student {
 		return htmlspecialchars ( $this->_first_name );
 	}
 	public function html_bloc() {
-		return htmlspecialchars ( $this->_responsible );
+		return htmlspecialchars ( $this->bloc );
 	}
 }
