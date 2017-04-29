@@ -20,6 +20,10 @@ $metas = array(
 					"title" => "IPL Présences - Edition des séances types",
 					"description" => "Gestionnaire de bloc : édition des séances types"
 			),
+			"blocs_responsible" => array(
+					"title" => "IPL Présences - Gestionnaire de blocs",
+					"description" => "Gestionnaire de blocs : introduire de nouveaux étudiants"
+			),
 			"admin" => array(
 					"title" => "IPL Présences - Admin",
 					"description" => "Gérer l'ajout de l'agenda et des professeurs"

@@ -98,6 +98,30 @@ class Db {
 		}
 		return $array_professors;
 	}
+	
+	public function select_students(){
+		$query = 'SELECT * FROM students ORDER BY name';
+		$ps = $this->_db->prepare ( $query );
+		$ps->execute ();
+		$array_students = "";
+		while ( $row = $ps->fetch () ) {
+			$array_students [] = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+		}
+		return $array_students;
+	}
+	
+	public function select_students_bloc($bloc){
+		$query = 'SELECT * FROM students WHERE bloc = :bloc ORDER BY name';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue(':bloc', $bloc);
+		$ps->execute ();
+		$array_students = "";
+		while ( $row = $ps->fetch () ) {
+			$array_students [] = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+		}
+		return $array_students;
+	}
+	
 	public function select_weeks(){
 		$query = 'SELECT week_id, week_number, term, monday_date FROM weeks';
 		$ps = $this->_db->prepare ( $query );
@@ -122,6 +146,14 @@ class Db {
 		$query = 'SELECT code from courses WHERE code = :code';
 		$ps = $this->_db->prepare ( $query );
 		$ps->bindValue ( ':code', $code);
+		$ps->execute ();
+		return $ps->rowcount () == 1;
+	}
+	
+	public function existing_student($mail) {
+		$query = 'SELECT mail from students WHERE mail = :mail';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':mail', $mail );
 		$ps->execute ();
 		return $ps->rowcount () == 1;
 	}
