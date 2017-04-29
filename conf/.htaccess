@@ -1,0 +1,4 @@
+AuthName "Conf directory"
+AuthType Basic
+AuthUserFile /wamp64/www/projetWeb/conf/.htpasswd
+Require valid-user
