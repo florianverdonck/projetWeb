@@ -108,6 +108,19 @@ class Db {
 		}
 		return $array_weeks;
 	}
+	public function select_professor($mail) {
+		$query = 'SELECT mail, name, first_name, responsible FROM professors
+				WHERE mail = :mail';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':mail', $mail );
+		$ps->execute ();
+		$row = $ps->fetch ();
+		$professor == '';
+		if (!empty($row)) {
+			new Professor ( $row->mail, $row->name, $row->first_name, $row->responsible );
+		}
+		return $professor;
+	}
 	// check if a professor is already inserted
 	public function existing_professor($mail) {
 		$query = 'SELECT mail from professors WHERE mail = :mail';
