@@ -117,7 +117,7 @@ class Db {
 		$row = $ps->fetch ();
 		$professor == '';
 		if (!empty($row)) {
-			new Professor ( $row->mail, $row->name, $row->first_name, $row->responsible );
+			$professor = new Professor ( $row->mail, $row->name, $row->first_name, $row->responsible );
 		}
 		return $professor;
 	}
