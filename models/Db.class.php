@@ -116,6 +116,16 @@ class Db {
 		$ps->execute ();
 		return $ps->rowcount () == 1;
 	}
+	
+	
+	public function existing_course($code) {
+		$query = 'SELECT code from courses WHERE code = :code';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':code', $code);
+		$ps->execute ();
+		return $ps->rowcount () == 1;
+	}
+	
 }
 
 
