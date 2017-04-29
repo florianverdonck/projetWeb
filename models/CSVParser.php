@@ -12,6 +12,9 @@
 	
 		foreach ($csv as $key => $value) {
 		    $output[] = $value[0];
+		    echo '<pre>';
+		    print_r($value);
+		    echo '</pre>';
 		}
 	
 		return $output;
