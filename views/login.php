@@ -19,14 +19,14 @@
 							<h3 class="panel-title">Entrez votre email</h3>
 						</div>
 						<div class="panel-body">
-							<form class="" action="index.php?page=login" method="post">
-								<input type="email" id="inputEmail" name="inputEmail" class="form-control" required autofocus>
+							<form action="index.php?page=login" method="post">
+								<input placeholder="E-mail" type="text" id="inputEmail" name="inputEmail" class="form-control" required autofocus>
 								<div class="checkbox pull-right">
 									<label>
 									<input type="checkbox" value="remember" name="inputRemember"> Se souvenir de moi
 									</label>
 								</div>
-								<button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+								<input type="submit" value="Connexion" name="form_login" class="btn btn-lg btn-primary btn-block">
 							</form>
 						</div>
 					</div>
