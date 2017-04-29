@@ -57,7 +57,10 @@ class BlocResponsibleController {
 				$course_unit_learning_activity = $result[4];
 				$ects = $result[5];
 				
-				echo $ects;
+				if (preg_match('/,/',$ects)) {
+					$ects = str_replace(",", ".", $ects);
+				}
+				
 				$abbreviation = $result[6];
 				$bloc = $_POST['inputBloc'];
 				
@@ -72,7 +75,7 @@ class BlocResponsibleController {
 			
 			return Array(
 					"error_code"=>"success",
-					"error_message"=>"Le nouveau fichier de programme du bloc " . $_POST['inputBloc'] . " a bien été pris en compte. " . $insertCounter . "entrées ont été ajoutées."
+					"error_message"=>"Le nouveau fichier de programme du bloc " . $_POST['inputBloc'] . " a bien été pris en compte. " . $insertCounter . " entrées ont été ajoutées."
 			);
 		}
 	}
