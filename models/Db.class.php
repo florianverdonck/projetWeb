@@ -154,7 +154,7 @@ class Db {
 		$row = $ps->fetch ();
 		$student = '';
 		if (!empty($row)) {
-			$professor = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+			$student = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
 		}
 		return $student;
 	}
