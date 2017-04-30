@@ -32,6 +32,6 @@ class Student {
 		return htmlspecialchars ( $this->_first_name );
 	}
 	public function html_bloc() {
-		return htmlspecialchars ( $this->bloc );
+		return htmlspecialchars ( $this->_bloc );
 	}
 }

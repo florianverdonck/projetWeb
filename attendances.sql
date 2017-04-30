@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 28 Avril 2017 à 10:44
+-- Généré le :  Sam 29 Avril 2017 à 21:32
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -198,7 +198,7 @@ INSERT INTO `series` (`serie_id`, `term`, `serie_numero`, `bloc`) VALUES
 --
 
 CREATE TABLE `students` (
-  `student-id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
   `mail` varchar(50) NOT NULL,
   `bloc` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -210,8 +210,8 @@ CREATE TABLE `students` (
 -- Contenu de la table `students`
 --
 
-INSERT INTO `students` (`student-id`, `mail`, `bloc`, `name`, `first_name`, `serie_id`) VALUES
-(1, 'student1@mail.vinci', 1, 'stud1', 'stud1', NULL);
+INSERT INTO `students` (`student_id`, `mail`, `bloc`, `name`, `first_name`, `serie_id`) VALUES
+(1, 'student1@student.vinci.be', 1, 'stud1', 'stud1', NULL);
 
 -- --------------------------------------------------------
 
@@ -316,7 +316,7 @@ ALTER TABLE `series`
 -- Index pour la table `students`
 --
 ALTER TABLE `students`
-  ADD PRIMARY KEY (`student-id`),
+  ADD PRIMARY KEY (`student_id`),
   ADD UNIQUE KEY `mail` (`mail`),
   ADD KEY `serie_id` (`serie_id`);
 
@@ -359,7 +359,7 @@ ALTER TABLE `series`
 -- AUTO_INCREMENT pour la table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student-id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `weeks`
 --
@@ -373,7 +373,7 @@ ALTER TABLE `weeks`
 -- Contraintes pour la table `attendances`
 --
 ALTER TABLE `attendances`
-  ADD CONSTRAINT `fk1_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`student-id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk1_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk2_attendance_sheet_id` FOREIGN KEY (`attendance_sheet_id`) REFERENCES `attendance_sheets` (`attendance_sheet_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
