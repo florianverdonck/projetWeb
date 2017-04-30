@@ -20,28 +20,9 @@ class LoginController {
 
 	// redirects according to permissions
 	private function checkPermissions() {
-		$responsible = $_SESSION ['authenticated'];
-		switch ($responsible) {
-			case "admin":
-				header ( 'Location: index.php?user=admin' );
-				die ();
-				break;
-			case "student":
-				header ( 'Location: index.php?user=student' );
-				die ();
-				break;
-			case "professor":
-				header ( 'Location: index.php?user=professor' );
-				die ();
-				break;
-			case "bloc_responsible":
-				header ( 'Location: index.php?user=bloc_responsible' );
-				die ();
-				break;
-			case "blocs_responsible":
-				header ( 'Location: index.php?user=blocs_responsible' );
-				die();
-		}
+		$user = $_SESSION ['authenticated'];
+		header ( "Location: index.php?user=$user" );
+		die ();
 	}
 
 	private function formLogin() {
@@ -51,14 +32,11 @@ class LoginController {
 			return $this->connectionErrorMessage ( );
 		}
 		if (preg_match('/@student\.vinci\.be$/', $mail)) { // is a student
-			$student = $this->_db->select_student($mail);
+			$student = $this->_db->select_student($mail);				
 			if (empty($student)) { // student doesn't exist
 				return $this->connectionErrorMessage ( );
 			}
-			$_SESSION ['authenticated'] = 'student';
-			$_SESSION['user'] = serialize($student);
-			header ( 'Location: index.php?action=student' );
-			die ();
+			$this->setAuthentificationStudent ($student);
 		}
 		if (preg_match('/@vinci\.be$/', $mail)) { // is a professor
 			$professor = $this->_db->select_professor($mail);
@@ -69,7 +47,14 @@ class LoginController {
 		}
 		return $this->connectionErrorMessage ();
 	}
-	
+
+	private function setAuthentificationStudent($student) {
+		$_SESSION ['authenticated'] = 'student';
+		$_SESSION['user'] = serialize($student);
+		header ( 'Location: index.php?action=student' );
+		die ();
+	}
+
 	private function setAuthenficationProfessor($professor){
 		$responsible = $professor->responsible();
 		$_SESSION['user'] = serialize($professor);
@@ -97,9 +82,9 @@ class LoginController {
 	}
 
 	private function connectionErrorMessage () {
-		$update_message['error_code'] = 'danger';
-		$update_message['error_message'] = 'La connexion a échoué. Veuillez vérifier l\'adresse mail.';
-		return $update_message;
+		return array (
+				"error_code" => "danger",
+				"error_message" => "La connexion a échoué. Veuillez vérifier l'adresse mail."
+		);
 	}
-
 }
