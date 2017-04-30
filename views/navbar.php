@@ -35,7 +35,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
           	<span class="glyphicon glyphicon-user" aria-hidden="true"></span> 
-          	<?php echo strtoupper(unserialize($_SESSION['user'])->name()) ?> <?php echo unserialize($_SESSION['user'])->first_name() ?>
+          	<?php echo strtoupper(unserialize($_SESSION['user'])->html_name()) ?> <?php echo unserialize($_SESSION['user'])->html_first_name() ?>
           	<span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
