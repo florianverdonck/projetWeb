@@ -7,7 +7,12 @@ class ProfessorController {
 	}
 			
 	public function run(){	
-		
+		// user must be an admin, a professor and a bloc(s) responsible to access attendances
+		if (empty ( $_SESSION ['authenticated']) || $_SESSION['authenticated'] == 'student') {
+			header ( 'Location: index.php?action=login' );
+			die ();
+		}
+
 //		$this->_db->insert_week(13, 2, '11/05/2017);
 //		$this->_db->insert_professor('mail@mail', 'test', 'test', 'true');
 // 		$this->_db->insert_course('test', 'test', 1, 2, 3, 't', 'UE');

@@ -7,10 +7,10 @@ class AdminController {
 	}
 			
 	public function run(){	
-// 		if (empty ( $_SESSION ['authenticated']) || $_SESSION ['authenticated'] != 'admin') {
-// 			header ( 'Location: index.php?action=login' );
-// 			die ();
-// 		}
+		if (empty ( $_SESSION ['authenticated']) || $_SESSION ['authenticated'] != 'admin') {
+			header ( 'Location: index.php?action=login' );
+			die ();
+		}
 		$update_message = '';
 		if (! empty ( $_POST ['form_agenda'] )) {
 			$update_message = $this->formAgenda ();

@@ -10,7 +10,11 @@ class BlocResponsibleController {
 	}
 		
 	public function run(){
-
+// 		user must be an admin or a bloc(s) responsible to access manage a bloc
+		if (empty ( $_SESSION ['authenticated']) || $_SESSION['authenticated'] == 'student' || $_SESSION['authenticated'] == 'professor') {
+			header ( 'Location: index.php?action=login' );
+			die ();
+		}
 		if (isset($_POST['formUEUpload'])) {
 			$update_message = $this->formUE();
 		}
