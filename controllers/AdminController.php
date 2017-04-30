@@ -7,7 +7,7 @@ class AdminController {
 	}
 			
 	public function run(){	
-// 		if (empty ( $_SESSION ['admin'])) {
+// 		if (empty ( $_SESSION ['authenticated']) || $_SESSION ['authenticated'] != 'admin') {
 // 			header ( 'Location: index.php?action=login' );
 // 			die ();
 // 		}
@@ -27,9 +27,10 @@ class AdminController {
 		if (! empty ( $_FILES ['userfile'] ['name'] )) {
 			// checks if file extension is properties 
 			if (! preg_match ( '/\.properties/', $_FILES ['userfile'] ['name'] )) {
-				$update_message['error_code'] = 'danger';
-				$update_message['error_message'] = 'Le fichier doit avoir une extension .properties';
-				return $update_message;	
+				return array (
+						"error_code" => "danger",
+						"error_message" => "Le fichier doit avoir une extension .properties."
+				);
 			}
 			// saves agenda file to conf directory
 			$origine = $_FILES ['userfile'] ['tmp_name'];
@@ -40,14 +41,16 @@ class AdminController {
 			foreach ( $fcontents as $icontent ) {
 				preg_match ( '/^(.*)_(.*)=(.*)$/', $icontent, $result );
 				if (!$this->_db->insert_week($result[2],$result[1],$result[3])){
-					$update_message['error_code'] = 'danger';
-					$update_message['error_message'] = 'L\'ajout n\'a pas pu être fait. Veuillez vérifier le contenu de votre fichier.';
-					return $update_message;
+					return array (
+							"error_code" => "danger",
+							"error_message" => "L'ajout n'a pas pu être fait. Veuillez vérifier le contenu de votre fichier."
+					);
 				}
 			}
-			$update_message['error_code'] = 'success';
-			$update_message['error_message'] = 'Les semaines ont été ajoutées dans l\'agenda avec succès';
-			return $update_message;
+			return array (
+					"error_code" => "success",
+					"error_message" => "Les semaines ont été ajoutées avec succès dans l'agenda."
+			);
 		}
 	}	
 	private function formProfessors() {
@@ -62,18 +65,22 @@ class AdminController {
 			$origine = $_FILES ['userfile'] ['tmp_name'];
 			$destination = 'conf/professeurs.csv';
 			move_uploaded_file ( $origine, $destination );
+			$insertCounter = 0;
 			$fcontents = file ( $destination );
 			// inserts each professor in the db
 			foreach ( $fcontents as $icontent ) {
 				preg_match ( '/^(.*);(.*);(.*);(.*)$/', $icontent, $result );
 				if (!empty($result) && $result[2] !== 'Nom') {
-					if (!$this->_db->existing_professor($result[1]))
+					if (!$this->_db->existing_professor($result[1])) {
+						$insertCounter++;
 						$this->_db->insert_professor($result[1],$result[2],$result[3],$result[4]);
+					}
 				}
 			}
-			$update_message['error_code'] = 'success';
-			$update_message['error_message'] = 'Les professeurs ont été ajoutés avec succès';
-			return $update_message;
+			return array (
+					"error_code" => "success",
+					"error_message" => "Le nouveau fichier de professeurs a bien été pris en compte. " . $insertCounter . " entrée(s) ont été ajoutée(s)." 
+			);
 		}
 	}
 }
