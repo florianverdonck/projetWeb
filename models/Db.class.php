@@ -139,7 +139,7 @@ class Db {
 		$ps->bindValue ( ':mail', $mail );
 		$ps->execute ();
 		$row = $ps->fetch ();
-		$professor == '';
+		$professor = '';
 		if (!empty($row)) {
 			$professor = new Professor ( $row->mail, $row->name, $row->first_name, $row->responsible );
 		}
@@ -152,7 +152,7 @@ class Db {
 		$ps->bindValue ( ':mail', $mail );
 		$ps->execute ();
 		$row = $ps->fetch ();
-		$student == '';
+		$student = '';
 		if (!empty($row)) {
 			$professor = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
 		}
@@ -182,9 +182,6 @@ class Db {
 		$ps->bindValue ( ':mail', $mail );
 		$ps->execute ();
 		return $ps->rowcount () == 1;
-	}
-	
+	}	
 }
-
-
 ?>
