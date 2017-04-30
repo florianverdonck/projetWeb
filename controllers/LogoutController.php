@@ -5,6 +5,6 @@ class LogoutController {
 	public function run() {
 		$_SESSION = array ();
 		session_destroy ();
-		header ( 'Location: index.php?action=login' );
+		header ( 'Location: index.php?user=login' );
 	}
 }
