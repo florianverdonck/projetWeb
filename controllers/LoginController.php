@@ -58,17 +58,17 @@ class LoginController {
 	private function setAuthenficationProfessor($professor){
 		$responsible = $professor->responsible();		
 		$_SESSION['user'] = serialize($professor);
-		if (substr ( $responsible, 0, 4 ) == 'true') {
+		if ($responsible == 'true') {
 			$_SESSION ['authenticated'] = 'admin';
 			header ( 'Location: index.php?user=admin' );
 			die ();
 		}
-		if (substr ( $responsible, 0, 5 ) == 'false') {
+		if ($responsible == 'false') {
 			$_SESSION ['authenticated'] = 'professor';
 			header ( 'Location: index.php?user=professor' );
 			die ();
 		}
-		if (substr ( $responsible, 0, 5 ) == 'blocs') {
+		if ($responsible == 'blocs') {
 			$_SESSION ['authenticated'] = 'blocs_responsible';
 			header ( 'Location: index.php?user=blocs_responsible' );
 			die ();
