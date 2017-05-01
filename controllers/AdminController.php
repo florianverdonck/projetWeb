@@ -40,7 +40,7 @@ class AdminController {
 			// inserts each weeks in the db
 			foreach ( $fcontents as $icontent ) {
 				preg_match ( '/^(.*)_(.*)=(.*)$/', $icontent, $result );
-				if (!$this->_db->insert_week($result[2],$result[1],$result[3])){
+				if (!$this->_db->insert_week($result[2],$result[1],trim($result[3]))){
 					return array (
 							"error_code" => "danger",
 							"error_message" => "L'ajout n'a pas pu être fait. Veuillez vérifier le contenu de votre fichier."
@@ -73,7 +73,7 @@ class AdminController {
 				if (!empty($result) && $result[2] !== 'Nom') {
 					if (!$this->_db->existing_professor($result[1])) {
 						$insertCounter++;
-						$this->_db->insert_professor($result[1],$result[2],$result[3],$result[4]);
+						$this->_db->insert_professor($result[1],$result[2],$result[3],trim($result[4]));
 					}
 				}
 			}
