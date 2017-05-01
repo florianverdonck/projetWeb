@@ -13,23 +13,35 @@
     
     <?php if (!empty($_SESSION['authenticated'])) { ?> 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">    
       <ul class="nav navbar-nav">
+      	<?php if ($_SESSION['authenticated'] != 'student' && $_SESSION['authenticated'] != 'professor') { ?>
 	  	<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gestionnaire de bloc<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu de gestion <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="index.php?user=professor">Prise de présences</a></li>
+            <li><a href="index.php?user=professor">Prise de présences</a></li>     
+            
+            <?php if ($_SESSION['authenticated'] == 'bloc_responsible' || $_SESSION['authenticated'] == 'blocs_responsible' || $_SESSION['authenticated'] == 'admin' ) { ?>  
             <li role="separator" class="divider"></li>
             <li><a href="index.php?user=bloc_responsible">Gestionnaire de bloc</a></li>
             	<li><a href="index.php?user=bloc_responsible">-> Importer UE/AA</a></li>
             	<li><a href="index.php?user=bloc_responsible&action=series">-> Créer/modifier séries</a></li>
             	<li><a href="index.php?user=bloc_responsible&action=seance_templates">-> Gérer séances types</a></li>
-            <li role="separator" class="divider"></li>
+            <?php } ?> <!-- bloc responsible -->       
+            
+            <?php if ($_SESSION['authenticated'] == 'blocs_responsible' || $_SESSION['authenticated'] == 'admin' ) { ?>  
+            <li role="separator" class="divider"></li>       
             <li><a href="index.php?user=blocs_responsible">Gestionnaire de blocs</a></li>
+            <?php } ?> <!-- blocs responsible -->         
+            
+            <?php if ($_SESSION['authenticated'] == 'admin') { ?>  
             <li role="separator" class="divider"></li>
-            <li><a href="index.php?user=admin">Admin</a></li>                
+            <li><a href="index.php?user=admin">Admin</a></li>      
+            <?php } ?> <!-- admin -->  
+                   
           </ul>
         </li>
+        <?php } ?> <!-- student or professor -->
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
