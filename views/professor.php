@@ -10,7 +10,7 @@
 				<div class="col-md-4">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
-							<h3 class="panel-title">Filtrez ici pour voir les présences</h3>
+							<h3 class="panel-title">Filtrez ici pour consulter ou prendre les présences</h3>
 						</div>
 						<div class="panel-body">
 							<form class="" action="index.php?user=professor" method="post">
