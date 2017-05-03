@@ -71,7 +71,7 @@ class BlocResponsibleController {
 				if ($key != 0) {
 					if (!$this->_db->existing_course($code)) {
 						
-						$this->_db->insert_course($code, $name, $term, $ects, $bloc, $abbreviation, $course_unit_learning_activity);
+						$this->_db->insert_course($code, $name, $term, trim($ects), $bloc, $abbreviation, $course_unit_learning_activity);
 						$insertCounter++;
 					}
 				}

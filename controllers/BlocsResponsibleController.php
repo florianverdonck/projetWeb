@@ -74,7 +74,7 @@ class BlocsResponsibleController {
 				if ($key != 0) {
 					if (!$this->_db->existing_student($mail)) {
 						
-						$this->_db->insert_student($mail, $bloc, $lastName, $firstName);
+						$this->_db->insert_student(trim($mail), $bloc, $lastName, $firstName);
 						$insertCounter++;
 					}
 				}
