@@ -13,8 +13,8 @@
 							<h3 class="panel-title">Filtrez ici pour consulter ou prendre les présences</h3>
 						</div>
 						<div class="panel-body">
-							<?php if (empty ($_GET['bloc']) || empty($_GET['term'])) { ?>
-							<form action="index.php?user=professor" method="get">
+							<?php if (empty ($_POST['bloc']) || empty($_POST['term'])) { ?>
+							<form action="index.php?user=professor" method="post">
 								<input name="user" value="professor" type="hidden"> 
 								<label for="inputBlocSelect">Sélectionnez le bloc </label><br>
 								<div class="btn-group" data-toggle="buttons" id="inputBlocSelect">
@@ -42,11 +42,13 @@
 								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Filtrer">
 							</form>
 							<?php } else { ?>
-							<form action="index.php?user=professor" method="post">
+							<form action="index.php?user=professor" method="post"> 
+								<input type="hidden" name="bloc" value="<?php echo $_POST['bloc']?>">
+								<input type="hidden" name="term" value="<?php echo $_POST['term']?>">	
 								<label for="seanceTemplateSelect">Sélectionnez la séance type </label><br>
 								<select name="seance" class="selectpicker" id="seanceTemplateSelect">
 									<?php foreach ($seances_templates as $st) { ?>
-										<option><?php echo $st->html_name() ?></option>
+										<option <?php if (isset($_POST['seance']) && $_POST['seance'] == $st->name()) echo "selected=\"selected\""?>><?php echo $st->html_name() ?></option>
 									<?php } ?>
 								</select>
 								<br><br>
@@ -54,7 +56,7 @@
 								<select name="week" class="selectpicker" id="inputWeekSelect">
 								<?php if ($weeks_created) { ?>
 									<?php for($i = 1; $i <= 13; $i++) {?>
-									<option>Semaine <?php echo $i?></option>
+									<option <?php if (isset($_POST['week']) && $_POST['week'] == "Semaine " . $i) echo "selected=\"selected\""?>>Semaine <?php echo $i?></option>
 									<?php }?>
 								<?php } ?>
 								</select>
@@ -62,20 +64,20 @@
 								<label for="inputWeekSelect">Sélectionnez la série </label><br>
 								<select name="serie" class="selectpicker" id="inputSerieSelect">
 									<?php foreach($series as $serie) {?>
-									<option>Série <?php echo $serie->html_serie_numero()?></option>
+									<option <?php if (isset($_POST['serie']) && $_POST['serie'] == $serie->html_serie_numero()) echo "selected=\"selected\""?>><?php echo $serie->html_serie_numero()?></option>
 									<?php }?>
 								</select>
 								<br><br>
 								<label for="inputAttendanceType">Sélectionnez le type de présence </label><br>
 								<div class="btn-group" data-toggle="buttons" id="inputAttendanceType">
 									<label class="btn btn-default active btn-sm">
-										<input type="radio" name="inputTerm" value="X" checked>X
+										<input type="radio" name="attendance_type" value="X" checked>X
 									</label>
 									<label class="btn btn-default btn-sm">
-										<input type="radio" name="inputTerm" value="XO">XO
+										<input type="radio" name="attendance_type" value="XO">XO
 									</label>
 									<label class="btn btn-default btn-sm">
-										<input type="radio" name="inputTerm" value="Noted">Noté
+										<input type="radio" name="attendance_type" value="Noted">Noté
 									</label>
 								</div>
 								<br><br>
@@ -94,19 +96,20 @@
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Mat<span class="hidden-xs">ricule</span></th>
-									<th>Pré<span class="hidden-xs">nom</span></th>
 									<th>Nom<span class="hidden-xs"> de famille</span></th>
+									<th>Pré<span class="hidden-xs">nom</span></th>		
 									<th>Prés<span class="hidden-xs">ence</span></th>
 									<th>Cert<span class="hidden-xs">ificat</span></th>
 								</tr>
 							</thead>
 							<tbody>
+							<?php if ($students != null) {?>
+								<?php foreach ($students as $student) { ?>
 								<tr>
-									<th scope="row">2</th>
-									<td>281</td>
-									<td>C<span class="hidden-xs">hristopher</span></td>
-									<td>Castel</td>
+									<th scope="row">5</th>
+									<td><?php echo $student->html_name()?></td>
+									<td><?php echo substr($student->html_first_name(), 0, 1)?><span class="hidden-xs"><?php echo substr($student->html_first_name(), 1, strlen($student->html_first_name()))?></span>
+									</td>
 									<td>
 										<div class="btn-group" data-toggle="buttons">
 										  <label class="btn btn-default active btn-sm">
@@ -125,81 +128,35 @@
 										</div>
 									</td>
 								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>121</td>
-									<td>M<span class="hidden-xs">arco</span></td>
-									<td>Amory</td>
-									<td>
-										<div class="btn-group" data-toggle="buttons">
-										  <label class="btn btn-default active btn-sm">
-										    <input type="radio" name="options"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Présent</span>
-										  </label>
-										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" checked><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
-										  </label>
-										</div>
-									</td>
-									<td>
-										<div class="btn-group" data-toggle="buttons">
-										  <label class="btn btn-default btn-sm">
-										    <input type="checkbox"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span><span class="hidden-xs"> Justifié</span>
-										  </label>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<th scope="row">4</th>
-									<td>200</td>
-									<td>F<span class="hidden-xs">lorian</span></td>
-									<td>Verdonck</td>
-									<td>
-										<div class="btn-group" data-toggle="buttons">
-										  <label class="btn btn-default active btn-sm">
-										    <input type="radio" name="options"> 0
-										  </label>
-										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options"> 1
-										  </label>
-										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" checked> Abs<span class="hidden-xs">ent</span>
-										  </label>
-										</div>
-									</td>
-									<td>
-										<div class="btn-group" data-toggle="buttons">
-										  <label class="btn btn-default btn-sm">
-										    <input type="checkbox"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span><span class="hidden-xs"> Justifié</span>
-										  </label>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<th scope="row">4</th>
-									<td>200</td>
-									<td><span class="hidden-xs">Florian</span></td>
-									<td>Verdonck</td>
-									<td>
-										<div class="btn-group" data-toggle="buttons">
-										  <label class="btn btn-default active btn-sm">
-										    <input type="radio" name="options"> 0
-										  </label>
-										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options"> 1
-										  </label>
-										  <label class="btn btn-default btn-sm">
-										    <input type="radio" name="options" checked> Abs<span class="hidden-xs">ent</span>
-										  </label>
-										</div>
-									</td>
-									<td>
-										<div class="btn-group" data-toggle="buttons">
-										  <label class="btn btn-default btn-sm">
-										    <input type="checkbox"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span><span class="hidden-xs"> Justifié</span>
-										  </label>
-										</div>
-									</td>
-								</tr>
+								<?php } ?>
+							<?php } ?>
+								
+<!-- 								<tr> -->
+<!-- 									<th scope="row">4</th> -->
+<!-- 									<td>200</td> -->
+<!-- 									<td><span class="hidden-xs">Florian</span></td> -->
+<!-- 									<td>Verdonck</td> -->
+<!-- 									<td> -->
+<!-- 										<div class="btn-group" data-toggle="buttons"> -->
+<!-- 										  <label class="btn btn-default active btn-sm"> -->
+<!-- 										    <input type="radio" name="options"> 0 -->
+<!-- 										  </label> -->
+<!-- 										  <label class="btn btn-default btn-sm"> -->
+<!-- 										    <input type="radio" name="options"> 1 -->
+<!-- 										  </label> -->
+<!-- 										  <label class="btn btn-default btn-sm"> -->
+<!-- 										    <input type="radio" name="options" checked> Abs<span class="hidden-xs">ent</span> -->
+<!-- 										  </label> -->
+<!-- 										</div> -->
+<!-- 									</td> -->
+<!-- 									<td> -->
+<!-- 										<div class="btn-group" data-toggle="buttons"> -->
+<!-- 										  <label class="btn btn-default btn-sm"> -->
+<!-- 										    <input type="checkbox"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span><span class="hidden-xs"> Justifié</span> -->
+<!-- 										  </label> -->
+<!-- 										</div> -->
+<!-- 									</td> -->
+<!-- 								</tr> -->
 							</tbody>
 						</table>
 						<div class="panel-body">
