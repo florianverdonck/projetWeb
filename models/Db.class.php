@@ -184,6 +184,23 @@ class Db {
 		return $array_students;
 	}
 	
+	public function select_students_from_course ($name, $serie_numero, $term, $bloc) {
+		$query = 'SELECT stu.* FROM students stu, seance_templates st, given_seances gs, series se
+				WHERE stu.serie_id = se.serie_id AND gs.serie_id = se.serie_id AND gs.seance_template_id = st.seance_template_id
+				AND st.name = :name AND se.serie_numero = :serie_numero AND se.term = :term AND stu.bloc = :bloc
+				ORDER BY stu.name';
+		$ps = $this->_db->prepare($query);
+		$ps->bindValue(':bloc', $bloc);
+		$ps->bindValue(':name', $name);
+		$ps->bindValue(':serie_numero', $serie_numero);
+		$ps->bindValue(':term', $term);
+		$ps->execute();
+		$array_students = "";
+		while ( $row = $ps->fetch () ) {
+			$array_students [] = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+		}
+		return $array_students;
+	}
 	
 	
 	public function select_weeks(){
