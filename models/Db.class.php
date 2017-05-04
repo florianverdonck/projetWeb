@@ -157,6 +157,7 @@ class Db {
 		}
 		return $professor;
 	}
+	
 	public function select_student($mail) {
 		$query = 'SELECT mail, name, first_name, bloc FROM students
 				WHERE mail = :mail';
@@ -169,6 +170,20 @@ class Db {
 			$student = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
 		}
 		return $student;
+	}
+	
+	public function select_seance_templates($bloc, $term) {
+		$query = 'SELECT DISTINCT st.name, st.attendance_type FROM seance_templates st, courses c
+				WHERE st.code = c.code AND c.term = :term AND c.bloc = :bloc';
+		$ps = $this->_db->prepare($query);
+		$ps->bindValue(':bloc', $bloc);
+		$ps->bindValue(':term', $term);
+		$ps->execute();
+		$array_seance_template = '';
+		while ( $row = $ps->fetch () ) {
+			$array_seance_template [] = new seance_template ($row->name, $row->attendance_type);
+		}
+		return $array_seance_template;
 	}
 	
 
@@ -196,6 +211,22 @@ class Db {
 		$ps->bindValue ( ':mail', $mail );
 		$ps->execute ();
 		return $ps->rowcount () == 1;
-	}	
+	}
+	
+	// check if agenda is created 
+	public function existing_weeks() {
+		$query = 'SELECT * from weeks';
+		$ps = $this->_db->prepare ( $query );
+		$ps->execute ();
+		return $ps->rowcount () > 0;
+	}
+	
+	// check if seances are created
+	public function existing_seances() {
+		$query = 'SELECT * from seance_templates';
+		$ps = $this->_db->prepare ( $query );
+		$ps->execute ();
+		return $ps->rowcount () > 0;
+	}
 }
 ?>
