@@ -13,42 +13,57 @@
 							<h3 class="panel-title">Filtrez ici pour consulter ou prendre les présences</h3>
 						</div>
 						<div class="panel-body">
-							<form class="" action="index.php?user=professor" method="post">
+							<?php if (empty ($_GET['bloc']) || empty($_GET['term'])) { ?>
+							<form action="index.php?user=professor" method="get">
+								<input name="user" value="professor" type="hidden"> 
 								<label for="inputBlocSelect">Sélectionnez le bloc </label><br>
 								<div class="btn-group" data-toggle="buttons" id="inputBlocSelect">
 									<label class="btn btn-default active btn-sm">
-										<input type="radio" name="inputBloc" value="1" checked>Bloc 1
+										<input type="radio" name="bloc" value="1" checked>Bloc 1
 									</label>
 									<label class="btn btn-default btn-sm">
-										<input type="radio" name="inputBloc" value="2">Bloc 2
+										<input type="radio" name="bloc" value="2">Bloc 2
 									</label>
 									<label class="btn btn-default btn-sm">
-									    <input type="radio" name="inputBloc" value="3">Bloc 3
+									    <input type="radio" name="bloc" value="3">Bloc 3
 									</label>
 								</div>
 								<br><br>
 								<label for="inputTermSelect">Sélectionnez le quadrimestre </label><br>
 								<div class="btn-group" data-toggle="buttons" id="inputBlocSelect">
 									<label class="btn btn-default active btn-sm">
-										<input type="radio" name="inputTerm" value="1" checked>Quadrimestre 1
+										<input type="radio" name="term" value="1" checked>Quadrimestre 1
 									</label>
 									<label class="btn btn-default btn-sm">
-										<input type="radio" name="inputTerm" value="2">Quadrimestre 2
+										<input type="radio" name="term" value="2">Quadrimestre 2
 									</label>
 								</div>
 								<br><br>
+								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Filtrer">
+							</form>
+							<?php } else { ?>
+							<form action="index.php?user=professor" method="post">
+								<label for="seanceTemplateSelect">Sélectionnez la séance type </label><br>
+								<select name="seance" class="selectpicker" id="seanceTemplateSelect">
+									<?php foreach ($seances_templates as $st) { ?>
+										<option><?php echo $st->html_name() ?></option>
+									<?php } ?>
+								</select>
+								<br><br>
 								<label for="inputWeekSelect">Sélectionnez la semaine </label><br>
-								<select class="selectpicker" id="inputWeekSelect">
+								<select name="week" class="selectpicker" id="inputWeekSelect">
+								<?php if ($weeks_created) { ?>
 									<?php for($i = 1; $i <= 13; $i++) {?>
 									<option>Semaine <?php echo $i?></option>
 									<?php }?>
+								<?php } ?>
 								</select>
 								<br><br>
-								<label for="seanceTemplateSelect">Sélectionnez la séance type </label><br>
-								<select class="selectpicker" id="seanceTemplateSelect">
-									<option>Algo I</option>
-									<option>Algo II</option>
-									<option>Math EX I</option>
+								<label for="inputWeekSelect">Sélectionnez la série </label><br>
+								<select name="serie" class="selectpicker" id="inputSerieSelect">
+									<?php foreach($series as $serie) {?>
+									<option>Série <?php echo $serie->html_serie_numero()?></option>
+									<?php }?>
 								</select>
 								<br><br>
 								<label for="inputAttendanceType">Sélectionnez le type de présence </label><br>
@@ -64,8 +79,9 @@
 									</label>
 								</div>
 								<br><br>
-								<button class="btn btn-lg btn-primary btn-block" type="submit">Filtrer</button>
+								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Filtrer" name="form_attendance">
 							</form>
+							<?php } ?>
 						</div>
 					</div>
 				</div>
