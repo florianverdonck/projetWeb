@@ -22,7 +22,7 @@ class BlocResponsibleController {
 		$action = (isset ( $_GET ['action'] )) ? htmlentities ( $_GET ['action'] ) : 'default';
 		switch ($action) {
 			case 'series':
-				require_once(PATH_VIEWS . "bloc_responsible_series.php");
+				$this->blocResponsibleSeries();
 				break;
 			case 'seance_templates':
 				require_once(PATH_VIEWS . "bloc_responsible_seance_templates.php");
@@ -33,6 +33,21 @@ class BlocResponsibleController {
 		}
 
 	}
+	
+	
+	public function blocResponsibleSeries() {
+		
+		if (isset($_POST['insert'])) {
+			
+		} else if (isset($_POST['change'])) {
+			
+		} else {
+			$arrayStudentsNotInSeries = $this->_db->select_students_not_in_series_from_bloc($bloc);
+			print_r($arrayStudentsNotInSeries);
+		}
+		
+	}
+	
 	
 	public function formUE() {
 		

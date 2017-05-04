@@ -122,6 +122,18 @@ class Db {
 		return $array_students;
 	}
 	
+	public function select_students_not_in_series_from_bloc($bloc) {
+		$query = 'SELECT * FROM students WHERE serie_id IS NULL ORDER BY name';
+		$ps = $this->_db->prepare ( $query );
+		$ps->execute ();
+		$array_students = "";
+		while ( $row = $ps->fetch () ) {
+			$array_students [] = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+		}
+		return $array_students;
+	}
+	
+	
 	public function select_weeks(){
 		$query = 'SELECT week_id, week_number, term, monday_date FROM weeks';
 		$ps = $this->_db->prepare ( $query );
@@ -158,6 +170,8 @@ class Db {
 		}
 		return $student;
 	}
+	
+
 	// check if a professor is already inserted
 	public function existing_professor($mail) {
 		$query = 'SELECT mail from professors WHERE mail = :mail';

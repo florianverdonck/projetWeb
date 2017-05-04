@@ -605,6 +605,41 @@
 							<button class="btn btn-lg btn-primary btn-block" type="submit">Déplacer<span class="hidden-md"> l'élève</span></button>
 	
 						</div>
+						<div class="panel-body">
+
+							<label for="inputStudentSelect">Nom de l'élève</label><br>
+							<select class="selectpicker" id="inputStudentSelect">
+								<option>Florian VERDONCK</option>
+								<option>Christopher CASTEL</option>
+								<option>Marco AMORY</option>
+								<option>Florian VERDONCK</option>
+								<option>Christopher CASTEL</option>
+								<option>Marco AMORY</option>
+								<option>Florian VERDONCK</option>
+								<option>Christopher CASTEL</option>
+								<option>Marco AMORY</option>
+								<option>Florian VERDONCK</option>
+								<option>Christopher CASTEL</option>
+								<option>Marco AMORY</option>
+							</select>
+							<br><br>
+	
+							<label for="inputWeekSelect">Placer dans</label><br>
+							<select class="selectpicker" id="inputWeekSelect">
+								<option>Série 1</option>
+								<option>Série 2</option>
+								<option>Série 3</option>
+								<option>Série 4</option>
+								<option>Série 5</option>
+								<option>Série 6</option>
+								<option>Série 7</option>
+								<option>Série 8</option>
+								<option>Série 9</option>
+							</select>
+							<br><br>
+							
+							<button class="btn btn-lg btn-primary btn-block" type="submit">Insérer<span class="hidden-md"> l'élève</span></button>
+						</div>
 					</div>
 				</div>
 			</div>
