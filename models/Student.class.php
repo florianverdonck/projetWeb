@@ -4,11 +4,12 @@ class Student {
 	private $_name;
 	private $_first_name;
 	private $_bloc;
+	
 	public function __construct($mail, $name, $first_name, $bloc) {
-		$this->_mail = $mail;
-		$this->_name = $name;
-		$this->_first_name = $first_name;
-		$this->_bloc = $bloc;
+		$this->_mail 		= $mail;
+		$this->_name 		= $name;
+		$this->_first_name	= $first_name;
+		$this->_bloc 		= $bloc;
 	}
 	public function mail() {
 		return $this->_mail;

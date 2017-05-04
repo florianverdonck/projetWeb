@@ -346,6 +346,7 @@ table .btn-default:hover {
 @media(max-width:992px){
 	.mobileNotFixed {
 		position: relative;
+		padding: 0px;
 	}
 }
 

@@ -122,10 +122,11 @@ class Db {
 		return $array_students;
 	}
 	
-	public function select_students_serie_bloc($serie, $bloc){
-		$query = 'SELECT * FROM students WHERE bloc = : AND serie = :serie ORDER BY name';
+	public function select_students_serie_bloc($serie, $bloc, $term){
+		$query = 'SELECT * FROM students stu, series ser WHERE stu.serie_id = ser.serie_id AND stu.bloc = :bloc AND ser.serie_numero = :serie AND term = :term ORDER BY name';
 		$ps = $this->_db->prepare ( $query );
 		$ps->bindValue(':bloc', $bloc);
+		$ps->bindValue(':term', $term);
 		$ps->bindValue(':serie', $serie);
 		$ps->execute ();
 		$array_students = "";
@@ -135,10 +136,11 @@ class Db {
 		return $array_students;
 	}
 	
-	public function select_series_from_bloc($bloc) {
-		$query = 'SELECT * FROM series WHERE bloc = :bloc ORDER BY serie_numero';
+	public function select_series_from_bloc($bloc, $term) {
+		$query = 'SELECT * FROM series WHERE bloc = :bloc AND term = :term ORDER BY serie_numero';
 		$ps = $this->_db->prepare ( $query );
 		$ps->bindValue(':bloc', $bloc);
+		$ps->bindValue(':term', $term);
 		$ps->execute ();
 		$array_series = "";
 		while ( $row = $ps->fetch () ) {
@@ -160,10 +162,11 @@ class Db {
 		return $array_series;
 	}
 	
-	public function select_number_series_from_bloc($bloc) {
-		$query = 'SELECT COUNT(serie_id) AS numberSeries FROM series WHERE bloc = :bloc ORDER BY serie_numero';
+	public function select_number_series_from_bloc($bloc, $term) {
+		$query = 'SELECT COUNT(serie_id) AS numberSeries FROM series WHERE bloc = :bloc AND term = :term ORDER BY serie_numero';
 		$ps = $this->_db->prepare ( $query );
 		$ps->bindValue(':bloc', $bloc);
+		$ps->bindValue(':term', $term);
 		$ps->execute ();
 		$numberSeries = $ps->fetch();
 		return $numberSeries;

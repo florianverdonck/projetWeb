@@ -84,10 +84,29 @@ class BlocResponsibleController {
 			}
 		}
 		
-		$studentsNotInSeries = $this->_db->select_students_not_in_series_from_bloc($_GET['bloc']);
+		$bloc = $_GET['bloc'];
 		
-		$studentInSerie[] = "";
-		$numberOfSeries = $this->_db->select_number_series_from_bloc($_GET['bloc'])->numberSeries;
+		$term = 2;
+		
+		$studentsNotInSeries = $this->_db->select_students_not_in_series_from_bloc($bloc);
+		
+		$studentsInSerie[] = "";
+		
+		$series = $this->_db->select_series_from_bloc($bloc, $term);
+		$numberOfSeries = count($series);
+		
+		for ($serie = 1; $serie <= $numberOfSeries; $serie++) {
+			$studentsInSerie[] = $this->_db->select_students_serie_bloc($serie, $bloc, $term);
+		}
+		
+		$maxNumberOfStudentsSerie = 0;
+		
+		foreach ($studentsInSerie as $key => $serie) {
+			$numberOfStudentsInThis = count($serie);
+			if ($numberOfStudentsInThis > $maxNumberOfStudentsSerie) {
+				$maxNumberOfStudentsSerie = $numberOfStudentsInThis;
+			}
+		}
 		
 		require_once(PATH_VIEWS . "bloc_responsible_series.php");
 		
