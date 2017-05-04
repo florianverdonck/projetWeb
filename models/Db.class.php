@@ -122,9 +122,44 @@ class Db {
 		return $array_students;
 	}
 	
-	public function select_students_not_in_series_from_bloc($bloc) {
-		$query = 'SELECT * FROM students WHERE serie_id IS NULL ORDER BY name';
+	public function select_students_serie_bloc($serie, $bloc){
+		$query = 'SELECT * FROM students WHERE bloc = : AND serie = :serie ORDER BY name';
 		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue(':bloc', $bloc);
+		$ps->bindValue(':serie', $serie);
+		$ps->execute ();
+		$array_students = "";
+		while ( $row = $ps->fetch () ) {
+			$array_students [] = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+		}
+		return $array_students;
+	}
+	
+	public function select_series_from_bloc($bloc) {
+		$query = 'SELECT * FROM series WHERE bloc = :bloc ORDER BY serie_numero';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue(':bloc', $bloc);
+		$ps->execute ();
+		$array_series = "";
+		while ( $row = $ps->fetch () ) {
+			$array_series[] = new Serie ( $row->serie_id, $row->term, $row->serie_numero, $row->bloc );
+		}
+		return $array_series;
+	}
+	
+	public function select_number_series_from_bloc($bloc) {
+		$query = 'SELECT COUNT(serie_id) AS numberSeries FROM series WHERE bloc = :bloc ORDER BY serie_numero';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue(':bloc', $bloc);
+		$ps->execute ();
+		$numberSeries = $ps->fetch();
+		return $numberSeries;
+	}
+	
+	public function select_students_not_in_series_from_bloc($bloc) {
+		$query = 'SELECT * FROM students WHERE serie_id IS NULL AND bloc = :bloc ORDER BY name';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue(':bloc', $bloc);
 		$ps->execute ();
 		$array_students = "";
 		while ( $row = $ps->fetch () ) {

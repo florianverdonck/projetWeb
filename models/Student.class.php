@@ -20,7 +20,7 @@ class Student {
 		return $this->_first_name;
 	}
 	public function bloc() {
-		return $this->bloc;
+		return $this->_bloc;
 	}
 	public function html_mail() {
 		return htmlspecialchars ( $this->_mail );
