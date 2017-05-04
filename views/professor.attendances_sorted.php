@@ -98,6 +98,10 @@
 										</td>
 									</tr>
 									<?php } ?>
+								<?php } else { ?>
+									<tr>
+										<td colspan="4"></td>
+									</tr>
 								<?php } ?>
 								</tbody>
 							</table>
@@ -105,8 +109,8 @@
 							<div class="panel-body">
 								<label for="basic-url">Entrez un élève absent de la liste</label>
 								<div class="input-group">
-								  <span class="input-group-addon" id="basic-addon3">Matricule</span>
-								  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+								  <span class="input-group-addon" id="basic-addon3">Mail</span>
+								  <input name="student_mail" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
 								  <div class="input-group-btn">
 								    <input name="form_add_student_attendance" value="Ajouter à la liste" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 								  </div>
@@ -115,8 +119,8 @@
 								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Confirmer" name="form_take_attendances">							
 							</div>
 							<?php } ?>
+						</div>					
 					</div>
-				</div>
 				</form>			
 			</div>
 		</div>
