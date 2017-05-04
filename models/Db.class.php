@@ -147,6 +147,19 @@ class Db {
 		return $array_series;
 	}
 	
+	public function select_series_from_bloc_term($bloc, $term) {
+		$query = 'SELECT * FROM series WHERE bloc = :bloc AND term = :term ORDER BY serie_numero';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue(':bloc', $bloc);
+		$ps->bindValue(':term', $term);
+		$ps->execute ();
+		$array_series = "";
+		while ( $row = $ps->fetch () ) {
+			$array_series[] = new Serie ( $row->serie_id, $row->term, $row->serie_numero, $row->bloc );
+		}
+		return $array_series;
+	}
+	
 	public function select_number_series_from_bloc($bloc) {
 		$query = 'SELECT COUNT(serie_id) AS numberSeries FROM series WHERE bloc = :bloc ORDER BY serie_numero';
 		$ps = $this->_db->prepare ( $query );
@@ -154,7 +167,7 @@ class Db {
 		$ps->execute ();
 		$numberSeries = $ps->fetch();
 		return $numberSeries;
-	}
+	}	
 	
 	public function select_students_not_in_series_from_bloc($bloc) {
 		$query = 'SELECT * FROM students WHERE serie_id IS NULL AND bloc = :bloc ORDER BY name';
@@ -167,6 +180,7 @@ class Db {
 		}
 		return $array_students;
 	}
+	
 	
 	
 	public function select_weeks(){
