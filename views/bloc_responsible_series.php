@@ -560,85 +560,86 @@
 							<h3 class="panel-title">Editer les séries</h3>
 						</div>
 						<div class="panel-body">
-							<label for="inputWeekSelect">Série de l'étudiant</label><br>
-							<select class="selectpicker" id="inputWeekSelect">
-								<option>Série 1</option>
-								<option>Série 2</option>
-								<option>Série 3</option>
-								<option>Série 4</option>
-								<option>Série 5</option>
-								<option>Série 6</option>
-								<option>Série 7</option>
-								<option>Série 8</option>
-								<option>Série 9</option>
-							</select>
-							<br><br>
-							
-							<label for="inputWeekSelect">Numéro de l'élève</label><br>
-							<select class="selectpicker" id="inputWeekSelect">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
-								<option>6</option>
-								<option>7</option>
-								<option>8</option>
-								<option>9</option>
-							</select>
-							<br><br>
-	
-							<label for="inputWeekSelect">Déplacer dans</label><br>
-							<select class="selectpicker" id="inputWeekSelect">
-								<option>Série 1</option>
-								<option>Série 2</option>
-								<option>Série 3</option>
-								<option>Série 4</option>
-								<option>Série 5</option>
-								<option>Série 6</option>
-								<option>Série 7</option>
-								<option>Série 8</option>
-								<option>Série 9</option>
-							</select>
-							<br><br>
-							
-							<button class="btn btn-lg btn-primary btn-block" type="submit">Déplacer<span class="hidden-md"> l'élève</span></button>
-	
+							<form action="index.php?user=bloc_responsible&action=series" method="POST">
+								<label for="inputStudentSelect">Nom de l'élève</label><br>
+								<select class="selectpicker" id="inputStudentSelect" name="studentMail">
+									<?php 
+										
+										foreach ($studentsNotInSeries as $student) {
+									
+									?>
+										<option value="<?php echo $student->html_mail();?>"><?php echo $student->html_name();?> <?php echo $student->html_first_name();?></option>
+									<?php
+										}	
+									?>
+								</select>
+								<br><br>
+		
+								<label for="inputWeekSelect">Placer dans</label><br>
+								<select class="selectpicker dropup" data-dropup-auto="false" id="inputWeekSelect" name="destinationSerie">
+									<option value="1">Série 1</option>
+										<option value="2">Série 2</option>
+										<option value="3">Série 3</option>
+										<option value="4">Série 4</option>
+										<option value="5">Série 5</option>
+										<option value="6">Série 6</option>
+										<option value="7">Série 7</option>
+										<option value="8">Série 8</option>
+										<option value="9">Série 9</option>
+								</select>
+								<br><br>
+								
+								<button class="btn btn-lg btn-primary btn-block" type="submit" name="formInsertSerie">Insérer<span class="hidden-md"> l'élève</span></button>
+							</form>
 						</div>
-						<div class="panel-body">
 
-							<label for="inputStudentSelect">Nom de l'élève</label><br>
-							<select class="selectpicker" id="inputStudentSelect">
-								<option>Florian VERDONCK</option>
-								<option>Christopher CASTEL</option>
-								<option>Marco AMORY</option>
-								<option>Florian VERDONCK</option>
-								<option>Christopher CASTEL</option>
-								<option>Marco AMORY</option>
-								<option>Florian VERDONCK</option>
-								<option>Christopher CASTEL</option>
-								<option>Marco AMORY</option>
-								<option>Florian VERDONCK</option>
-								<option>Christopher CASTEL</option>
-								<option>Marco AMORY</option>
-							</select>
-							<br><br>
-	
-							<label for="inputWeekSelect">Placer dans</label><br>
-							<select class="selectpicker" id="inputWeekSelect">
-								<option>Série 1</option>
-								<option>Série 2</option>
-								<option>Série 3</option>
-								<option>Série 4</option>
-								<option>Série 5</option>
-								<option>Série 6</option>
-								<option>Série 7</option>
-								<option>Série 8</option>
-								<option>Série 9</option>
-							</select>
-							<br><br>
-							
-							<button class="btn btn-lg btn-primary btn-block" type="submit">Insérer<span class="hidden-md"> l'élève</span></button>
+						<div class="panel-body">
+							<form action="index.php?user=bloc_responsible&action=series" method="POST">
+								<label for="inputWeekSelect">Série de l'étudiant</label><br>
+								<select class="selectpicker dropup" data-dropup-auto="false" id="inputWeekSelect" name="originSerie">
+									<option value="1">Série 1</option>
+									<option value="2">Série 2</option>
+									<option value="3">Série 3</option>
+									<option value="4">Série 4</option>
+									<option value="5">Série 5</option>
+									<option value="6">Série 6</option>
+									<option value="7">Série 7</option>
+									<option value="8">Série 8</option>
+									<option value="9">Série 9</option>
+								</select>
+								<br><br>
+								
+								<label for="inputWeekSelect">Numéro de l'élève</label><br>
+								<select class="selectpicker dropup" data-dropup-auto="false" id="inputWeekSelect" name="studentMail">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+								</select>
+								<br><br>
+		
+								<label for="inputWeekSelect">Déplacer dans</label><br>
+								
+								<select class="selectpicker dropup" data-dropup-auto="false" id="inputWeekSelect" name="destinationSerie">
+									<option value="1">Série 1</option>
+									<option value="2">Série 2</option>
+									<option value="3">Série 3</option>
+									<option value="4">Série 4</option>
+									<option value="5">Série 5</option>
+									<option value="6">Série 6</option>
+									<option value="7">Série 7</option>
+									<option value="8">Série 8</option>
+									<option value="9">Série 9</option>
+								</select>
+								<br><br>
+								
+								<button class="btn btn-lg btn-primary btn-block" type="submit" name="formChangeSerie">Déplacer<span class="hidden-md"> l'élève</span></button>
+							</form>
 						</div>
 					</div>
 				</div>
