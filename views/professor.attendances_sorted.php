@@ -83,10 +83,10 @@
 										<td>
 											<div class="btn-group" data-toggle="buttons">
 											  <label class="btn btn-default active btn-sm">
-											    <input type="radio" name="options"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Présent</span>
+											    <input type="radio" name="attendance"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Présent</span>
 											  </label>
 											  <label class="btn btn-default btn-sm">
-											    <input type="radio" name="options" checked><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
+											    <input type="radio" name="attendance" checked><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
 											  </label>
 											</div>
 										</td>

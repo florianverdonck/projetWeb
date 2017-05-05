@@ -290,7 +290,7 @@ class Db {
 	}
 	
 	public function select_student($mail) {
-		$query = 'SELECT mail, name, first_name, bloc FROM students
+		$query = 'SELECT * FROM students
 				WHERE mail = :mail';
 		$ps = $this->_db->prepare ( $query );
 		$ps->bindValue ( ':mail', $mail );
@@ -385,6 +385,16 @@ class Db {
 		$ps->bindValue(':seance_template_id', $seance_template_id);
 		$ps->bindValue(':mail', $mail);
 		$ps->bindValue(':week_id', $week_id);
+		$ps->execute ();
+		return $ps->rowcount () > 0;
+	}
+	
+	public function existing_attendance ($attendance_sheet_id, $student_id) {
+		$query = 'SELECT * FROM attendances
+			WHERE attendance_sheet_id = :attendance_sheet_id AND student_id = :student_id';
+		$ps = $this->_db->prepare($query);
+		$ps->bindValue(':attendance_sheet_id', $attendance_sheet_id);
+		$ps->bindValue(':student_id', $student_id);
 		$ps->execute ();
 		return $ps->rowcount () > 0;
 	}
