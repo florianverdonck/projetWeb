@@ -7,13 +7,13 @@
 		<div class="container">
 			<div class="row">
 				<div class="pt30 hidden-xs"></div>
-				<form action="index.php?user=professor" method="post"> 				
 				<div class="col-md-4">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
 							<h3 class="panel-title">Filtrez ici pour consulter ou prendre les présences</h3>
 						</div>
 						<div class="panel-body">
+								<form action="index.php?user=professor" method="post"> 									
 								<input type="hidden" name="bloc" value="<?php echo $_POST['bloc']?>">
 								<input type="hidden" name="term" value="<?php echo $_POST['term']?>">	
 								<label for="seanceTemplateSelect">Sélectionnez la séance type </label><br>
@@ -54,6 +54,7 @@
 								</div>
 								<br><br>
 								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Filtrer" name="form_sort_attendances">
+								</form>							
 						</div>
 					</div>
 				</div>
@@ -62,6 +63,12 @@
 						<div class="panel-heading">
 							<h3 class="panel-title">Table de présences</h3>
 						</div>
+							<form action="index.php?user=professor" method="post"> 									
+								<input type="hidden" name="bloc" value="<?php echo $_POST['bloc']?>">
+								<input type="hidden" name="term" value="<?php echo $_POST['term']?>">
+								<input type="hidden" name="seance" value="<?php echo $_POST['seance']?>">
+								<input type="hidden" name="week" value="<?php echo $_POST['week']?>">	
+								<input type="hidden" name="serie" value="<?php echo $_POST['serie']?>">	
 							<table class="table">
 								<thead>
 									<tr>
@@ -83,10 +90,10 @@
 										<td>
 											<div class="btn-group" data-toggle="buttons">
 											  <label class="btn btn-default active btn-sm">
-											    <input type="radio" name="attendance"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Présent</span>
+											    <input value="X" type="radio" name="attendance['<?php echo $student->student_id()?>']" checked="checked" ><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Présent</span>
 											  </label>
 											  <label class="btn btn-default btn-sm">
-											    <input type="radio" name="attendance" checked><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
+											    <input value="Xo" type="radio" name="attendance['<?php echo $student->student_id()?>']"  ><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
 											  </label>
 											</div>
 										</td>
@@ -120,9 +127,10 @@
 								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Confirmer" name="form_take_attendances">							
 							</div>
 							<?php } ?>
+							</form> 									
+							
 						</div>					
 					</div>
-				</form>			
 			</div>
 		</div>
 		<!-- /container -->

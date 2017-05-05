@@ -4,13 +4,13 @@ class ProfessorController {
 	private $_professor;
 	public function __construct($db) {
 		$this->_db = $db;
-		$this->_professor = unserialize ( $_SESSION ['user'] );	
+		$this->_professor = unserialize ( $_SESSION ['user'] );
 	}
 	public function run() {
 		// user must be an admin, a professor and a bloc(s) responsible to access attendances
 		$this->checkPermissions ();
 		
-		// variables for view 
+		// variables for view
 		$sorted_attendances = false;
 		$update_message = $students = $seances_templates = '';
 		$seances_created = $this->_db->existing_seances ();
@@ -33,9 +33,9 @@ class ProfessorController {
 				if (! $this->_db->existing_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] )) {
 					$students = $this->_db->select_students_from_course ( $_POST ['seance'], $_POST ['serie'], $_POST ['term'], $_POST ['bloc'] );
 					$this->_db->insert_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] );
-					$this->setAllStudentsPresent ( $students );	// by default all students are present
+					$this->setAllStudentsPresent ( $students ); // by default all students are present
 				}
-				$students = $this->fetchStudents ( );
+				$students = $this->fetchStudents ();				
 			}
 		}
 		
@@ -45,6 +45,7 @@ class ProfessorController {
 					"error_code" => "success",
 					"error_message" => "Les présences ont été prises." 
 			);
+			$students = $this->fetchStudents ();
 		}
 		
 		// Allows the professor to add a student which isn't from the current serie
@@ -53,40 +54,37 @@ class ProfessorController {
 			if ($update_message ['error_code'] == 'success') {
 				$update_message = $this->addStudentAnotherBloc ();
 			}
-			$students = $this->fetchStudents ( );
+			$students = $this->fetchStudents ();
 		}
+		var_dump($_POST['attendance']);
 		$sorted_attendances ? require_once (PATH_VIEWS . "professor.attendances_sorted.php") : require_once (PATH_VIEWS . "professor.php");
 	}
-	
 	private function checkPermissions() {
 		if (empty ( $_SESSION ['authenticated'] ) || $_SESSION ['authenticated'] == 'student') {
 			header ( 'Location: index.php?action=login' );
 			die ();
 		}
 	}
-	
 	private function addStudentAnotherBloc() {
 		$student = $this->_db->select_student ( $_POST ['student_mail'] );
 		$student_id = $student->student_id ();
 		$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] );
 		$attendance_sheet_id = $attendance_sheet->attendance_sheet_id ();
-		if (!$this->_db->existing_attendance($attendance_sheet_id, $student_id)) {
+		if (! $this->_db->existing_attendance ( $attendance_sheet_id, $student_id )) {
 			$this->_db->insert_attendance ( $attendance_sheet_id, $student_id, 'X' );
 			$this->_db->select_students_from_attendances ( $attendance_sheet_id );
 		} else {
 			return array (
 					"error_code" => "danger",
-					"error_message" => "L'élève est déjà présent dans la liste."
+					"error_message" => "L'élève est déjà présent dans la liste." 
 			);
 		}
 	}
-	
 	private function fetchStudents() {
 		$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] );
 		$attendance_sheet_id = $attendance_sheet->attendance_sheet_id ();
 		return $this->_db->select_students_from_attendances ( $attendance_sheet_id );
 	}
-	
 	private function setAllStudentsPresent($students) {
 		$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] );
 		$attendance_sheet_id = $attendance_sheet->attendance_sheet_id ();
