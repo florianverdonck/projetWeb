@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
--- https://www.phpmyadmin.net/
+-- version 4.1.14
+-- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 01 Mai 2017 à 11:00
--- Version du serveur :  5.7.14
--- Version de PHP :  5.6.25
+-- Généré le :  Ven 05 Mai 2017 à 10:29
+-- Version du serveur :  5.6.17
+-- Version de PHP :  5.5.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de données :  `attendances`
@@ -26,12 +26,16 @@ SET time_zone = "+00:00";
 -- Structure de la table `attendances`
 --
 
-CREATE TABLE `attendances` (
-  `attendance_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `attendances` (
+  `attendance_id` int(11) NOT NULL AUTO_INCREMENT,
   `attendance` varchar(15) NOT NULL,
   `student_id` int(11) NOT NULL,
-  `attendance_sheet_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `attendance_sheet_id` int(11) NOT NULL,
+  `sick_note` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`attendance_id`),
+  KEY `student_id` (`student_id`),
+  KEY `attendance_sheet_id` (`attendance_sheet_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -39,12 +43,16 @@ CREATE TABLE `attendances` (
 -- Structure de la table `attendance_sheets`
 --
 
-CREATE TABLE `attendance_sheets` (
-  `attendance_sheet_id` int(11) NOT NULL,
-  `given_seance_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `attendance_sheets` (
+  `attendance_sheet_id` int(11) NOT NULL AUTO_INCREMENT,
+  `seance_templates_id` int(11) NOT NULL,
   `mail` varchar(50) NOT NULL,
-  `week_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `week_id` int(11) NOT NULL,
+  PRIMARY KEY (`attendance_sheet_id`),
+  KEY `given_seance_id` (`seance_templates_id`),
+  KEY `mail` (`mail`),
+  KEY `week_number` (`week_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -52,14 +60,15 @@ CREATE TABLE `attendance_sheets` (
 -- Structure de la table `courses`
 --
 
-CREATE TABLE `courses` (
+CREATE TABLE IF NOT EXISTS `courses` (
   `code` varchar(25) NOT NULL,
   `name` varchar(50) NOT NULL,
   `term` int(11) NOT NULL,
   `ECTs` int(11) NOT NULL,
   `bloc` int(11) NOT NULL,
   `abbreviation` varchar(20) DEFAULT NULL,
-  `course_unit_learning_activity` varchar(2) NOT NULL
+  `course_unit_learning_activity` varchar(2) NOT NULL,
+  PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -67,7 +76,9 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`code`, `name`, `term`, `ECTs`, `bloc`, `abbreviation`, `course_unit_learning_activity`) VALUES
+('', 'php', 1, 3, 1, 'php', ''),
 ('IE445LI', 'algotest', 1, 6, 1, 'algo', 'CU'),
+('IEDDE', 'math1', 1, 1, 1, 'math', 'cu'),
 ('IL4545POI', 'PHP', 2, 6, 2, NULL, 'CU');
 
 -- --------------------------------------------------------
@@ -76,11 +87,14 @@ INSERT INTO `courses` (`code`, `name`, `term`, `ECTs`, `bloc`, `abbreviation`, `
 -- Structure de la table `given_seances`
 --
 
-CREATE TABLE `given_seances` (
-  `given_seance_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `given_seances` (
+  `given_seance_id` int(11) NOT NULL AUTO_INCREMENT,
   `seance_template_id` int(11) NOT NULL,
-  `serie_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `serie_id` int(11) NOT NULL,
+  PRIMARY KEY (`given_seance_id`),
+  KEY `seance_template_id` (`seance_template_id`),
+  KEY `serie_id` (`serie_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 
 --
 -- Contenu de la table `given_seances`
@@ -90,7 +104,16 @@ INSERT INTO `given_seances` (`given_seance_id`, `seance_template_id`, `serie_id`
 (3, 2, 6),
 (4, 2, 6),
 (5, 1, 5),
-(6, 2, 5);
+(6, 2, 5),
+(7, 1, 5),
+(8, 2, 6),
+(9, 1, 7),
+(10, 4, 9),
+(11, 4, 8),
+(12, 3, 6),
+(13, 7, 8),
+(14, 6, 9),
+(15, 7, 9);
 
 -- --------------------------------------------------------
 
@@ -98,11 +121,12 @@ INSERT INTO `given_seances` (`given_seance_id`, `seance_template_id`, `serie_id`
 -- Structure de la table `professors`
 --
 
-CREATE TABLE `professors` (
+CREATE TABLE IF NOT EXISTS `professors` (
   `mail` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
   `first_name` varchar(50) NOT NULL,
-  `responsible` varchar(15) NOT NULL
+  `responsible` varchar(15) NOT NULL,
+  PRIMARY KEY (`mail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -137,12 +161,14 @@ INSERT INTO `professors` (`mail`, `name`, `first_name`, `responsible`) VALUES
 -- Structure de la table `seance_templates`
 --
 
-CREATE TABLE `seance_templates` (
-  `seance_template_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `seance_templates` (
+  `seance_template_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   `attendance_type` varchar(10) NOT NULL,
-  `code` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `code` varchar(25) NOT NULL,
+  PRIMARY KEY (`seance_template_id`),
+  KEY `code` (`code`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Contenu de la table `seance_templates`
@@ -151,7 +177,11 @@ CREATE TABLE `seance_templates` (
 INSERT INTO `seance_templates` (`seance_template_id`, `name`, `attendance_type`, `code`) VALUES
 (1, 'algo1', 'XO', 'IE445LI'),
 (2, 'algo2', 'Notee', 'IE445LI'),
-(3, NULL, 'X', 'IL4545POI');
+(3, 'php', 'X', 'IE445LI'),
+(4, 'math', 'XO', 'IEDDE'),
+(5, 'test', 'X', 'IEDDE'),
+(6, 'test2', 'X', 'IEDDE'),
+(7, 'test3', 'X', 'IL4545POI');
 
 -- --------------------------------------------------------
 
@@ -159,21 +189,26 @@ INSERT INTO `seance_templates` (`seance_template_id`, `name`, `attendance_type`,
 -- Structure de la table `series`
 --
 
-CREATE TABLE `series` (
-  `serie_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `series` (
+  `serie_id` int(11) NOT NULL AUTO_INCREMENT,
   `term` int(11) NOT NULL,
   `serie_numero` int(50) NOT NULL,
-  `bloc` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `bloc` int(11) NOT NULL,
+  PRIMARY KEY (`serie_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- Contenu de la table `series`
 --
 
 INSERT INTO `series` (`serie_id`, `term`, `serie_numero`, `bloc`) VALUES
-(5, 2, 2, 1),
+(5, 2, 3, 1),
 (6, 2, 2, 1),
-(7, 2, 2, 1);
+(7, 2, 1, 1),
+(8, 1, 1, 1),
+(9, 1, 2, 1),
+(10, 1, 4, 1),
+(11, 1, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -181,25 +216,28 @@ INSERT INTO `series` (`serie_id`, `term`, `serie_numero`, `bloc`) VALUES
 -- Structure de la table `students`
 --
 
-CREATE TABLE `students` (
-  `student_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `students` (
+  `student_id` int(11) NOT NULL AUTO_INCREMENT,
   `mail` varchar(100) NOT NULL,
   `bloc` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `first_name` varchar(50) NOT NULL,
-  `serie_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `serie_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`student_id`),
+  UNIQUE KEY `mail` (`mail`),
+  KEY `serie_id` (`serie_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3241 ;
 
 --
 -- Contenu de la table `students`
 --
 
 INSERT INTO `students` (`student_id`, `mail`, `bloc`, `name`, `first_name`, `serie_id`) VALUES
-(2892, 'kodjo.adegnon@student.vinci.be', 3, 'ADEGNON', 'Kodjo', NULL),
-(2893, 'mustafa.alp@student.vinci.be', 3, 'ALP', 'Mustafa', NULL),
-(2894, 'laurent.batslé@student.vinci.be', 3, 'BATSLÉ', 'Laurent', NULL),
-(2895, 'stefan.bogdanovic@student.vinci.be', 3, 'BOGDANOVIC', 'Stefan', NULL),
-(2896, 'fany.bottemanne@student.vinci.be', 3, 'BOTTEMANNE', 'Fany', NULL),
+(2892, 'kodjo.adegnon@student.vinci.be', 3, 'ADEGNON', 'Kodjo', 6),
+(2893, 'mustafa.alp@student.vinci.be', 3, 'ALP', 'Mustafa', 5),
+(2894, 'laurent.batslé@student.vinci.be', 3, 'BATSLÉ', 'Laurent', 8),
+(2895, 'stefan.bogdanovic@student.vinci.be', 3, 'BOGDANOVIC', 'Stefan', 7),
+(2896, 'fany.bottemanne@student.vinci.be', 3, 'BOTTEMANNE', 'Fany', 9),
 (2897, 'bill.brancart@student.vinci.be', 3, 'BRANCART', 'Bill', NULL),
 (2898, 'antoine.colet@student.vinci.be', 3, 'COLET', 'Antoine', NULL),
 (2899, 'pierric.cotton@student.vinci.be', 3, 'COTTON', 'Pierric', NULL),
@@ -381,7 +419,7 @@ INSERT INTO `students` (`student_id`, `mail`, `bloc`, `name`, `first_name`, `ser
 (3075, 'arnaud.de boeck@student.vinci.be', 1, 'DE BOECK', 'Arnaud', NULL),
 (3076, 'benjamin.de bosscher@student.vinci.be', 1, 'De Bosscher', 'Benjamin', NULL),
 (3077, 'hugues.de mathelin de papigny@student.vinci.be', 1, 'de Mathelin de Papigny', 'Hugues', NULL),
-(3078, 'augustin.de meeûs d\'argenteuil@student.vinci.be', 1, 'de MEEÛS d\'ARGENTEUIL', 'Augustin', NULL),
+(3078, 'augustin.de meeûs d''argenteuil@student.vinci.be', 1, 'de MEEÛS d''ARGENTEUIL', 'Augustin', NULL),
 (3079, 'antoine.de roose@student.vinci.be', 1, 'DE ROOSE', 'Antoine', NULL),
 (3080, 'andy.de smedt@student.vinci.be', 1, 'De Smedt', 'Andy', NULL),
 (3081, 'nestor.debiesme@student.vinci.be', 1, 'Debiesme', 'Nestor', NULL),
@@ -400,7 +438,7 @@ INSERT INTO `students` (`student_id`, `mail`, `bloc`, `name`, `first_name`, `ser
 (3094, 'jean.dubuisson@student.vinci.be', 1, 'DUBUISSON', 'Jean', NULL),
 (3095, 'othmane.echagdali zahri@student.vinci.be', 1, 'ECHAGDALI ZAHRI', 'Othmane', NULL),
 (3096, 'hicham.el asri@student.vinci.be', 1, 'EL ASRI', 'Hicham', NULL),
-(3097, 'ismaël.el f\'kih ben ahmed@student.vinci.be', 1, 'El F\'Kih Ben Ahmed', 'Ismaël', NULL),
+(3097, 'ismaël.el f''kih ben ahmed@student.vinci.be', 1, 'El F''Kih Ben Ahmed', 'Ismaël', NULL),
 (3098, 'yassine.el hadouchi@student.vinci.be', 1, 'EL HADOUCHI', 'Yassine', NULL),
 (3099, 'mohammed.el khattabi@student.vinci.be', 1, 'EL KHATTABI', 'Mohammed', NULL),
 (3100, 'zineb.el mokadem@student.vinci.be', 1, 'EL MOKADEM', 'Zineb', NULL),
@@ -442,7 +480,7 @@ INSERT INTO `students` (`student_id`, `mail`, `bloc`, `name`, `first_name`, `ser
 (3136, 'egide.kabanza@student.vinci.be', 1, 'KABANZA', 'Egide', NULL),
 (3137, 'rubain.kamegneson wabo@student.vinci.be', 1, 'KAMEGNESON WABO', 'Rubain', NULL),
 (3138, 'burim.kastrati@student.vinci.be', 1, 'KASTRATI', 'Burim', NULL),
-(3139, 'bouchra.kh\' leeh@student.vinci.be', 1, 'KH\' LEEH', 'Bouchra', NULL),
+(3139, 'bouchra.kh'' leeh@student.vinci.be', 1, 'KH'' LEEH', 'Bouchra', NULL),
 (3140, 'gaël.kifoumbi @student.vinci.be', 1, 'KIFOUMBI ', 'Gaël', NULL),
 (3141, 'kamil.kowalczyk@student.vinci.be', 1, 'KOWALCZYK', 'Kamil', NULL),
 (3142, 'dejvi.kurti@student.vinci.be', 1, 'KURTI', 'Dejvi', NULL),
@@ -520,15 +558,15 @@ INSERT INTO `students` (`student_id`, `mail`, `bloc`, `name`, `first_name`, `ser
 (3214, 'amatus.umugabe@student.vinci.be', 1, 'UMUGABE', 'Amatus', NULL),
 (3215, 'ralph.urbach@student.vinci.be', 1, 'URBACH', 'Ralph', NULL),
 (3216, 'louis.van aken@student.vinci.be', 1, 'VAN AKEN', 'Louis', NULL),
-(3217, 'colin.van den brande@student.vinci.be', 1, 'VAN DEN BRANDE', 'Colin', NULL),
-(3218, 'wim.van der schueren@student.vinci.be', 1, 'Van der Schueren', 'Wim', NULL),
-(3219, 'nicolas.van gelder@student.vinci.be', 1, 'van GELDER', 'Nicolas', NULL),
-(3220, 'vincent.van rossem@student.vinci.be', 1, 'VAN ROSSEM', 'Vincent', NULL),
+(3217, 'colin.van den brande@student.vinci.be', 1, 'VAN DEN BRANDE', 'Colin', 10),
+(3218, 'wim.van der schueren@student.vinci.be', 1, 'Van der Schueren', 'Wim', 11),
+(3219, 'nicolas.van gelder@student.vinci.be', 1, 'van GELDER', 'Nicolas', 9),
+(3220, 'vincent.van rossem@student.vinci.be', 1, 'VAN ROSSEM', 'Vincent', 7),
 (3221, 'driss.vandenheede@student.vinci.be', 1, 'VANDENHEEDE', 'Driss', NULL),
-(3222, 'jérémy.vander motte@student.vinci.be', 1, 'VANDER MOTTE', 'Jérémy', NULL),
-(3223, 'guy.vassart@student.vinci.be', 1, 'VASSART', 'Guy', NULL),
-(3224, 'florian.verdonck@student.vinci.be', 1, 'VERDONCK', 'Florian', NULL),
-(3225, 'thomas.verelst@student.vinci.be', 1, 'Verelst', 'Thomas', NULL),
+(3222, 'jérémy.vander motte@student.vinci.be', 1, 'VANDER MOTTE', 'Jérémy', 8),
+(3223, 'guy.vassart@student.vinci.be', 1, 'VASSART', 'Guy', 10),
+(3224, 'florian.verdonck@student.vinci.be', 1, 'VERDONCK', 'Florian', 8),
+(3225, 'thomas.verelst@student.vinci.be', 1, 'Verelst', 'Thomas', 8),
 (3226, 'jonathan.visiedo gil@student.vinci.be', 1, 'Visiedo Gil', 'Jonathan', NULL),
 (3227, 'andy.voiturier@student.vinci.be', 1, 'VOITURIER', 'Andy', NULL),
 (3228, 'joachim.vranken@student.vinci.be', 1, 'VRANKEN', 'Joachim', NULL),
@@ -549,12 +587,13 @@ INSERT INTO `students` (`student_id`, `mail`, `bloc`, `name`, `first_name`, `ser
 -- Structure de la table `weeks`
 --
 
-CREATE TABLE `weeks` (
-  `week_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `weeks` (
+  `week_id` int(11) NOT NULL AUTO_INCREMENT,
   `week_number` varchar(9) NOT NULL,
   `term` varchar(2) NOT NULL,
-  `monday_date` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `monday_date` varchar(20) NOT NULL,
+  PRIMARY KEY (`week_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=220 ;
 
 --
 -- Contenu de la table `weeks`
@@ -589,113 +628,6 @@ INSERT INTO `weeks` (`week_id`, `week_number`, `term`, `monday_date`) VALUES
 (219, 'semaine13', 'q2', '15/05/2017');
 
 --
--- Index pour les tables exportées
---
-
---
--- Index pour la table `attendances`
---
-ALTER TABLE `attendances`
-  ADD PRIMARY KEY (`attendance_id`),
-  ADD KEY `student_id` (`student_id`),
-  ADD KEY `attendance_sheet_id` (`attendance_sheet_id`);
-
---
--- Index pour la table `attendance_sheets`
---
-ALTER TABLE `attendance_sheets`
-  ADD PRIMARY KEY (`attendance_sheet_id`),
-  ADD KEY `given_seance_id` (`given_seance_id`),
-  ADD KEY `mail` (`mail`),
-  ADD KEY `week_number` (`week_id`);
-
---
--- Index pour la table `courses`
---
-ALTER TABLE `courses`
-  ADD PRIMARY KEY (`code`);
-
---
--- Index pour la table `given_seances`
---
-ALTER TABLE `given_seances`
-  ADD PRIMARY KEY (`given_seance_id`),
-  ADD KEY `seance_template_id` (`seance_template_id`),
-  ADD KEY `serie_id` (`serie_id`);
-
---
--- Index pour la table `professors`
---
-ALTER TABLE `professors`
-  ADD PRIMARY KEY (`mail`);
-
---
--- Index pour la table `seance_templates`
---
-ALTER TABLE `seance_templates`
-  ADD PRIMARY KEY (`seance_template_id`),
-  ADD KEY `code` (`code`);
-
---
--- Index pour la table `series`
---
-ALTER TABLE `series`
-  ADD PRIMARY KEY (`serie_id`);
-
---
--- Index pour la table `students`
---
-ALTER TABLE `students`
-  ADD PRIMARY KEY (`student_id`),
-  ADD UNIQUE KEY `mail` (`mail`),
-  ADD KEY `serie_id` (`serie_id`);
-
---
--- Index pour la table `weeks`
---
-ALTER TABLE `weeks`
-  ADD PRIMARY KEY (`week_id`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `attendances`
---
-ALTER TABLE `attendances`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `attendance_sheets`
---
-ALTER TABLE `attendance_sheets`
-  MODIFY `attendance_sheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT pour la table `given_seances`
---
-ALTER TABLE `given_seances`
-  MODIFY `given_seance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT pour la table `seance_templates`
---
-ALTER TABLE `seance_templates`
-  MODIFY `seance_template_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT pour la table `series`
---
-ALTER TABLE `series`
-  MODIFY `serie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT pour la table `students`
---
-ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3239;
---
--- AUTO_INCREMENT pour la table `weeks`
---
-ALTER TABLE `weeks`
-  MODIFY `week_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
---
 -- Contraintes pour les tables exportées
 --
 
@@ -710,7 +642,7 @@ ALTER TABLE `attendances`
 -- Contraintes pour la table `attendance_sheets`
 --
 ALTER TABLE `attendance_sheets`
-  ADD CONSTRAINT `fk_given_seance_id` FOREIGN KEY (`given_seance_id`) REFERENCES `given_seances` (`given_seance_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_given_seance_id` FOREIGN KEY (`seance_templates_id`) REFERENCES `seance_templates` (`seance_template_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_mail` FOREIGN KEY (`mail`) REFERENCES `professors` (`mail`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_week_id` FOREIGN KEY (`week_id`) REFERENCES `weeks` (`week_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
