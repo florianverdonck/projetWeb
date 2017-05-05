@@ -19,16 +19,17 @@
 								<label for="seanceTemplateSelect">Sélectionnez la séance type </label><br>
 								<select name="seance" class="selectpicker" id="seanceTemplateSelect">
 									<?php foreach ($seances_templates as $st) { ?>
-										<option <?php if (isset($_POST['seance']) && $_POST['seance'] == $st->name()) echo "selected=\"selected\""?>><?php echo $st->html_name() ?></option>
+										<option value="<?php echo $st->html_seance_template_id() ?>" <?php if (isset($_POST['seance']) && $_POST['seance'] == $st->html_seance_template_id()) echo "selected=\"selected\""?>><?php echo $st->html_name() ?></option>
 									<?php } ?>
 								</select>
 								<br><br>
 								<label for="inputWeekSelect">Sélectionnez la semaine </label><br>
 								<select name="week" class="selectpicker" id="inputWeekSelect">
-								<?php if ($weeks_created) { ?>
-									<?php for($i = 1; $i <= 13; $i++) {?>
-									<option <?php if (isset($_POST['week']) && $_POST['week'] == "Semaine " . $i) echo "selected=\"selected\""?>>Semaine <?php echo $i?></option>
-									<?php }?>
+								
+								<?php foreach ($weeks as $w) { ?>
+								<option value="<?php echo $w->html_week_id() ?>" <?php if (isset($_POST['week']) && $_POST['week'] == $w->html_week_id()) echo "selected=\"selected\""?>>
+								<?php echo $w->html_week_number()?>
+								</option>
 								<?php } ?>
 								</select>
 								<br><br>
