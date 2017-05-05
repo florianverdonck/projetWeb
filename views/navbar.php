@@ -21,7 +21,7 @@
           <ul class="dropdown-menu">
             <li><a href="index.php?user=professor">Prise de présences</a></li>     
             
-            <?php if ($_SESSION['authenticated'] == 'bloc_responsible' || $_SESSION['authenticated'] == 'blocs_responsible' || $_SESSION['authenticated'] == 'admin' ) { ?>  
+            <?php if ($_SESSION['authenticated'] == 'bloc_responsible' || $_SESSION['authenticated'] == 'blocs_responsible' ) { ?>  
             <li role="separator" class="divider"></li>
             <li><a href="index.php?user=bloc_responsible">Gestionnaire de bloc</a></li>
             	<li><a href="index.php?user=bloc_responsible">-> Importer UE/AA</a></li>
@@ -29,7 +29,7 @@
             	<li><a href="index.php?user=bloc_responsible&action=seance_templates">-> Gérer séances types</a></li>
             <?php } ?> <!-- bloc responsible -->       
             
-            <?php if ($_SESSION['authenticated'] == 'blocs_responsible' || $_SESSION['authenticated'] == 'admin' ) { ?>  
+            <?php if ($_SESSION['authenticated'] == 'blocs_responsible' ) { ?>  
             <li role="separator" class="divider"></li>       
             <li><a href="index.php?user=blocs_responsible">Gestionnaire de blocs</a></li>
             <?php } ?> <!-- blocs responsible -->         
