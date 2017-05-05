@@ -128,7 +128,7 @@ class Db {
 		$ps->execute ();
 		$array_students = "";
 		while ( $row = $ps->fetch () ) {
-			$array_students [] = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
 		}
 		return $array_students;
 	}
@@ -140,7 +140,7 @@ class Db {
 		$ps->execute ();
 		$array_students = "";
 		while ( $row = $ps->fetch () ) {
-			$array_students [] = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
 		}
 		return $array_students;
 	}
@@ -154,7 +154,7 @@ class Db {
 		$ps->execute ();
 		$array_students = "";
 		while ( $row = $ps->fetch () ) {
-			$array_students [] = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
 		}
 		return $array_students;
 	}
@@ -202,7 +202,7 @@ class Db {
 		$ps->execute ();
 		$array_students = "";
 		while ( $row = $ps->fetch () ) {
-			$array_students [] = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
 		}
 		return $array_students;
 	}
@@ -220,13 +220,22 @@ class Db {
 		$ps->execute();
 		$array_students = "";
 		while ( $row = $ps->fetch () ) {
-			$array_students [] = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
 		}
 		return $array_students;
 	}	
 	
-	public function select_students_from_attendances() {
-		
+	public function select_students_from_attendances($attendance_sheet_id) {
+		$query = 'SELECT stu.* FROM students stu, attendances at
+				WHERE at.student_id = stu.student_id AND at.attendance_sheet_id = :attendance_sheet_id';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':attendance_sheet_id', $attendance_sheet_id );
+		$ps->execute ();
+		$array_students = '';
+		while ( $row = $ps->fetch () ) {
+			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
+		}
+		return $array_students;
 	}
 	
 	public function select_weeks(){
@@ -238,6 +247,20 @@ class Db {
 			$array_weeks [] = new Week ( $row->week_id, $row->week_number, $row->term, $row->monday_date );
 		}
 		return $array_weeks;
+	}
+	
+	public function select_seance_templates($bloc, $term) {
+		$query = 'SELECT st.* FROM seance_templates st, courses c
+				WHERE st.code = c.code AND c.term = :term AND c.bloc = :bloc';
+		$ps = $this->_db->prepare($query);
+		$ps->bindValue(':bloc', $bloc);
+		$ps->bindValue(':term', $term);
+		$ps->execute();
+		$array_seance_template = '';
+		while ( $row = $ps->fetch () ) {
+			$array_seance_template [] = new seance_template ($row-> seance_template_id, $row->name, $row->attendance_type);
+		}
+		return $array_seance_template;
 	}
 	
 	public function select_weeks_term($term){
@@ -275,7 +298,7 @@ class Db {
 		$row = $ps->fetch ();
 		$student = '';
 		if (!empty($row)) {
-			$student = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+			$student = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
 		}
 		return $student;
 	}
@@ -295,19 +318,22 @@ class Db {
 		return $week;
 	}
 	
-	public function select_seance_templates($bloc, $term) {
-		$query = 'SELECT st.* FROM seance_templates st, courses c
-				WHERE st.code = c.code AND c.term = :term AND c.bloc = :bloc';
+	public function select_attendance_sheet($seance_template_id, $mail, $week_id) {
+		$query = 'SELECT * FROM attendance_sheets 
+				WHERE seance_template_id = :seance_template_id AND mail = :mail AND week_id = :week_id';
 		$ps = $this->_db->prepare($query);
-		$ps->bindValue(':bloc', $bloc);
-		$ps->bindValue(':term', $term);
-		$ps->execute();
-		$array_seance_template = '';
-		while ( $row = $ps->fetch () ) {
-			$array_seance_template [] = new seance_template ($row-> seance_template_id, $row->name, $row->attendance_type);
+		$ps->bindValue(':seance_template_id', $seance_template_id);
+		$ps->bindValue(':mail', $mail);
+		$ps->bindValue(':week_id', $week_id);
+		$ps->execute ();
+		$row = $ps->fetch ();		
+		$attendance_sheet = '';
+		if (!empty($row)) {
+			$attendance_sheet = new Attendance_sheet ( $row->attendance_sheet_id, $row->seance_template_id, $row->mail, $row->week_id );
 		}
-		return $array_seance_template;
+		return $attendance_sheet;	
 	}
+
 	
 
 	// check if a professor is already inserted
