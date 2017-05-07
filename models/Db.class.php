@@ -347,7 +347,16 @@ class Db {
 		return $attendance;
 	}
 	
-
+	public function select_attendance_type ($seance_template_id) {
+		$query = 'SELECT attendance_type FROM seance_templates WHERE seance_template_id = :seance_template_id';
+		$ps = $this->_db->prepare($query);
+		$ps->bindValue(':seance_template_id', $seance_template_id);
+		$ps->execute();
+		$row = $ps->fetch ();	
+		$attendance_type = $row->attendance_type;
+		return $attendance_type;
+	}
+	
 	// check if a professor is already inserted
 	public function existing_professor($mail) {
 		$query = 'SELECT mail FROM professors WHERE mail = :mail';
@@ -356,7 +365,6 @@ class Db {
 		$ps->execute ();
 		return $ps->rowcount () == 1;
 	}
-	
 	
 	public function existing_course($code) {
 		$query = 'SELECT code FROM courses WHERE code = :code';
@@ -418,7 +426,6 @@ class Db {
 		$ps->bindValue(':attendance', $attendance);
 		$ps->bindValue(':attendance_sheet_id', $attendance_sheet_id);
 		$ps->bindValue(':student_id', $student_id);
-
 		$ps->execute ();
 	}
 }
