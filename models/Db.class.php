@@ -424,9 +424,7 @@ class Db {
 		$ps->execute ();
 		return $ps->rowcount () > 0;
 	}
-	
-<<<<<<< HEAD
-	
+		
 	public function update_student_serie($mail, $serie_id) {
 		$query = 'UPDATE students SET serie_id = :serie_id WHERE mail = :mail';
 		$ps = $this->_db->prepare( $query );
