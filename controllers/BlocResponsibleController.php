@@ -6,64 +6,13 @@ class BlocResponsibleController {
 
 	private $_db;
 	private $_professor;
+	private $_bloc;
+	private $_term;
 	
 	
 	public function __construct($db) {
 		$this->_db = $db;
 		$this->_professor = unserialize($_SESSION['user']);
-	}
-		
-	public function run(){
-// 		user must be an admin or a bloc(s) responsible to access manage a bloc
-		if (empty ( $_SESSION ['authenticated']) || $_SESSION['authenticated'] == 'student' || $_SESSION['authenticated'] == 'professor') {
-			header ( 'Location: index.php?action=login' );
-			die ();
-		}
-		
-		if (isset($_POST['formUEUpload'])) {
-			$update_message = $this->formUE();
-		}
-		
-		if (isset($_POST['formChangeSerie'])) {
-			if (isset($_POST['originSerie']) && isset($_POST['studentMail']) && isset($_POST['destinationSerie'])) {
-				$update_message = $this->formChangeSerie();
-				print_r($_POST);
-			} else {
-				$update_message = array (
-				"error_code" => "danger",
-				"error_message" => "Le changement de série a échoué. Un des paramètres de la requête est manquant."
-				);
-			}
-		}
-		
-		if (isset($_POST['formInsertSerie'])) {
-			if (isset($_POST['studentMail']) && isset($_POST['destinationSerie'])) {
-				$update_message = $this->formChangeSerie();
-				print_r($_POST);
-			} else {
-				$update_message = array (
-				"error_code" => "danger",
-				"error_message" => "Le changement de série a échoué. Un des paramètres de la requête est manquant."
-				);
-			}
-		}
-
-		$action = (isset ( $_GET ['action'] )) ? htmlentities ( $_GET ['action'] ) : 'default';
-		switch ($action) {
-			case 'series':
-				$this->blocResponsibleSeries();
-				break;
-			case 'seance_templates':
-				require_once(PATH_VIEWS . "bloc_responsible_seance_templates.php");
-				break;
-			default:
-				require_once(PATH_VIEWS . "bloc_responsible.php");
-				break;
-		}
-
-	}
-	
-	public function blocResponsibleSeries() {
 		
 		if (!isset($_GET['bloc'])) {
 		
@@ -84,19 +33,74 @@ class BlocResponsibleController {
 			}
 		}
 		
-		$bloc = $_GET['bloc'];
+		$this->_bloc = $_GET['bloc'];
 		
-		$term = 2;
 		
-		$studentsNotInSeries = $this->_db->select_students_not_in_series_from_bloc($bloc);
+		/// STILL HAVE TO MODIFY THIS --> HOW ?
+		$this->_term = 2;
+		
+	}
+		
+	public function run(){
+		
+		
+		$update_message = "";
+ 		// user must be an admin or a bloc(s) responsible to access manage a bloc
+ 		
+		if (empty ( $_SESSION ['authenticated']) || $_SESSION['authenticated'] == 'student' || $_SESSION['authenticated'] == 'professor') {
+			header ( 'Location: index.php?action=login' );
+			die ();
+		}
+		
+		if (isset($_POST['formUEUpload'])) {
+			$update_message = $this->formUE();
+		}
+		
+		if (isset($_POST['formChangeSerie'])) {
+			$update_message = $this->formChangeSerie();
+		}
+		
+		if (isset($_POST['formInsertSerie'])) {
+			$update_message = $this->formInsertSerie();
+		}
+		
+		if (isset($_POST['formAutoFillSeries'])) {
+			$update_message = $this->formAutoFillSeries();
+		}
+
+		$action = (isset ( $_GET ['action'] )) ? htmlentities ( $_GET ['action'] ) : 'default';
+		switch ($action) {
+			case 'series':
+				$this->blocResponsibleSeries($update_message);
+				break;
+			case 'seance_templates':
+				require_once(PATH_VIEWS . "bloc_responsible_seance_templates.php");
+				break;
+			default:
+				require_once(PATH_VIEWS . "bloc_responsible.php");
+				break;
+		}
+
+	}
+	
+	public function blocResponsibleSeries($update_message = "") {
+		
+		$numberStudents = $this->_db->count_students($this->_bloc);
+		
+		$studentsNotInSeries = $this->_db->select_students_not_in_series_from_bloc($this->_bloc);
 		
 		$studentsInSerie[] = "";
 		
-		$series = $this->_db->select_series_from_bloc($bloc, $term);
-		$numberOfSeries = count($series);
+		$series = $this->_db->select_series_from_bloc($this->_bloc, $this->_term);
+		$numberOfSeries = 0;
+		if (is_array($series)) {
+			$numberOfSeries = count($series);
+		} else {
+			$numberOfSeries = 0;
+		}
 		
 		for ($serie = 1; $serie <= $numberOfSeries; $serie++) {
-			$studentsInSerie[] = $this->_db->select_students_serie_bloc($serie, $bloc, $term);
+			$studentsInSerie[] = $this->_db->select_students_serie_bloc($serie, $this->_bloc, $this->_term);
 		}
 		
 		$maxNumberOfStudentsSerie = 0;
@@ -113,18 +117,121 @@ class BlocResponsibleController {
 	}
 	
 	
-	public function formChangeSerie() {
-		return array (
-				"error_code" => "success",
-				"error_message" => "Changement de série."
-		);
+	public function formAutoFillSeries() {
+		
+		if (!$this->_db->existing_series($this->_bloc, $this->_term)) {
+		
+			$numberSeries = htmlspecialchars($_POST['formAutoFillSeries']);
+			$numberStudents = $this->_db->count_students($this->_bloc);
+			
+			$numberStudentsSerie = (int)($numberStudents/$numberSeries);
+			$numberOrphanStudents = $numberStudents%$numberSeries;
+	
+			$students = $this->_db->select_students_bloc($this->_bloc);		
+			
+			for ($serieNumber = 1; $serieNumber <= $numberSeries; $serieNumber++) {
+				$this->_db->insert_serie($this->_term, $this->_bloc, $serieNumber);
+			}
+			
+			$series = $this->_db->select_series_from_bloc($this->_bloc, $this->_term);
+
+			
+			$studentsLeftInThisSerie = $numberStudentsSerie;
+			$serie = 1;
+			$seriePlicPloc = 1;
+	
+			foreach ($students as $key => $student) {
+				if ($studentsLeftInThisSerie == 0) {
+					// Il ne reste plus d'étudiants à insérer
+					// On réintialise le compteur
+					$studentsLeftInThisSerie = $numberStudentsSerie;
+					$serie++;
+				}
+				
+				if ($serie <= $numberSeries) {
+					$this->_db->update_student_serie($student->mail(), $series[$serie-1]->serie_id());
+					$studentsLeftInThisSerie--;
+				} else {
+					$this->_db->update_student_serie($student->mail(), $series[$seriePlicPloc-1]->serie_id());
+					$seriePlicPloc++;
+				}
+			}
+		}
 	}
 	
+	
 	public function formInsertSerie() {
-		return array (
+		
+		if (isset($_POST['studentMail']) && isset($_POST['destinationSerie'])) {
+			
+			$studentMail = htmlspecialchars($_POST['studentMail']);
+			$destinationSerie = htmlspecialchars($_POST['destinationSerie']);
+		
+			$this->_db->update_student_serie($studentMail, $destinationSerie);
+			
+			return array (
 				"error_code" => "success",
-				"error_message" => "Insertion série."
-		);
+				"error_message" => "L'étudiant " . $studentMail . " a bien été placé dans la série " . $destinationSerie
+			);
+		
+		} else {
+			return array (
+				"error_code" => "warning",
+				"error_message" => "L'étudiant n'a pas pu être inséré, paramètre manquant."
+			);
+		}
+		
+		
+	}
+	
+	public function formChangeSerie() {
+		
+		if (isset($_POST['originSerie']) && isset($_POST['studentNumber']) && isset($_POST['destinationSerie'])) {
+			
+			$originSerie = htmlspecialchars($_POST['originSerie']);
+			$studentNumber = htmlspecialchars($_POST['studentNumber']);
+			$destinationSerie = htmlspecialchars($_POST['destinationSerie']);
+			
+			
+			$studentMail = "";
+
+			$arrayStudent = $this->_db->select_students_serie_id($originSerie);
+			
+			
+			foreach ($arrayStudent as $key => $student) {
+				if (($key+1) == $studentNumber) {
+					$studentMail = $student->mail();
+				}
+			}
+			
+			if ($destinationSerie != "delete") {
+			
+				$this->_db->update_student_serie($studentMail, $destinationSerie);
+				
+				return array (
+					"error_code" => "success",
+					"error_message" => "L'étudiant " . $studentMail . " a bien été placé dans la série" . $destinationSerie
+				);
+	
+			} else {
+				
+				$this->_db->update_student_serie_delete($studentMail);
+				
+				
+				return array (
+					"error_code" => "success",
+					"error_message" => "L'étudiant " . $studentMail . " a bien été enlevé de sa série"
+				);
+				
+			}
+		
+		} else {
+			return array (
+				"error_code" => "warning",
+				"error_message" => "L'étudiant n'a pas pu être déplacé, paramètre manquant."
+			);
+		}
+
 	}
 	
 	
