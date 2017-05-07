@@ -31,7 +31,7 @@ class ProfessorController {
 			if (! isset ( $update_message )) {
 				// attendance sheet isn't created yet
 				if (! $this->_db->existing_attendance_sheet ( $_POST ['seance'], $_POST ['week'] )) {
-					$students = $this->_db->select_students_from_course ( $_POST ['seance'], $_POST ['serie'], $_POST ['term'], $_POST ['bloc'] );
+					$students = $this->_db->select_students_from_course ( $_POST ['seance'], $_POST ['serie']); //, $_POST ['term'], $_POST ['bloc'] 
 					$this->_db->insert_attendance_sheet ( $_POST ['seance'], $this->_professor->html_mail(), $_POST ['week']);
 					$this->setAllStudentsAbsent ( $students ); // by default all students are absent
 				}

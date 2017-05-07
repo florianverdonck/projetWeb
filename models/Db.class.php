@@ -207,21 +207,20 @@ class Db {
 		return $array_students;
 	}
 	
-	public function select_students_from_course ($seance_template_id, $serie_numero, $term, $bloc) {
+	public function select_students_from_course ($seance_template_id, $serie_id) {
 		$query = 'SELECT stu.* FROM students stu, seance_templates st, given_seances gs, series se
 				WHERE stu.serie_id = se.serie_id AND gs.serie_id = se.serie_id AND gs.seance_template_id = st.seance_template_id
-				AND st.seance_template_id = :seance_template_id AND se.serie_numero = :serie_numero AND se.term = :term AND stu.bloc = :bloc
+				AND st.seance_template_id = :seance_template_id AND se.serie_id = :serie_id
 				ORDER BY stu.name';
 		$ps = $this->_db->prepare($query);
-		$ps->bindValue(':bloc', $bloc);
 		$ps->bindValue(':seance_template_id', $seance_template_id);
-		$ps->bindValue(':serie_numero', $serie_numero);
-		$ps->bindValue(':term', $term);
+		$ps->bindValue(':serie_id', $serie_id);
 		$ps->execute();
 		$array_students = "";
 		while ( $row = $ps->fetch () ) {
 			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
 		}
+		var_dump($array_students);
 		return $array_students;
 	}	
 	

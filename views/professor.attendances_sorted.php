@@ -36,7 +36,7 @@
 								<label for="inputWeekSelect">Sélectionnez la série </label><br>
 								<select name="serie" class="selectpicker" id="inputSerieSelect">
 									<?php foreach($series as $serie) {?>
-									<option <?php if (isset($_POST['serie']) && $_POST['serie'] == $serie->html_serie_numero()) echo "selected=\"selected\""?>><?php echo $serie->html_serie_numero()?></option>
+									<option value="<?php echo $serie->html_serie_id()?>" <?php if (isset($_POST['serie']) && $_POST['serie'] == $serie->html_serie_id()) echo "selected=\"selected\""?>><?php echo $serie->html_serie_numero()?></option>
 									<?php }?>
 								</select>
 								<br><br>
