@@ -6,78 +6,82 @@
 		<?php include_once(PATH_VIEWS . "navbar.php"); ?>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-10">
+				<?php if ($numberOfSeries > 0) { ?>
+				<div class="col-md-10" id="series">
 					<?php
 						
-					// Loop on each serie available in database and create a "col-md-3" for each
-					for ($serie = 1; $serie <= $numberOfSeries; $serie++) {
-						
-						// If it's a 1, 5, 9, ... serie, it should begin a new row ! Mark it as opened so we are sure we close it at the end
-						if (((($serie-1)%4)) == 0) { $opened = true; ?>
-						
-						<!-- BALISE ROW OUVERTE -->
-						<div class="row">
-							
-						<?php } ?>
 						
 						
-						<div class="col-md-3 col-sm-6">
-							<div class="panel panel-primary">
-								<div class="panel-heading">
-									<h3 class="panel-title">Série <?php echo $serie; ?></h3>
+							// Loop on each serie available in database and create a "col-md-3" for each
+							for ($serie = 1; $serie <= $numberOfSeries; $serie++) {
+								
+								// If it's a 1, 5, 9, ... serie, it should begin a new row ! Mark it as opened so we are sure we close it at the end
+								if (((($serie-1)%4)) == 0) { $opened = true; ?>
+								
+								<!-- BALISE ROW OUVERTE -->
+								<div class="row">
+									
+								<?php } ?>
+								
+								
+								<div class="col-md-3 col-sm-6">
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<h3 class="panel-title">Série <?php echo $serie; ?></h3>
+										</div>
+										<table class="table">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Nom</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php if($studentsInSerie[$serie] != null) { foreach ($studentsInSerie[$serie] as $key => $value){ ?>
+												<tr>
+													<th scope="row"><?=$key+1;?></th>
+													<td><?=$value->name() . " " . $value->first_name();?></td>
+												</tr>
+												<?php } } else { ?>
+												<tr>
+													<th scope="row">0</th>
+													<td>Aucun étudiant</td>
+												</tr>
+												<?php
+												}
+												?>
+											</tbody>
+										</table>
+									</div>
 								</div>
-								<table class="table">
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>Nom</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php if($studentsInSerie[$serie] != null) { foreach ($studentsInSerie[$serie] as $key => $value){ ?>
-										<tr>
-											<th scope="row"><?=$key+1;?></th>
-											<td><?=$value->name() . " " . $value->first_name();?></td>
-										</tr>
-										<?php } } else { ?>
-										<tr>
-											<th scope="row">0</th>
-											<td>Aucun étudiant</td>
-										</tr>
-										<?php
-										}
-										?>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						
-						<?php 
+								
+								<?php 
+									
+									// If it's a 4, 8, ... serie, we should close the "row" opened previously, and mark it as closed !
+									
+									if ((($serie)%4) == 0) { $opened = false; ?>
+								
+									</div> <!-- FERMETURE DE ROW -->
 							
-							// If it's a 4, 8, ... serie, we should close the "row" opened previously, and mark it as closed !
+									<?php } ?>
 							
-							if ((($serie)%4) == 0) { $opened = false; ?>
-						
-							</div> <!-- FERMETURE DE ROW -->
-					
+							<?php
+								
+							// Mark the end of the FOR looping over series	
+								
+							}
+							
+							?>
+							
+							<?php
+								// If the "row wasn't closed previously, close it now. It happens when the counter doens't pass 4 or 8, so it is opened but the row is not full so never closed
+								
+								if ($opened) { ?>
+								
+								</div> <!-- FERMETURE DE ROW AVANT L'HEURE -->
+							
 							<?php } ?>
-					
-					<?php
-						
-					// Mark the end of the FOR looping over series	
-						
-					}
-					
-					?>
-					
-					<?php
-						// If the "row wasn't closed previously, close it now. It happens when the counter doens't pass 4 or 8, so it is opened but the row is not full so never closed
-						
-						if ($opened) { ?>
-						
-						</div> <!-- FERMETURE DE ROW AVANT L'HEURE -->
-					
-					<?php } ?>
+												
 			</div>
 			<div class="col-md-2 col-sm-12">
 				<div class="col-md-2 col-sm-12 affix mobileNotFixed">
@@ -134,6 +138,7 @@
 									<?php foreach ($series as $key => $serie){ ?>
 									<option value="<?=$serie->serie_id()?>">Série <?=$serie->serie_numero()?></option>
 									<?php } ?>
+									<option value="delete">Enlever de la série</option>
 								</select>
 								<br><br>
 								<button class="btn btn-lg btn-primary btn-block" type="submit" name="formChangeSerie">Déplacer<span class="hidden-md"> l'élève</span></button>
@@ -143,6 +148,55 @@
 				</div>
 			</div>
 		</div>
+		<?php
+						
+					// If there is no series
+					
+					} else { ?>
+					
+					<!-- VUE AUCUNE SERIE -->
+					
+						<div class="col-md-12 col-sm-12">
+							
+							<h2 class="pb20">Répartition automatique des étudiants par séries</h2>
+							
+							<div class="panel panel-primary">
+										<div class="panel-heading">
+											<h3 class="panel-title">Aide à la répartition</h3>
+										</div>
+										<form action="index.php?user=bloc_responsible&action=series" method="POST">
+											<table class="table">
+												<thead>
+													<tr>
+														<th>Nombre de séries</th>
+														<?php for ($seriesIterator = 1; $seriesIterator<=12; $seriesIterator++) { ?>
+														<th><?=$seriesIterator?></th>
+														<?php } ?>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<th scope="row">Etudiants par série</th>
+														<?php for ($seriesIterator = 1; $seriesIterator<=12; $seriesIterator++) { ?>
+														<td><?php echo (int)($numberStudents/$seriesIterator) ?></td>
+														<?php } ?>
+													</tr>
+													<tr>
+														<th scope="row">Répartir les étudiants</th>
+														<?php for ($seriesIterator = 1; $seriesIterator<=12; $seriesIterator++) { ?>
+														<td><button class="btn btn-xs btn-primary" name="formAutoFillSeries" value="<?=$seriesIterator?>" type="submit"><?=$seriesIterator?></button></td>
+														<?php } ?>
+													</tr>
+												</tbody>
+											</table>
+										</form>
+									</div>
+
+							
+						</div>
+						
+					<?php } ?>		
+
 		</div>
 		</div>
 		<!-- /container -->
