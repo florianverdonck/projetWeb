@@ -73,7 +73,7 @@ if (!empty($update_message)) {
 		</div>
 	</div>
 <?php
-}	
+} else {
 ?>
-
 <div class="pt30 hidden-xs"></div>
+<?php } ?>
