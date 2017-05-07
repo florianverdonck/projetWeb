@@ -10,7 +10,7 @@ class Week {
 		$this->_term = $term;
 		$this->_monday_date = $monday_date;
 	}
-	public function week_id(){
+	public function week_id() {
 		return $this->_week_id;
 	}
 	public function week_number() {
@@ -21,6 +21,9 @@ class Week {
 	}
 	public function monday_date() {
 		return $this->_monday_date;
+	}
+	public function html_week_id() {
+		return htmlspecialchars ( $this->_week_id );
 	}
 	public function html_week_number() {
 		return htmlspecialchars ( $this->_week_number );

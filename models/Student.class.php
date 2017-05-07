@@ -1,15 +1,21 @@
 <?php
 class Student {
+	private $_student_id;
 	private $_mail;
 	private $_name;
 	private $_first_name;
 	private $_bloc;
-	
-	public function __construct($mail, $name, $first_name, $bloc) {
-		$this->_mail 		= $mail;
-		$this->_name 		= $name;
-		$this->_first_name	= $first_name;
-		$this->_bloc 		= $bloc;
+	private $_attendance;
+	public function __construct($student_id, $mail, $name, $first_name, $bloc, $attendance = '') {
+		$this->_student_id = $student_id;
+		$this->_mail = $mail;
+		$this->_name = $name;
+		$this->_first_name = $first_name;
+		$this->_bloc = $bloc;
+		$this->_attendance = $attendance;
+	}
+	public function student_id() {
+		return $this->_student_id;
 	}
 	public function mail() {
 		return $this->_mail;
@@ -23,6 +29,12 @@ class Student {
 	public function bloc() {
 		return $this->_bloc;
 	}
+	public function attendance() {
+		return $this->_attendance;
+	}
+	public function html_student_id() {
+		return htmlspecialchars ( $this->_student_id );
+	}
 	public function html_mail() {
 		return htmlspecialchars ( $this->_mail );
 	}
@@ -34,5 +46,8 @@ class Student {
 	}
 	public function html_bloc() {
 		return htmlspecialchars ( $this->_bloc );
+	}
+	public function html_attendance() {
+		return htmlspecialchars ( $this->_attendance );
 	}
 }
