@@ -366,3 +366,8 @@ table .btn-default:hover {
 .floatLeft {
 	float: left;
 }
+
+
+#series {
+	font-size: small;
+}
