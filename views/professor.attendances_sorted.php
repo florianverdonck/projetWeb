@@ -51,6 +51,9 @@
 									<label class="btn btn-default <?php if (isset($_POST['attendance_type']) && $_POST['attendance_type'] == 'Noted') echo "active"?> btn-sm">
 										<input type="radio" name="attendance_type" value="Noted" <?php if (isset($_POST['attendance_type']) && $_POST['attendance_type'] == 'Noted') echo "checked=\"checked\""?>>Noté
 									</label>
+									<label class="btn btn-default btn-sm">
+										<input type="radio" name="attendance_type" value="default">Défaut
+									</label>
 								</div>								
 								<br><br>
 								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Filtrer" name="form_sort_attendances">

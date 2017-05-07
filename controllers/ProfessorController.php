@@ -30,34 +30,24 @@ class ProfessorController {
 			// if no error message
 			if (! isset ( $update_message )) {
 				// attendance sheet isn't created yet
-				if (! $this->_db->existing_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] )) {
+				if (! $this->_db->existing_attendance_sheet ( $_POST ['seance'], $_POST ['week'] )) {
 					$students = $this->_db->select_students_from_course ( $_POST ['seance'], $_POST ['serie'], $_POST ['term'], $_POST ['bloc'] );
-					$this->_db->insert_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] );
+					$this->_db->insert_attendance_sheet ( $_POST ['seance'], $_POST ['week'] );
 					$this->setAllStudentsAbsent ( $students ); // by default all students are absent
 				}
 				// by default attendance type is defined by the seance template 
-				if (!isset($_POST['attendance_type'])) {
-					$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] );
+				if (!isset($_POST['attendance_type']) || $_POST['attendance_type'] == 'default') {
+					$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $_POST ['week'] );
 					$seance_template_id = $attendance_sheet->seance_template_id ();
-					var_dump($seance_template_id);
 					$_POST['attendance_type'] = $this->_db->select_attendance_type($seance_template_id);
 				}
 				$students = $this->fetchStudents ();
 			}
 		}
 			
-			// Takes attendances for listed students
+		// Takes attendances for listed students
 		if (! empty ( $_POST ['form_take_attendances'] )) {		
-			$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] );
-			$attendance_sheet_id = $attendance_sheet->attendance_sheet_id ();
-			foreach ( $_POST ['attendance'] as $student => $attendance ) {
-				$st = substr ( ( string ) $student, 1, 4 );
-				$this->_db->update_attendance ( $attendance_sheet_id, $st, $attendance );
-			}
-			$update_message = array (
-					"error_code" => "success",
-					"error_message" => "Les présences ont été enregistrées." 
-			);		
+			$update_message = $this->takeAttendances ( );		
 			$students = $this->fetchStudents ();
 		}
 		
@@ -72,6 +62,20 @@ class ProfessorController {
 		}
 		$sorted_attendances ? require_once (PATH_VIEWS . "professor.attendances_sorted.php") : require_once (PATH_VIEWS . "professor.php");
 	}
+	
+	private function takeAttendances( ) {
+		$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $_POST ['week'] );
+		$attendance_sheet_id = $attendance_sheet->attendance_sheet_id ();
+		foreach ( $_POST ['attendance'] as $student => $attendance ) {
+			$st = substr ( ( string ) $student, 1, 4 );
+			$this->_db->update_attendance ( $attendance_sheet_id, $st, $attendance );
+		}
+		return array (
+				"error_code" => "success",
+				"error_message" => "Les présences ont été enregistrées." 
+		);
+	}
+
 	private function checkPermissions() {
 		if (empty ( $_SESSION ['authenticated'] ) || $_SESSION ['authenticated'] == 'student') {
 			header ( 'Location: index.php?action=login' );
@@ -82,7 +86,7 @@ class ProfessorController {
 		$mail_eleve = $_POST ['student_mail'] . '@student.vinci.be';
 		$student = $this->_db->select_student ( $mail_eleve );
 		$student_id = $student->student_id ();
-		$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] );
+		$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $_POST ['week'] );
 		$attendance_sheet_id = $attendance_sheet->attendance_sheet_id ();
 		if (! $this->_db->existing_attendance ( $attendance_sheet_id, $student_id )) {
 			if ($_POST ['attendance_type'] == 'Noted') {
@@ -103,12 +107,12 @@ class ProfessorController {
 		}
 	}
 	private function fetchStudents() {
-		$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] );
+		$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $_POST ['week'] );
 		$attendance_sheet_id = $attendance_sheet->attendance_sheet_id ();
 		return $this->_db->select_students_from_attendances ( $attendance_sheet_id );
 	}
 	private function setAllStudentsAbsent($students) {
-		$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] );
+		$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $_POST ['week'] );
 		$seance_template_id= $attendance_sheet->attendance_sheet_id ();
 		if (! empty ( $students )) {
 			foreach ( $students as $student ) {

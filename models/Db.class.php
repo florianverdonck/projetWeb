@@ -318,12 +318,11 @@ class Db {
 		return $week;
 	}
 	
-	public function select_attendance_sheet($seance_template_id, $mail, $week_id) {
+	public function select_attendance_sheet($seance_template_id, $week_id) {
 		$query = 'SELECT * FROM attendance_sheets 
-				WHERE seance_template_id = :seance_template_id AND mail = :mail AND week_id = :week_id';
+				WHERE seance_template_id = :seance_template_id AND week_id = :week_id';
 		$ps = $this->_db->prepare ( $query );
 		$ps->bindValue ( ':seance_template_id', $seance_template_id );
-		$ps->bindValue ( ':mail', $mail );
 		$ps->bindValue ( ':week_id', $week_id );
 		$ps->execute ();
 		$row = $ps->fetch ();
@@ -398,12 +397,11 @@ class Db {
 		return $ps->rowcount () > 0;
 	}
 	
-	public function existing_attendance_sheet($seance_template_id, $mail, $week_id) {
+	public function existing_attendance_sheet($seance_template_id, $week_id) {
 		$query = 'SELECT * FROM attendance_sheets 
-				WHERE seance_template_id = :seance_template_id AND mail = :mail AND week_id = :week_id';
+				WHERE seance_template_id = :seance_template_id AND week_id = :week_id';
 		$ps = $this->_db->prepare($query);
 		$ps->bindValue(':seance_template_id', $seance_template_id);
-		$ps->bindValue(':mail', $mail);
 		$ps->bindValue(':week_id', $week_id);
 		$ps->execute ();
 		return $ps->rowcount () > 0;
