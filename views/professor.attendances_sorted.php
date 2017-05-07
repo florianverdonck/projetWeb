@@ -51,8 +51,8 @@
 									<label class="btn btn-default <?php if (isset($_POST['attendance_type']) && $_POST['attendance_type'] == 'Noted') echo "active"?> btn-sm">
 										<input type="radio" name="attendance_type" value="Noted" <?php if (isset($_POST['attendance_type']) && $_POST['attendance_type'] == 'Noted') echo "checked=\"checked\""?>>Noté
 									</label>
-									<label class="btn btn-default btn-sm">
-										<input type="radio" name="attendance_type" value="default">Défaut
+									<label class="btn btn-default <?php if (!isset($_POST['attendance_type'])) echo "active"?> btn-sm">
+										<input type="radio" name="attendance_type" value="default" <?php if (!isset($_POST['attendance_type'])) echo "checked=\"checked\""?>>Défaut
 									</label>
 								</div>								
 								<br><br>
