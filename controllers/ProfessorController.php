@@ -35,28 +35,34 @@ class ProfessorController {
 					$this->_db->insert_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] );
 					$this->setAllStudentsPresent ( $students ); // by default all students are present
 				}
-				$students = $this->fetchStudents ();				
+				$students = $this->fetchStudents ();
 			}
 		}
 		
 		// Takes attendances for listed students
 		if (! empty ( $_POST ['form_take_attendances'] )) {
+			$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] );
+			$attendance_sheet_id = $attendance_sheet->attendance_sheet_id ();
+			foreach ( $_POST ['attendance'] as $student => $attendance) {
+				$st = substr((string)$student, 1,4);
+				$this->_db->update_attendance ( $attendance_sheet_id, $st, $attendance );
+			}
 			$update_message = array (
 					"error_code" => "success",
-					"error_message" => "Les présences ont été prises." 
+					"error_message" => "Les présences ont été enregistrées." 
 			);
 			$students = $this->fetchStudents ();
 		}
 		
 		// Allows the professor to add a student which isn't from the current serie
 		if (! empty ( $_POST ['form_add_student_attendance'] )) {
+			
 			$update_message = $this->formAddErrorMessage ( $students );
 			if ($update_message ['error_code'] == 'success') {
 				$update_message = $this->addStudentAnotherBloc ();
 			}
 			$students = $this->fetchStudents ();
 		}
-		var_dump($_POST['attendance']);
 		$sorted_attendances ? require_once (PATH_VIEWS . "professor.attendances_sorted.php") : require_once (PATH_VIEWS . "professor.php");
 	}
 	private function checkPermissions() {
@@ -66,13 +72,22 @@ class ProfessorController {
 		}
 	}
 	private function addStudentAnotherBloc() {
-		$student = $this->_db->select_student ( $_POST ['student_mail'] );
+		$mail_eleve = $_POST['student_mail'] . '@student.vinci.be';
+		$student = $this->_db->select_student ( $mail_eleve );
 		$student_id = $student->student_id ();
 		$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $this->_professor->mail (), $_POST ['week'] );
 		$attendance_sheet_id = $attendance_sheet->attendance_sheet_id ();
 		if (! $this->_db->existing_attendance ( $attendance_sheet_id, $student_id )) {
-			$this->_db->insert_attendance ( $attendance_sheet_id, $student_id, 'X' );
+			if ($_POST['attendance_type'] == 'Noted') {
+				$this->_db->insert_attendance ( $attendance_sheet_id, $student_id, 0);			
+			} else {
+				$this->_db->insert_attendance ( $attendance_sheet_id, $student_id, 'absent' );
+			}
 			$this->_db->select_students_from_attendances ( $attendance_sheet_id );
+			return array (
+					"error_code" => "success",
+					"error_message" => "L'élève a été ajouté dans la liste en tant qu'absent."
+			);
 		} else {
 			return array (
 					"error_code" => "danger",
@@ -103,7 +118,7 @@ class ProfessorController {
 					"error_message" => "Le mail de l'élève doit être complété." 
 			);
 		}
-		if (! $this->_db->existing_student ( $_POST ['student_mail'] )) {
+		if (! $this->_db->existing_student ( $_POST['student_mail'] . '@student.vinci.be' )) {
 			return array (
 					"error_code" => "danger",
 					"error_message" => "Le mail ne correspond a aucun élève." 

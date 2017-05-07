@@ -226,14 +226,14 @@ class Db {
 	}	
 	
 	public function select_students_from_attendances($attendance_sheet_id) {
-		$query = 'SELECT stu.* FROM students stu, attendances at
-				WHERE at.student_id = stu.student_id AND at.attendance_sheet_id = :attendance_sheet_id';
+		$query = 'SELECT stu.*, at.attendance FROM students stu, attendances at
+				WHERE at.student_id = stu.student_id AND at.attendance_sheet_id = :attendance_sheet_id ORDER BY name';
 		$ps = $this->_db->prepare ( $query );
 		$ps->bindValue ( ':attendance_sheet_id', $attendance_sheet_id );
 		$ps->execute ();
 		$array_students = '';
 		while ( $row = $ps->fetch () ) {
-			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
+			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc, $row->attendance );
 		}
 		return $array_students;
 	}
@@ -321,19 +321,31 @@ class Db {
 	public function select_attendance_sheet($seance_template_id, $mail, $week_id) {
 		$query = 'SELECT * FROM attendance_sheets 
 				WHERE seance_template_id = :seance_template_id AND mail = :mail AND week_id = :week_id';
-		$ps = $this->_db->prepare($query);
-		$ps->bindValue(':seance_template_id', $seance_template_id);
-		$ps->bindValue(':mail', $mail);
-		$ps->bindValue(':week_id', $week_id);
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':seance_template_id', $seance_template_id );
+		$ps->bindValue ( ':mail', $mail );
+		$ps->bindValue ( ':week_id', $week_id );
 		$ps->execute ();
-		$row = $ps->fetch ();		
+		$row = $ps->fetch ();
 		$attendance_sheet = '';
-		if (!empty($row)) {
+		if (! empty ( $row )) {
 			$attendance_sheet = new Attendance_sheet ( $row->attendance_sheet_id, $row->seance_template_id, $row->mail, $row->week_id );
 		}
-		return $attendance_sheet;	
+		return $attendance_sheet;
 	}
-
+	
+	public function select_attendance($attendance_sheet_id, $student_id) {
+		$query = 'SELECT * from attendances WHERE attendance_sheet_id = :attendance_sheet_id AND student_id = :student_id';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':attendance_sheet_id', $attendance_sheet_id );
+		$ps->bindValue ( ':student_id', $student_id );
+		$row = $ps->fetch ();
+		$attendance = '';
+		if (! empty ( $row )) {
+			$attendance = new Attendance ( $row->attendance_id, $row->attendance_sheet_id, $row->student_id, $row->attendance, $row->sick_note );
+		}
+		return $attendance;
+	}
 	
 
 	// check if a professor is already inserted
@@ -397,6 +409,17 @@ class Db {
 		$ps->bindValue(':student_id', $student_id);
 		$ps->execute ();
 		return $ps->rowcount () > 0;
+	}
+	
+	public function update_attendance ($attendance_sheet_id, $student_id, $attendance) {
+		$query = 'UPDATE attendances SET attendance = :attendance 
+				WHERE attendance_sheet_id = :attendance_sheet_id AND student_id = :student_id';
+		$ps = $this->_db->prepare($query);
+		$ps->bindValue(':attendance', $attendance);
+		$ps->bindValue(':attendance_sheet_id', $attendance_sheet_id);
+		$ps->bindValue(':student_id', $student_id);
+
+		$ps->execute ();
 	}
 }
 ?>
