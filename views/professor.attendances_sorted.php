@@ -135,7 +135,7 @@
 								 	<input name="student_mail" type="text" class="form-control" aria-describedby="basic-addon3">
   									<span class="input-group-addon" id="basic-addon3">@student.vinci.be</span>
 								  <div class="input-group-btn">
-								    <input name="form_add_student_attendance" value="Ajouter à la liste" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								    <input name="form_add_student_attendance" value="Ajouter" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 								  </div>
 								</div>
 								<br>
