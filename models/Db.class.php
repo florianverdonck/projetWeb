@@ -110,6 +110,14 @@ class Db {
 		return $array_students;
 	}
 	
+	public function count_students($bloc){
+		$query = 'SELECT count(*) AS numberStudents FROM students WHERE bloc = :bloc';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue(':bloc', $bloc);
+		$ps->execute ();
+		return $ps->fetch()->numberStudents;
+	}
+	
 	public function select_students_bloc($bloc){
 		$query = 'SELECT * FROM students WHERE bloc = :bloc ORDER BY name';
 		$ps = $this->_db->prepare ( $query );
@@ -128,6 +136,18 @@ class Db {
 		$ps->bindValue(':bloc', $bloc);
 		$ps->bindValue(':term', $term);
 		$ps->bindValue(':serie', $serie);
+		$ps->execute ();
+		$array_students = "";
+		while ( $row = $ps->fetch () ) {
+			$array_students [] = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+		}
+		return $array_students;
+	}
+	
+	public function select_students_serie_id($serie_id){
+		$query = 'SELECT * FROM students stu, series ser WHERE stu.serie_id = ser.serie_id AND ser.serie_id = :serie_id ORDER BY name';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue(':serie_id', $serie_id);
 		$ps->execute ();
 		$array_students = "";
 		while ( $row = $ps->fetch () ) {
@@ -282,6 +302,15 @@ class Db {
 		return $ps->rowcount () == 1;
 	}
 	
+	public function existing_series($bloc, $term) {
+		$query = 'SELECT * from series WHERE bloc = :bloc AND term = :term';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue(':bloc', $bloc);
+		$ps->bindValue(':term', $term);
+		$ps->execute ();
+		return $ps->rowcount () == 1;
+	}
+	
 	// check if agenda is created 
 	public function existing_weeks() {
 		$query = 'SELECT * from weeks';
@@ -297,5 +326,25 @@ class Db {
 		$ps->execute ();
 		return $ps->rowcount () > 0;
 	}
+	
+	
+	public function update_student_serie($mail, $serie_id) {
+		$query = 'UPDATE students SET serie_id = :serie_id WHERE mail = :mail';
+		$ps = $this->_db->prepare( $query );
+		$ps->bindValue ( ':serie_id', $serie_id );
+		$ps->bindValue ( ':mail', $mail );
+		$ps->execute ();
+		return true;
+	}
+	
+	public function update_student_serie_delete($mail) {
+		$query = 'UPDATE students SET serie_id = NULL WHERE mail = :mail';
+		$ps = $this->_db->prepare( $query );
+		$ps->bindValue ( ':mail', $mail );
+		$ps->execute ();
+		return true;
+	}
+	
+	
 }
 ?>
