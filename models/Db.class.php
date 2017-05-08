@@ -248,11 +248,11 @@ class Db {
 	
 	public function select_students_from_attendances($attendance_sheet_id, $serie = '') {
 		if ($serie == '') {
-			$query = 'SELECT stu.*, at.attendance FROM students stu, attendances at
+			$query = 'SELECT stu.*, at.attendance, at.sick_note FROM students stu, attendances at
 					WHERE at.student_id = stu.student_id AND at.attendance_sheet_id = :attendance_sheet_id ORDER BY name';
 			$ps = $this->_db->prepare ( $query );
 		} else {
-			$query = 'SELECT stu.*, at.attendance FROM students stu, attendances at
+			$query = 'SELECT stu.*, at.attendance, at.sick_note FROM students stu, attendances at
 					WHERE at.student_id = stu.student_id AND at.attendance_sheet_id = :attendance_sheet_id AND stu.serie_id = :serie
 					ORDER BY name';
 			$ps = $this->_db->prepare ( $query );
@@ -262,7 +262,7 @@ class Db {
 		$ps->execute ();
 		$array_students = '';
 		while ( $row = $ps->fetch () ) {
-			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc, $row->attendance );
+			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc, $row->attendance, $row->sick_note);
 		}
 		return $array_students;
 	}

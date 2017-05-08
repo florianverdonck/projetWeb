@@ -115,7 +115,7 @@
 											<div class="btn-group" data-toggle="buttons">
 											<?php if (isset($_POST['attendance_type'])) { ?>
 											<?php $attendance = $student->html_attendance();
-												  $student_id = $student->student_id();   ?>
+												  $student_id = $student->html_student_id();   ?>
 												<?php if ($_POST['attendance_type'] == 'XO'){ ?>
 												  <label class="btn btn-default <?php if ($attendance == 'active') echo "active"?> btn-sm">
 												    <input value="active" type="radio" name="attendance['<?php echo $student_id?>']" <?php if ($attendance == 'active') echo "checked=\"checked\""?>><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Actif</span>
@@ -141,8 +141,8 @@
 										</td>
 										<td>
 											<div class="btn-group" data-toggle="buttons">
-											  <label class="btn btn-default btn-sm">
-											    <input value="justified" name="sick_note['<?php echo $student->student_id()?>']" type="checkbox" ><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span><span class="hidden-xs"> Justifié</span>
+											  <label class="btn btn-default <?php if ( $student->html_sick_note() == 'justified') echo "active"?> btn-sm">
+											    <input value="justified" name="sick_note['<?php echo $student->student_id()?>']" type="checkbox" <?php if ( $student->html_sick_note() == 'justified') echo "checked=\"checked\""?> ><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span><span class="hidden-xs"> Justifié</span>
 											  </label>
 											</div>
 										</td>
