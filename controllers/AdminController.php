@@ -39,7 +39,7 @@ class AdminController {
 			$fcontents = file ( $destination );
 			// inserts each weeks in the db
 			foreach ( $fcontents as $icontent ) {
-				preg_match ( '/^(.*)_(.*)=(.*)$/', $icontent, $result );
+				preg_match ( '/^q([0-9]+)_semaine([0-9]+)=(.*)$/', $icontent, $result );
 				if (!$this->_db->insert_week($result[2],$result[1],trim($result[3]))){
 					return array (
 							"error_code" => "danger",
