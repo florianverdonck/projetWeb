@@ -492,4 +492,3 @@ class Db {
 		return $ps->execute ();
 	}
 }
-?>
