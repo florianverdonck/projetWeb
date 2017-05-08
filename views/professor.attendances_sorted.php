@@ -18,27 +18,33 @@
 								<input type="hidden" name="term" value="<?php echo $_POST['term']?>">	
 								<label for="seanceTemplateSelect">Sélectionnez la séance type </label><br>
 								<select name="seance" class="selectpicker" id="seanceTemplateSelect">
+								<?php if ($seances_templates != '') { ?>
 									<?php foreach ($seances_templates as $st) { ?>
 										<option value="<?php echo $st->html_seance_template_id() ?>" <?php if (isset($_POST['seance']) && $_POST['seance'] == $st->html_seance_template_id()) echo "selected=\"selected\""?>><?php echo $st->html_name() ?></option>
 									<?php } ?>
+								<?php } ?>
 								</select>
 								<br><br>
 								<label for="inputWeekSelect">Sélectionnez la semaine </label><br>
-								<select name="week" class="selectpicker" id="inputWeekSelect">
-								
-								<?php foreach ($weeks as $w) { ?>
-								<option value="<?php echo $w->html_week_id() ?>" <?php if (isset($_POST['week']) && $_POST['week'] == $w->html_week_id()) echo "selected=\"selected\""?>>
-								<?php echo substr($w->html_week_number(),7,9)?>
-								</option>
+								<select name="week" class="selectpicker" id="inputWeekSelect">	
+								<?php if ($weeks != '') { ?>									
+									<?php foreach ($weeks as $w) { ?>
+									<option value="<?php echo $w->html_week_id() ?>" <?php if (isset($_POST['week']) && $_POST['week'] == $w->html_week_id()) echo "selected=\"selected\""?>>
+									<?php echo $w->html_week_number() ?>
+									</option>
+									<?php } ?>
 								<?php } ?>
 								</select>
 								<br><br>
 								<label for="inputWeekSelect">Sélectionnez la série </label><br>
 								<select name="serie" class="selectpicker" id="inputSerieSelect">
+																
+								<?php if ($series != '') { ?>
 									<option value=""> Toutes les séries
 									<?php foreach($series as $serie) {?>
 									<option value="<?php echo $serie->html_serie_id()?>" <?php if (isset($_POST['serie']) && $_POST['serie'] == $serie->html_serie_id()) echo "selected=\"selected\""?>><?php echo $serie->html_serie_numero()?></option>
 									<?php }?>
+								<?php } ?>
 								</select>
 								<br><br>
 								<label for="inputAttendanceType">Sélectionnez le type de présence </label><br>
