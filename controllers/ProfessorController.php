@@ -31,7 +31,7 @@ class ProfessorController {
 			if (! isset ( $update_message )) {
 				// attendance sheet isn't created yet
 				if (! $this->_db->existing_attendance_sheet ( $_POST ['seance'], $_POST ['week'] )) {
-					$students = $this->_db->select_students_from_course ( $_POST ['seance'], $_POST ['serie']); //, $_POST ['term'], $_POST ['bloc'] 
+					$students = $this->_db->select_students_bloc ( $_POST ['bloc']); 
 					$this->_db->insert_attendance_sheet ( $_POST ['seance'], $this->_professor->html_mail(), $_POST ['week']);
 					$this->setAllStudentsAbsent ( $students ); // by default all students are absent
 				}
@@ -68,6 +68,12 @@ class ProfessorController {
 		foreach ( $_POST ['attendance'] as $student => $attendance ) {
 			$st = substr ( ( string ) $student, 1, 4 );
 			$this->_db->update_attendance ( $attendance_sheet_id, $st, $attendance );
+		}
+		if (isset ( $_POST ['sick_note'])) {
+			foreach ( $_POST ['sick_note'] as $student => $sick_note ) {
+				$st = substr ( ( string ) $student, 1, 4 );
+				$this->_db->update_sick_note ( $attendance_sheet_id, $st, $sick_note );
+			} 
 		}
 		return array (
 				"error_code" => "success",
@@ -113,18 +119,21 @@ class ProfessorController {
 	
 	private function fetchStudents() {
 		$attendance_sheet_id = $this->getAttendanceSheetId ();
-		return $this->_db->select_students_from_attendances ( $attendance_sheet_id );
+		if (! isset ( $_POST ['serie'] )) {
+			return $this->_db->select_students_from_attendances ( $attendance_sheet_id );
+		}
+		return $this->_db->select_students_from_attendances ( $attendance_sheet_id, $_POST ['serie'] );
 	}
 	
 	private function setAllStudentsAbsent($students) {
 		$attendance_sheet_id = $this->getAttendanceSheetId ();
 		if (! empty ( $students )) {
 			foreach ( $students as $student ) {
-// 				if ($_POST ['attendance_type'] == 'Noted') {
-// 					$this->_db->insert_attendance ( $attendance_sheet_id, $student_id, 0 );
-// 				} else {
+				if ($_POST ['attendance_type'] == 'Noted') {
+					$this->_db->insert_attendance ( $attendance_sheet_id, $student_id, 0 );
+				} else {
 					$this->_db->insert_attendance ( $attendance_sheet_id, $student->student_id(), 'absent' );
-// 				}
+				}
 			}
 		}
 	}

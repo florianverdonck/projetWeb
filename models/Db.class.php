@@ -242,12 +242,20 @@ class Db {
 		}
 		var_dump($array_students);
 		return $array_students;
-	}	
+	}
 	
-	public function select_students_from_attendances($attendance_sheet_id) {
-		$query = 'SELECT stu.*, at.attendance FROM students stu, attendances at
-				WHERE at.student_id = stu.student_id AND at.attendance_sheet_id = :attendance_sheet_id ORDER BY name';
-		$ps = $this->_db->prepare ( $query );
+	public function select_students_from_attendances($attendance_sheet_id, $serie = '') {
+		if ($serie == '') {
+			$query = 'SELECT stu.*, at.attendance FROM students stu, attendances at
+					WHERE at.student_id = stu.student_id AND at.attendance_sheet_id = :attendance_sheet_id ORDER BY name';
+			$ps = $this->_db->prepare ( $query );
+		} else {
+			$query = 'SELECT stu.*, at.attendance FROM students stu, attendances at
+					WHERE at.student_id = stu.student_id AND at.attendance_sheet_id = :attendance_sheet_id AND stu.serie_id = :serie
+					ORDER BY name';
+			$ps = $this->_db->prepare ( $query );
+			$ps->bindValue ( ':serie', $serie );
+		}
 		$ps->bindValue ( ':attendance_sheet_id', $attendance_sheet_id );
 		$ps->execute ();
 		$array_students = '';
@@ -470,7 +478,17 @@ class Db {
 		$ps->bindValue(':attendance', $attendance);
 		$ps->bindValue(':attendance_sheet_id', $attendance_sheet_id);
 		$ps->bindValue(':student_id', $student_id);
-		$ps->execute ();
+		return $ps->execute ();
+	}
+	
+	public function update_sick_note ($attendance_sheet_id, $student_id, $sick_note) {
+		$query = 'UPDATE attendances SET sick_note = :sick_note
+				WHERE attendance_sheet_id = :attendance_sheet_id AND student_id = :student_id';
+		$ps = $this->_db->prepare($query);
+		$ps->bindValue(':sick_note', $sick_note);
+		$ps->bindValue(':attendance_sheet_id', $attendance_sheet_id);
+		$ps->bindValue(':student_id', $student_id);
+		return $ps->execute ();
 	}
 }
 ?>
