@@ -30,42 +30,32 @@
 							
 							<label for="inputWeekSelect">Numéro de la semaine</label><br>
 							<select class="selectpicker" id="inputWeekSelect">
-									<option>Semaine n°1</option>
-									<option>Semaine n°2</option>
-									<option>Semaine n°3</option>
-									<option>Semaine n°4</option>
-									<option>Semaine n°5</option>
-									<option>Semaine n°6</option>
-									<option>Semaine n°7</option>
-									<option>Semaine n°8</option>
-									<option>Semaine n°9</option>
+								<?php foreach ($weeks as $key => $week) { ?>
+									<option value="<?=$week->week_id();?>">Semaine n°<?=$week->week_number();?></option>
+								<?php } ?>
 							</select><br><br>
-							
-							<label for="inputSerieSelect">Série concernée</label><br>
-							<select class="selectpicker" id="inputSerieSelect">
-									<option>Série 1</option>
-									<option>Série 2</option>
-									<option>Série 3</option>
-									<option>Série 4</option>
-									<option>Série 5</option>
-									<option>Série 6</option>
-									<option>Série 7</option>
-									<option>Série 8</option>
-									<option>Série 9</option>
-							</select><br><br>
-							
-							<label for="inputTypeOfPresence">Type de présence </label>
-							<div class="btn-group floatRight" data-toggle="buttons" id="inputTypeOfPresence">
+														
+							<label for="inputTypeOfPresence">Type de présence par défaut</label>
+							<div class="btn-group" data-toggle="buttons" id="inputTypeOfPresence">
 							  <label class="btn btn-default active btn-sm">
-							    <input type="radio" name="options">X
+							    <input type="radio" name="presenceType" value="x">X
 							  </label>
 							  <label class="btn btn-default btn-sm">
-							    <input type="radio" name="options">XO
+							    <input type="radio" name="presenceType" value="xo">XO
 							  </label>
 							  <label class="btn btn-default btn-sm">
-							    <input type="radio" name="options">Noté</span>
+							    <input type="radio" name="presenceType" value="noted">Noté</span>
 							  </label>
 							</div><br><br>
+							
+							<label for="inputTypeOfPresence">Séries concernées</label>
+							<div class="btn-group" data-toggle="buttons" id="inputTypeOfPresence">
+							  <label class="btn btn-default active btn-sm">
+							    <input type="radio" name="options">1
+							  </label>
+
+							</div><br><br>
+
 							
 							
 							
