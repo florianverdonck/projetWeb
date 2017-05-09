@@ -36,8 +36,13 @@ class BlocResponsibleController {
 		$this->_bloc = $_GET['bloc'];
 		
 		
-		/// STILL HAVE TO MODIFY THIS --> HOW ?
-		$this->_term = 2;
+		if (!isset($_GET['term'])) {
+		
+			$_GET['term'] = 1;
+			
+		}
+		
+		$this->_term = $_GET['term'];
 		
 	}
 		
@@ -67,6 +72,10 @@ class BlocResponsibleController {
 		if (isset($_POST['formAutoFillSeries'])) {
 			$update_message = $this->formAutoFillSeries();
 		}
+		
+		if (isset($_POST['formAddSeanceTemplate'])) {
+			$update_message = $this->formAddSeanceTemplate();
+		}
 
 		$action = (isset ( $_GET ['action'] )) ? htmlentities ( $_GET ['action'] ) : 'default';
 		switch ($action) {
@@ -74,7 +83,7 @@ class BlocResponsibleController {
 				$this->blocResponsibleSeries($update_message);
 				break;
 			case 'seance_templates':
-				require_once(PATH_VIEWS . "bloc_responsible_seance_templates.php");
+				$this->blocResponsibleSeanceTemplates($update_message);
 				break;
 			default:
 				require_once(PATH_VIEWS . "bloc_responsible.php");
@@ -82,6 +91,24 @@ class BlocResponsibleController {
 		}
 
 	}
+	
+	
+	public function blocResponsibleSeanceTemplates($update_message) {
+		
+		$weeks = $this->_db->select_weeks_term('q' . $this->_term);
+
+		
+		require_once(PATH_VIEWS . "bloc_responsible_seance_templates.php");
+		
+	}
+	
+	
+	public function formAddSeanceTemplate() {
+		
+		
+	}
+	
+	
 	
 	public function blocResponsibleSeries($update_message = "") {
 		
