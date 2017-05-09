@@ -43,29 +43,6 @@
 						</div>
 					</div>
 				</div>
-<!-- 				<div class="col-md-8"> -->
-<!-- 					<div class="panel panel-primary"> -->
-<!-- 						<div class="panel-heading"> -->
-<!-- 							<h3 class="panel-title">Table de présences</h3> -->
-<!-- 						</div> -->
-<!-- 						<table class="table"> -->
-<!-- 							<thead> -->
-<!-- 								<tr> -->
-<!-- 									<th>#</th> -->
-<!-- 									<th>Nom<span class="hidden-xs"> de famille</span></th> -->
-<!-- 									<th>Pré<span class="hidden-xs">nom</span></th>		 -->
-<!-- 									<th>Prés<span class="hidden-xs">ence</span></th> -->
-<!-- 									<th>Cert<span class="hidden-xs">ificat</span></th> -->
-<!-- 								</tr> -->
-<!-- 							</thead> -->
-<!-- 							<tbody> -->
-<!-- 								<tr> -->
-<!-- 									<td colspan="4">Complétez le formulaire pour pouvoir prendre les présences</td> -->
-<!-- 								</tr> -->
-<!-- 							</tbody> -->
-<!-- 						</table> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
 			</div>
 		</div>
 		<!-- /container -->

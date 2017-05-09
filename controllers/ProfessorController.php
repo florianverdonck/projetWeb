@@ -60,8 +60,19 @@ class ProfessorController {
 			}
 			$students = $this->fetchStudents ();
 		}
+		
+		if (! empty ( $_POST['form_search_student'])) {
+			if (empty ($_POST['keyword'])) {
+				$update_message = array (
+						"error_code" => "danger",
+						"error_message" => "Veuillez écrire un mot clé pour la recherche."
+				);
+			}
+			$students = $this->fetchStudents ();
+		}
 		$sorted_attendances ? require_once (PATH_VIEWS . "professor.attendances_sorted.php") : require_once (PATH_VIEWS . "professor.php");
 	}
+	
 	private function takeAttendances() {
 		$attendance_sheet_id = $this->getAttendanceSheetId ();
 		foreach ( $_POST ['attendance'] as $student => $attendance ) {
@@ -117,11 +128,17 @@ class ProfessorController {
 	}
 	
 	private function fetchStudents() {
-		$attendance_sheet_id = $this->getAttendanceSheetId ();
-		if (! isset ( $_POST ['serie'] )) {
+		$attendance_sheet_id = $this->getAttendanceSheetId ();	
+		if ($_POST['serie'] == '' && ! isset ( $_POST ['keyword'] )) {			
 			return $this->_db->select_students_from_attendances ( $attendance_sheet_id );
 		}
-		return $this->_db->select_students_from_attendances ( $attendance_sheet_id, $_POST ['serie'] );
+		if ($_POST['serie'] != '' && ! isset ( $_POST ['keyword'] )) {				
+			return $this->_db->select_students_from_attendances ( $attendance_sheet_id, $_POST ['serie'] );
+		}
+		if ($_POST['serie'] == '' && isset ( $_POST ['keyword'] )) {
+			return $this->_db->select_students_from_attendances ( $attendance_sheet_id, $_POST['serie'], $_POST ['keyword'] );
+		}		
+		return $this->_db->select_students_from_attendances ( $attendance_sheet_id, $_POST ['serie'], $_POST ['keyword'] );
 	}
 	
 	private function setAllStudentsAbsent($students) {

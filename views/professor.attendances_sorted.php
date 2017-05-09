@@ -82,19 +82,40 @@
 								</form>							
 						</div>
 					</div>
-				</div>
+					<?php if (!empty($_POST['seance']) && !empty($_POST['week'])) {?>	
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Recherchez un élève</h3>
+						</div>
+						<div class="panel-body">
+								<form action="index.php?user=professor" method="post"> 									
+									<input type="hidden" name="bloc" value="<?php echo $_POST['bloc']?>">
+									<input type="hidden" name="term" value="<?php echo $_POST['term']?>">
+									<input type="hidden" name="seance" value="<?php if (isset($_POST['seance'])) echo $_POST['seance']?>">
+									<input type="hidden" name="week" value="<?php if (isset($_POST['week'])) echo $_POST['week']?>">
+									<input type="hidden" name="serie" value="<?php if (isset($_POST['serie'])) echo $_POST['serie']?>">
+									<input type="hidden" name="attendance_type" value="<?php if (isset($_POST['attendance_type'])) echo $_POST['attendance_type']?>">
+									<label for="student">Entrez le nom ou prénom de l'élève </label><br>
+									<input name="keyword" type="text" class="form-control">
+									<br>
+									<input class="btn btn-lg btn-primary btn-block" type="submit" value="Rechercher" name="form_search_student">	
+								</form>							
+						</div>
+					</div>
+					<?php } ?>
+				</div>		
 				<div class="col-md-8">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
 							<h3 class="panel-title">Table de présences</h3>
 						</div>
-							<form action="index.php?user=professor" method="post"> 									
-								<input type="hidden" name="bloc" value="<?php echo $_POST['bloc']?>">
-								<input type="hidden" name="term" value="<?php echo $_POST['term']?>">
-								<input type="hidden" name="seance" value="<?php if (isset($_POST['seance'])) echo $_POST['seance']?>">
-								<input type="hidden" name="week" value="<?php if (isset($_POST['week'])) echo $_POST['week']?>">
-								<input type="hidden" name="serie" value="<?php if (isset($_POST['serie'])) echo $_POST['serie']?>">
-								<input type="hidden" name="attendance_type" value="<?php if (isset($_POST['attendance_type'])) echo $_POST['attendance_type']?>">
+						<form action="index.php?user=professor" method="post"> 									
+							<input type="hidden" name="bloc" value="<?php echo $_POST['bloc']?>">
+							<input type="hidden" name="term" value="<?php echo $_POST['term']?>">
+							<input type="hidden" name="seance" value="<?php if (isset($_POST['seance'])) echo $_POST['seance']?>">
+							<input type="hidden" name="week" value="<?php if (isset($_POST['week'])) echo $_POST['week']?>">
+							<input type="hidden" name="serie" value="<?php if (isset($_POST['serie'])) echo $_POST['serie']?>">
+							<input type="hidden" name="attendance_type" value="<?php if (isset($_POST['attendance_type'])) echo $_POST['attendance_type']?>">
 							<table class="table">
 								<thead>
 									<tr>
@@ -134,7 +155,7 @@
 												    <input value="absent" type="radio" name="attendance['<?php echo $student_id?>']" <?php if ($attendance == 'absent') echo "checked=\"checked\""?>><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
 												  </label>
 												 <?php } elseif ($_POST['attendance_type'] == 'Noted') { ?>	
-												    <input value="<?php echo $attendance ?>" type="text" class="form-control" name="attendance['<?php echo $student_id?>']"> 
+												    <input value="<?php if (preg_match('/[0-9]+/', $attendance)) { echo $attendance; } ?>" type="text" class="form-control" name="attendance['<?php echo $student_id?>']">
 												 <?php } ?>	
 											 <?php } ?>						  
 											</div>
@@ -155,7 +176,7 @@
 								<?php } ?>
 								</tbody>
 							</table>
-							<?php if (!empty($_POST['seance'])) {?>
+							<?php if (!empty($_POST['seance']) && !empty($_POST['week'])) {?>	
 							<div class="panel-body">
 								<label for="basic-url">Ajoutez un élève à la liste</label>
 								<div class="input-group">
@@ -169,10 +190,9 @@
 								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Enregistrer" name="form_take_attendances">							
 							</div>
 							<?php } ?>
-							</form> 									
-							
-						</div>					
-					</div>
+						</form> 															
+					</div>					
+				</div>				
 			</div>
 		</div>
 		<!-- /container -->
