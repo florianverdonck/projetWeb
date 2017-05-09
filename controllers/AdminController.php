@@ -17,12 +17,12 @@ class AdminController {
 			$update_message = $this->formProfessors ();
 		}
 		if (! empty ( $_POST ['form_delete'] )) {
-			$update_messag = $this->formDelete ();
+			$update_message = $this->formDeleteData ();
 		}
 		$array_professors = $this->_db->select_professors ();
 		require_once (PATH_VIEWS . 'admin.php');
 	}
-	private function formDelete() {
+	private function formDeleteData() {
 		$tables = array (
 				'attendances',
 				'attendance_sheets',
@@ -99,7 +99,7 @@ class AdminController {
 			);
 		}
 	}
-	private function move_upload_file($destination) {
+	private function moveUploadFile($destination) {
 		move_uploaded_file ( $_FILES ['userfile'] ['tmp_name'], $destination );
 	}
 }
