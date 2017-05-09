@@ -90,7 +90,7 @@
 							<h3 class="panel-title">Editer les séries</h3>
 						</div>
 						<div class="panel-body">
-							<form action="index.php?user=bloc_responsible&action=series" method="POST">
+							<form action="index.php?user=bloc_responsible&action=series&bloc=<?=$this->_bloc;?>&term=<?=$this->_term;?>" method="POST">
 								<label for="inputStudentSelect">Nom de l'élève</label><br>
 								<select class="selectpicker" id="inputStudentSelect" name="studentMail">
 									<?php 
@@ -114,7 +114,7 @@
 							</form>
 						</div>
 						<div class="panel-body">
-							<form action="index.php?user=bloc_responsible&action=series" method="POST">
+							<form action="index.php?user=bloc_responsible&action=series&bloc=<?=$this->_bloc;?>&term=<?=$this->_term;?>" method="POST">
 								<label for="inputWeekSelect">Série de l'étudiant</label><br>
 								<select class="selectpicker dropup" data-dropup-auto="false" id="inputWeekSelect" name="originSerie">
 									<?php foreach ($series as $key => $serie){ ?>
@@ -164,7 +164,7 @@
 										<div class="panel-heading">
 											<h3 class="panel-title">Aide à la répartition</h3>
 										</div>
-										<form action="index.php?user=bloc_responsible&action=series" method="POST">
+										<form action="index.php?user=bloc_responsible&action=series&bloc=<?=$this->_bloc;?>&term=<?=$this->_term;?>" method="POST">
 											<table class="table">
 												<thead>
 													<tr>
