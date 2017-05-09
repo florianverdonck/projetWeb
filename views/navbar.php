@@ -42,6 +42,26 @@
           </ul>
         </li>
         <?php } ?> <!-- student or professor -->
+        
+        <?php if ($_GET['user'] == 'bloc_responsible' && ($_GET['action']=='series' || $_GET['action']=='seance_templates') ) { ?>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bloc / Quadri<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            	<li><a href="#">Blocs</a></li>
+	            <li><a href="index.php?user=bloc_responsible&action=<?=$_GET['action'];?>&bloc=1&term=1">--> Bloc n°1</a></li> 
+	           	<li><a href="index.php?user=bloc_responsible&action=<?=$_GET['action'];?>&bloc=2&term=1">--> Bloc n°2</a></li>
+	           	<li><a href="index.php?user=bloc_responsible&action=<?=$_GET['action'];?>&bloc=3&term=1">--> Bloc n°3</a></li>
+	        
+	        <li role="separator" class="divider"></li>
+	        
+	        	<li><a href="#">Quadrimestre</a></li>
+	            <li><a href="index.php?user=bloc_responsible&action=<?=$_GET['action'];?>&bloc=<?=$this->_bloc;?>&term=1">--> Quadrimestre 1</a></li> 
+	           	<li><a href="index.php?user=bloc_responsible&action=<?=$_GET['action'];?>&bloc=<?=$this->_bloc;?>&term=2">--> Quadrimestre 2</a></li>                     
+          </ul>
+        </li>
+        
+        <?php } ?>
+        
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
