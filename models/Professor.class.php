@@ -5,10 +5,10 @@ class Professor {
 	private $_first_name;
 	private $_responsible;
 	public function __construct($mail, $name, $first_name, $responsible) {
-		$this->_mail = $mail;
-		$this->_name = $name;
-		$this->_first_name = $first_name;
-		$this->_responsible = $responsible;
+		$this->_mail = trim($mail);
+		$this->_name = trim($name);
+		$this->_first_name = trim($first_name);
+		$this->_responsible = trim($responsible);
 	}
 	public function mail() {
 		return $this->_mail;
@@ -23,15 +23,15 @@ class Professor {
 		return $this->_responsible;
 	}
 	public function html_mail() {
-		return htmlspecialchars ( $this->_mail );
+		return htmlspecialchars( $this->_mail );
 	}
 	public function html_name() {
-		return htmlspecialchars ( $this->_name );
+		return htmlspecialchars( $this->_name );
 	}
 	public function html_first_name() {
-		return htmlspecialchars ( $this->_first_name );
+		return htmlspecialchars( $this->_first_name );
 	}
 	public function html_responsible() {
-		return htmlspecialchars ( $this->_responsible );
+		return htmlspecialchars( $this->_responsible );
 	}
 }

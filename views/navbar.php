@@ -43,7 +43,7 @@
         </li>
         <?php } ?> <!-- student or professor -->
         
-        <?php if ($_GET['user'] == 'bloc_responsible' && ($_GET['action']=='series' || $_GET['action']=='seance_templates') ) { ?>
+        <?php if ($_GET['user'] == 'bloc_responsible' && isset($_GET['action']) && ($_GET['action']=='series' || $_GET['action']=='seance_templates')) { ?>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bloc / Quadri<span class="caret"></span></a>
           <ul class="dropdown-menu">

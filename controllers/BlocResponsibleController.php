@@ -28,7 +28,7 @@ class BlocResponsibleController {
 				$_GET['bloc'] = 3;
 			}
 			
-			if ($this->_professor->responsible() == "blocs") {
+			if ($this->_professor->html_responsible() == "blocs") {
 				$_GET['bloc'] = 1;  // Default : for blocs manager -> redirect to Bloc 1 series manager 
 			}
 		}
