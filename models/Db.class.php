@@ -492,7 +492,7 @@ class Db {
 		return $ps->execute ();
 	}
 		
-		// deletes all records
+	// deletes all records
 	public function delete_table($table_name) {
 		$query = 'DELETE FROM ' . $table_name;
 		$ps = $this->_db->prepare ( $query );

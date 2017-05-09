@@ -38,12 +38,36 @@
 					</div>
 					<div class="panel panel-primary">
 						<div class="panel-heading">
-							<h3 class="panel-title">Supprimez les données annuelles</h3>
+							<label class="control-label">Selectionnez les données à supprimer</label>
 						</div>
 						<div class="panel-body">
-							<p>Option pour vider toutes les données annuelles. Soyez prudents.</p>
 							<form action="index.php?user=admin" method="post">
-								<br>
+								<label class="control-label">Selectionnez les données à supprimer</label>
+								<div class="checkbox">
+								  <label>
+								    <input type="checkbox" value="attendances" name="tables[]"> Les présences  
+								  </label>
+								</div>
+								<div class="checkbox">
+								  <label>
+								    <input type="checkbox" value="series" name="tables[]"> Les séries  
+								  </label>
+								</div>
+								<div class="checkbox">
+								  <label>
+								    <input type="checkbox" value="students" name="tables[]"> Les étudiants  
+								  </label>
+								</div>
+								<div class="checkbox">
+								  <label>
+								    <input type="checkbox" value="weeks" name="tables[]"> L'agenda  
+								  </label>
+								</div>
+								<div class="checkbox ">
+								  <label>
+								    <input class="styled" type="checkbox" value="professors" name="tables[]"> Les professeurs  
+								  </label>
+								</div>
 								<input class="btn-danger btn-lg btn-primary btn-block" type="submit" value="Supprimer" name="form_delete">
 							</form>
 						</div>

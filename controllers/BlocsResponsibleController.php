@@ -42,22 +42,18 @@ class BlocsResponsibleController {
 	}
 
 	private function formDeleteData() {
-		$tables = array (
-				'attendances',
-				'attendance_sheets',
-				'weeks',
-				'students',
-				'seance_templates',
-				'given_seances',
-				'series',
-				'courses'
-		);
-		foreach ( $tables as $table ) {
-			$this->_db->delete_table ( $table );
+		if (isset ($_POST['tables'])) {
+			foreach ( $_POST['tables'] as $table ) {
+				$this->_db->delete_table ( $table );
+			}
+			return array (
+					"error_code" => "success",
+					"error_message" => "Toutes les données ont été supprimées."
+			);
 		}
 		return array (
-				"error_code" => "success",
-				"error_message" => "Toutes les données ont été supprimées."
+				"error_code" => "danger",
+				"error_message" => "Aucune donnée n'a été cochée."
 		);
 	}
 	
