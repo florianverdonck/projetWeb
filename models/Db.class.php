@@ -171,10 +171,10 @@ class Db {
 		$query = 'SELECT * FROM students stu, series ser WHERE stu.serie_id = ser.serie_id AND ser.serie_id = :serie_id ORDER BY name';
 		$ps = $this->_db->prepare ( $query );
 		$ps->bindValue(':serie_id', $serie_id);
-		$ps->execute ();
+		$ps->execute();
 		$array_students = "";
-		while ( $row = $ps->fetch () ) {
-			$array_students [] = new Student ( $row->mail, $row->name, $row->first_name, $row->bloc );
+		while ($row = $ps->fetch () ) {
+			$array_students[] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
 		}
 		return $array_students;
 	}
