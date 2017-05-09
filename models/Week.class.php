@@ -14,7 +14,7 @@ class Week {
 		return $this->_week_id;
 	}
 	public function week_number() {
-		return $this->_html_week_number;
+		return $this->_week_number;
 	}
 	public function term() {
 		return $this->_term;
