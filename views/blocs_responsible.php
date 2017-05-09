@@ -28,9 +28,9 @@
 						</div>
 						<div class="panel-body">
 							<p>Option pour vider toutes les données annuelles. Soyez prudents.</p>
-							<form action="index.php?user=admin" method="post">
+							<form action="index.php?user=blocs_responsible" method="post">
 								<br>
-								<input class="btn-danger btn-lg btn-primary btn-block" type="submit" value="Supprimer" name="">
+								<input class="btn-danger btn-lg btn-primary btn-block" type="submit" value="Supprimer" name="formDeleteData">
 							</form>
 						</div>
 					</div>
