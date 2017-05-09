@@ -16,7 +16,9 @@ class BlocsResponsibleController {
 		if (isset($_POST['formStudentsUpload'])) {
 			$update_message = $this->formStudentsUpload();
 		}
-
+		if (isset($_POST['formDeleteData'])) {
+			$update_message = $this->formDeleteData ();
+		}
 
 		$action = (isset ( $_GET ['bloc'] )) ? htmlentities ( $_GET ['bloc'] ) : 'default';
 		switch ($action) {
@@ -39,6 +41,26 @@ class BlocsResponsibleController {
 		}
 	}
 
+	private function formDeleteData() {
+		$tables = array (
+				'attendances',
+				'attendance_sheets',
+				'weeks',
+				'students',
+				'seance_templates',
+				'given_seances',
+				'series',
+				'courses'
+		);
+		foreach ( $tables as $table ) {
+			$this->_db->delete_table ( $table );
+		}
+		return array (
+				"error_code" => "success",
+				"error_message" => "Toutes les données ont été supprimées."
+		);
+	}
+	
 	public function formStudentsUpload() {
 		
 		if (!empty($_FILES['inputStudentsFile']['name'])) {

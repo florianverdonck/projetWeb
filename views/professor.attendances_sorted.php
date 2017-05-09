@@ -18,42 +18,64 @@
 								<input type="hidden" name="term" value="<?php echo $_POST['term']?>">	
 								<label for="seanceTemplateSelect">Sélectionnez la séance type </label><br>
 								<select name="seance" class="selectpicker" id="seanceTemplateSelect">
+								<?php if ($seances_templates != '') { ?>
 									<?php foreach ($seances_templates as $st) { ?>
 										<option value="<?php echo $st->html_seance_template_id() ?>" <?php if (isset($_POST['seance']) && $_POST['seance'] == $st->html_seance_template_id()) echo "selected=\"selected\""?>><?php echo $st->html_name() ?></option>
 									<?php } ?>
+								<?php } ?>
 								</select>
 								<br><br>
 								<label for="inputWeekSelect">Sélectionnez la semaine </label><br>
-								<select name="week" class="selectpicker" id="inputWeekSelect">
-								
-								<?php foreach ($weeks as $w) { ?>
-								<option value="<?php echo $w->html_week_id() ?>" <?php if (isset($_POST['week']) && $_POST['week'] == $w->html_week_id()) echo "selected=\"selected\""?>>
-								<?php echo substr($w->html_week_number(),7,9)?>
-								</option>
+								<select name="week" class="selectpicker" id="inputWeekSelect">	
+								<?php if ($weeks != '') { ?>									
+									<?php foreach ($weeks as $w) { ?>
+									<option value="<?php echo $w->html_week_id() ?>" <?php if (isset($_POST['week']) && $_POST['week'] == $w->html_week_id()) echo "selected=\"selected\""?>>
+									<?php echo $w->html_week_number() ?>
+									</option>
+									<?php } ?>
 								<?php } ?>
 								</select>
 								<br><br>
 								<label for="inputWeekSelect">Sélectionnez la série </label><br>
 								<select name="serie" class="selectpicker" id="inputSerieSelect">
+																
+								<?php if ($series != '') { ?>
+									<option value=""> Toutes les séries
 									<?php foreach($series as $serie) {?>
 									<option value="<?php echo $serie->html_serie_id()?>" <?php if (isset($_POST['serie']) && $_POST['serie'] == $serie->html_serie_id()) echo "selected=\"selected\""?>><?php echo $serie->html_serie_numero()?></option>
 									<?php }?>
+								<?php } ?>
 								</select>
 								<br><br>
 								<label for="inputAttendanceType">Sélectionnez le type de présence </label><br>
 								<div class="btn-group" data-toggle="buttons" id="inputAttendanceType">
-									<label class="btn btn-default <?php if (isset($_POST['attendance_type']) && $_POST['attendance_type'] == 'X') echo "active"?> btn-sm">
-										<input type="radio" name="attendance_type" value="X" <?php if (isset($_POST['attendance_type']) && $_POST['attendance_type'] == 'X') echo "checked=\"checked\""?>>X
+									<?php if (isset($_POST['attendance_type'])) { ?>
+									<label class="btn btn-default <?php if ($_POST['attendance_type'] == 'X') echo "active"?> btn-sm">
+										<input type="radio" name="attendance_type" value="X" <?php if ($_POST['attendance_type'] == 'X') echo "checked=\"checked\""?>>X
 									</label>
-									<label class="btn btn-default <?php if (isset($_POST['attendance_type']) && $_POST['attendance_type'] == 'XO') echo "active"?> btn-sm">
-										<input type="radio" name="attendance_type" value="XO" <?php if (isset($_POST['attendance_type']) && $_POST['attendance_type'] == 'XO') echo "checked=\"checked\""?>>XO
+									<label class="btn btn-default <?php if ($_POST['attendance_type'] == 'XO') echo "active"?> btn-sm">
+										<input type="radio" name="attendance_type" value="XO" <?php if ($_POST['attendance_type'] == 'XO') echo "checked=\"checked\""?>>XO
 									</label>
-									<label class="btn btn-default <?php if (isset($_POST['attendance_type']) && $_POST['attendance_type'] == 'Noted') echo "active"?> btn-sm">
-										<input type="radio" name="attendance_type" value="Noted" <?php if (isset($_POST['attendance_type']) && $_POST['attendance_type'] == 'Noted') echo "checked=\"checked\""?>>Noté
+									<label class="btn btn-default <?php if ($_POST['attendance_type'] == 'Noted') echo "active"?> btn-sm">
+										<input type="radio" name="attendance_type" value="Noted" <?php if ($_POST['attendance_type'] == 'Noted') echo "checked=\"checked\""?>>Noté
 									</label>
-									<label class="btn btn-default <?php if (!isset($_POST['attendance_type'])) echo "active"?> btn-sm">
-										<input type="radio" name="attendance_type" value="default" <?php if (!isset($_POST['attendance_type'])) echo "checked=\"checked\""?>>Défaut
+									<label class="btn btn-default btn-sm">
+										<input type="radio" name="attendance_type" value="default">Défaut
 									</label>
+									<?php } else { ?>
+									<label class="btn btn-default btn-sm">
+										<input type="radio" name="attendance_type" value="X">X
+									</label>
+									<label class="btn btn-default btn-sm">
+										<input type="radio" name="attendance_type" value="XO">XO
+									</label>
+									<label class="btn btn-default btn-sm">
+										<input type="radio" name="attendance_type" value="Noted">Noté
+									</label>
+									<label class="btn btn-default active btn-sm">
+										<input type="radio" name="attendance_type" value="default" checked="checked">Défaut
+									</label>
+									<?php } ?>
 								</div>								
 								<br><br>
 								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Filtrer" name="form_sort_attendances">
@@ -92,33 +114,35 @@
 										<td>
 											<div class="btn-group" data-toggle="buttons">
 											<?php if (isset($_POST['attendance_type'])) { ?>
+											<?php $attendance = $student->html_attendance();
+												  $student_id = $student->html_student_id();   ?>
 												<?php if ($_POST['attendance_type'] == 'XO'){ ?>
-												  <label class="btn btn-default <?php if ($student->html_attendance() == 'active') echo "active"?> btn-sm">
-												    <input value="active" type="radio" name="attendance['<?php echo $student->student_id()?>']" <?php if ($student->html_attendance() == 'active') echo "checked=\"checked\""?>><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Actif</span>
+												  <label class="btn btn-default <?php if ($attendance == 'active') echo "active"?> btn-sm">
+												    <input value="active" type="radio" name="attendance['<?php echo $student_id?>']" <?php if ($attendance == 'active') echo "checked=\"checked\""?>><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Actif</span>
 												  </label>
-												  <label class="btn btn-default <?php if ($student->html_attendance() == 'passive') echo "active"?> btn-sm">
-												    <input value="passive" type="radio" name="attendance['<?php echo $student->student_id()?>']" <?php if ($student->html_attendance() == 'passive') echo "checked=\"checked\""?>><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span><span class="hidden-xs"> Passif</span>
+												  <label class="btn btn-default <?php if ($attendance == 'passive') echo "active"?> btn-sm">
+												    <input value="passive" type="radio" name="attendance['<?php echo $student_id?>']" <?php if ($attendance == 'passive') echo "checked=\"checked\""?>><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span><span class="hidden-xs"> Passif</span>
 												  </label>
-												  <label class="btn btn-default <?php if ($student->html_attendance() == 'absent') echo "active"?> btn-sm">
-												    <input value="absent" type="radio" name="attendance['<?php echo $student->student_id()?>']" <?php if ($student->html_attendance() == 'absent') echo "checked=\"checked\""?>><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
+												  <label class="btn btn-default <?php if ($attendance == 'absent') echo "active"?> btn-sm">
+												    <input value="absent" type="radio" name="attendance['<?php echo $student_id?>']" <?php if ($attendance == 'absent') echo "checked=\"checked\""?>><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
 												  </label>
 												 <?php } elseif ($_POST['attendance_type'] == 'X') { ?>
-												 <label class="btn btn-default <?php if ($student->html_attendance() == 'present') echo "active"?> btn-sm">
-												    <input value="present" type="radio" name="attendance['<?php echo $student->student_id()?>']" <?php if ($student->html_attendance() == 'present') echo "checked=\"checked\""?>><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Present</span>
+												 <label class="btn btn-default <?php if ($attendance == 'present') echo "active"?> btn-sm">
+												    <input value="present" type="radio" name="attendance['<?php echo $student_id?>']" <?php if ($attendance == 'present') echo "checked=\"checked\""?>><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Present</span>
 												  </label>
-												  <label class="btn btn-default <?php if ($student->html_attendance() == 'absent') echo "active"?> btn-sm">
-												    <input value="absent" type="radio" name="attendance['<?php echo $student->student_id()?>']" <?php if ($student->html_attendance() == 'absent') echo "checked=\"checked\""?>><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
+												  <label class="btn btn-default <?php if ($attendance == 'absent') echo "active"?> btn-sm">
+												    <input value="absent" type="radio" name="attendance['<?php echo $student_id?>']" <?php if ($attendance == 'absent') echo "checked=\"checked\""?>><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
 												  </label>
 												 <?php } elseif ($_POST['attendance_type'] == 'Noted') { ?>	
-												    <input value="<?php echo $student->html_attendance() ?>" type="text" class="form-control" name="attendance['<?php echo $student->student_id()?>']"> 
+												    <input value="<?php echo $attendance ?>" type="text" class="form-control" name="attendance['<?php echo $student_id?>']"> 
 												 <?php } ?>	
 											 <?php } ?>						  
 											</div>
 										</td>
 										<td>
 											<div class="btn-group" data-toggle="buttons">
-											  <label class="btn btn-default btn-sm">
-											    <input type="checkbox"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span><span class="hidden-xs"> Justifié</span>
+											  <label class="btn btn-default <?php if ( $student->html_sick_note() == 'justified') echo "active"?> btn-sm">
+											    <input value="justified" name="sick_note['<?php echo $student->student_id()?>']" type="checkbox" <?php if ( $student->html_sick_note() == 'justified') echo "checked=\"checked\""?> ><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span><span class="hidden-xs"> Justifié</span>
 											  </label>
 											</div>
 										</td>
