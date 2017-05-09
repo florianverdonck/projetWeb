@@ -491,4 +491,11 @@ class Db {
 		$ps->bindValue ( ':student_id', $student_id );
 		return $ps->execute ();
 	}
+		
+		// deletes all records
+	public function delete_table($table_name) {
+		$query = 'DELETE FROM ' . $table_name;
+		$ps = $this->_db->prepare ( $query );
+		return $ps->execute ();
+	}
 }
