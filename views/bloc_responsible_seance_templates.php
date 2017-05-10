@@ -15,52 +15,62 @@
 							<h3 class="panel-title">Introduire des seances types</h3>
 						</div>
 						<div class="panel-body">
-							<label for="inputUESelect">UE/AA concernée</label><br>
-							<select class="selectpicker" id="inputUESelect">
-									
-									<?php
+							<form action="index.php?user=bloc_responsible&action=seance_templates&bloc=<?=1;?>&term=<?=$this->_term;?>" method="POST">
+								<label for="inputUESelect">UE/AA concernée</label><br>
+								<select class="selectpicker" id="inputUESelect">
 										
-										foreach ($array_ue as $key => $ue) {
-									
-									?>		
-											<option value="<?=$ue->code();?>"><?=$ue->name();?></option>	
+										<?php
+											
+											foreach ($array_ue as $key => $ue) {
+										
+										?>		
+												<option value="<?=$ue->code();?>"><?=$ue->name();?></option>	
+										<?php		
+											}
+										?>
+								</select><br><br>
+								
+								<label for="inputWeekSelect">Numéro de la semaine</label><br>
+								<select class="selectpicker" id="inputWeekSelect">
+									<?php foreach ($weeks as $key => $week) { ?>
+										<option value="<?=$week->week_id();?>">Semaine n°<?=$week->week_number();?></option>
+									<?php } ?>
+								</select><br><br>
+															
+								<label for="inputTypeOfPresence">Type de présence par défaut</label><br>
+								<div class="btn-group" data-toggle="buttons" id="inputTypeOfPresence">
+								  <label class="btn btn-default active btn-sm">
+								    <input type="radio" name="presenceType" value="x">X
+								  </label>
+								  <label class="btn btn-default btn-sm">
+								    <input type="radio" name="presenceType" value="xo">XO
+								  </label>
+								  <label class="btn btn-default btn-sm">
+								    <input type="radio" name="presenceType" value="noted">Noté</span>
+								  </label>
+								</div><br><br>
+								
+								<label for="inputTypeOfPresence">Séries concernées</label><br>
+								<div class="btn-group" data-toggle="buttons" id="inputTypeOfPresence">
+								  							  
+								  	<?php
+										
+											foreach ($array_series as $key => $serie) {
+										
+										?>		
+											<label class="btn btn-default btn-sm">
+												<input type="radio" name="seriesSelected" value="<?=$serie->serie_id();?>"><?=$serie->serie_numero();?>
+											 </label>
 									<?php		
 										}
 									?>
-							</select><br><br>
-							
-							<label for="inputWeekSelect">Numéro de la semaine</label><br>
-							<select class="selectpicker" id="inputWeekSelect">
-								<?php foreach ($weeks as $key => $week) { ?>
-									<option value="<?=$week->week_id();?>">Semaine n°<?=$week->week_number();?></option>
-								<?php } ?>
-							</select><br><br>
-														
-							<label for="inputTypeOfPresence">Type de présence par défaut</label>
-							<div class="btn-group" data-toggle="buttons" id="inputTypeOfPresence">
-							  <label class="btn btn-default active btn-sm">
-							    <input type="radio" name="presenceType" value="x">X
-							  </label>
-							  <label class="btn btn-default btn-sm">
-							    <input type="radio" name="presenceType" value="xo">XO
-							  </label>
-							  <label class="btn btn-default btn-sm">
-							    <input type="radio" name="presenceType" value="noted">Noté</span>
-							  </label>
-							</div><br><br>
-							
-							<label for="inputTypeOfPresence">Séries concernées</label>
-							<div class="btn-group" data-toggle="buttons" id="inputTypeOfPresence">
-							  <label class="btn btn-default active btn-sm">
-							    <input type="radio" name="options">1
-							  </label>
-
-							</div><br><br>
-
-							
-							
-							
-							<button class="btn btn-lg btn-primary btn-block" type="submit">Ajouter la séance type</button>
+								    
+								 
+	
+								</div><br><br>
+	
+								<button class="btn btn-lg btn-primary btn-block" type="submit">Ajouter la séance type</button>
+							</form>
 						</div>
 					</div>
 				</div>
