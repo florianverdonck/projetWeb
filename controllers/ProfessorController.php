@@ -75,9 +75,11 @@ class ProfessorController {
 	
 	private function takeAttendances() {
 		$attendance_sheet_id = $this->getAttendanceSheetId ();
-		foreach ( $_POST ['attendance'] as $student => $attendance ) {
-			$st = substr ( ( string ) $student, 1, 4 );
-			$this->_db->update_attendance ( $attendance_sheet_id, $st, $attendance );
+		if (isset ( $_POST ['attendance'] )) {
+			foreach ( $_POST ['attendance'] as $student => $attendance ) {
+				$st = substr ( ( string ) $student, 1, 4 );
+				$this->_db->update_attendance ( $attendance_sheet_id, $st, $attendance );
+			}
 		}
 		if (isset ( $_POST ['sick_note'] )) {
 			foreach ( $_POST ['sick_note'] as $student => $sick_note ) {
@@ -132,7 +134,7 @@ class ProfessorController {
 		if ($_POST['serie'] == '' && ! isset ( $_POST ['keyword'] )) {			
 			return $this->_db->select_students_from_attendances ( $attendance_sheet_id );
 		}
-		if ($_POST['serie'] != '' && ! isset ( $_POST ['keyword'] )) {				
+		if ($_POST['serie'] != '' && ! isset ( $_POST ['keyword'] )) {			
 			return $this->_db->select_students_from_attendances ( $attendance_sheet_id, $_POST ['serie'] );
 		}
 		if ($_POST['serie'] == '' && isset ( $_POST ['keyword'] )) {
@@ -152,6 +154,15 @@ class ProfessorController {
 				}
 			}
 		}
+	}
+	
+	private function last_monday($date) {
+		if (! is_numeric ( $date ))
+			$date = strtotime ( $date );
+		if (date ( 'w', $date ) == 1)
+			return $date;
+		else
+			return strtotime ( 'last monday', $date );
 	}
 	
 	// returns error messages if inputs aren't set
