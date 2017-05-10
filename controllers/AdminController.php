@@ -46,13 +46,14 @@ class AdminController {
 						"error_message" => "Le fichier doit avoir une extension .properties." 
 				);
 			}
-			// saves agenda file to conf directory
+		// saves agenda file to conf directory
 			$destination = 'conf/agenda.properties';
 			$this->move_upload_file ( $destination );
 			// inserts each weeks in the db
 			$csvFile = file ( $destination );
 			foreach ( $csvFile as $line ) {
 				preg_match ( '/^q([0-9]+)_semaine([0-9]+)=(.*)$/', $line, $result );
+				$result[2] = substr($result[2], 0, 6);
 				if (! $this->_db->insert_week ( $result [2], $result [1], trim ( $result [3] ) )) {
 					return array (
 							"error_code" => "danger",
