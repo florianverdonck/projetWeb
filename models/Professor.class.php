@@ -5,10 +5,10 @@ class Professor {
 	private $_first_name;
 	private $_responsible;
 	public function __construct($mail, $name, $first_name, $responsible) {
-		$this->_mail = trim($mail);
-		$this->_name = trim($name);
-		$this->_first_name = trim($first_name);
-		$this->_responsible = trim($responsible);
+		$this->_mail = $mail;
+		$this->_name = $name;
+		$this->_first_name = $first_name;
+		$this->_responsible = $responsible;
 	}
 	public function mail() {
 		return $this->_mail;
