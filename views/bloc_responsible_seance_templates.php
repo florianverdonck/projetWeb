@@ -17,16 +17,17 @@
 						<div class="panel-body">
 							<label for="inputUESelect">UE/AA concernée</label><br>
 							<select class="selectpicker" id="inputUESelect">
-									<option>Algo</option>
-									<option>SD</option>
-									<option>Math2</option>
-									<option>Math1</option>
-									<option>Linux</option>
-									<option>Systèmes d'exploitation</option>
-									<option>Web</option>
-									<option>Projet Web</option>
-									<option>Anglais</option>
-								</select><br><br>
+									
+									<?php
+										
+										foreach ($array_ue as $key => $ue) {
+									
+									?>		
+											<option value="<?=$ue->code();?>"><?=$ue->name();?></option>	
+									<?php		
+										}
+									?>
+							</select><br><br>
 							
 							<label for="inputWeekSelect">Numéro de la semaine</label><br>
 							<select class="selectpicker" id="inputWeekSelect">

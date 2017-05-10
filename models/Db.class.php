@@ -124,6 +124,19 @@ class Db {
 		return $array_professors;
 	}
 	
+	public function select_courses_bloc_term($bloc, $term) {
+		$query = 'SELECT * FROM courses WHERE bloc = :bloc AND term = :term';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':bloc', $bloc );
+		$ps->bindValue ( ':term', $term );
+		$ps->execute();
+		$array_courses = "";
+		while ( $row = $ps->fetch () ) {
+			$array_courses [] = new Course ( $row->code, $row->name, $row->term, $row->ECTs, $row->bloc, $row->abbreviation, $row->course_unit_learning_activity);
+		}
+		return $array_courses;
+	}
+	
 	public function select_students() {
 		$query = 'SELECT * FROM students ORDER BY bloc, name';
 		$ps = $this->_db->prepare ( $query );

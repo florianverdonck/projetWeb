@@ -97,6 +97,9 @@ class BlocResponsibleController {
 		
 		$weeks = $this->_db->select_weeks_term('q' . $this->_term);
 
+		$array_ue = $this->_db->select_courses_bloc_term($this->_bloc, $this->_term);
+		
+		print_r($array_ue);
 		
 		require_once(PATH_VIEWS . "bloc_responsible_seance_templates.php");
 		
