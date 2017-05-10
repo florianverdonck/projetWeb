@@ -125,7 +125,7 @@ class Db {
 	}
 	
 	public function select_students() {
-		$query = 'SELECT * FROM students ORDER BY name';
+		$query = 'SELECT * FROM students ORDER BY bloc, name';
 		$ps = $this->_db->prepare ( $query );
 		$ps->execute ();
 		$array_students = "";
@@ -246,7 +246,7 @@ class Db {
 	}
 	
 	public function select_students_from_attendances($attendance_sheet_id, $serie = '', $keyword = '') {
-		if ($serie == '' && $keyword == '') {
+		if ($serie == '' && $keyword == '') {				
 			$query = 'SELECT stu.*, at.attendance, at.sick_note FROM students stu, attendances at
 					WHERE at.student_id = stu.student_id AND at.attendance_sheet_id = :attendance_sheet_id ORDER BY name';
 			$ps = $this->_db->prepare ( $query );
@@ -256,7 +256,7 @@ class Db {
 					ORDER BY name';
 			$ps = $this->_db->prepare ( $query );
 			$ps->bindValue ( ':serie', $serie );
-		} elseif ($serie == '' && $keyword != '') {				
+		} elseif ($serie == '' && $keyword != '') {					
 			$query = 'SELECT stu.*, at.attendance, at.sick_note FROM students stu, attendances at
 					WHERE at.student_id = stu.student_id AND at.attendance_sheet_id = :attendance_sheet_id 
 					AND (stu.name LIKE :keyword OR stu.first_name LIKE :keyword)
