@@ -27,11 +27,11 @@
 							<label class="control-label">Selectionnez les données à supprimer</label>
 						</div>
 						<div class="panel-body">
-							<form action="index.php?user=admin" method="post">
+							<form action="index.php?user=blocs_responsible" method="post">
 								<label class="control-label">Selectionnez les données à supprimer</label>
 								<div class="checkbox">
 								  <label>
-								    <input type="checkbox" value="attendances" name="tables[]"> Les présences  
+								    <input type="checkbox" value="attendance_sheets" name="tables[]"> Les présences  
 								  </label>
 								</div>
 								<div class="checkbox">
@@ -54,7 +54,7 @@
 								    <input class="styled" type="checkbox" value="professors" name="tables[]"> Les professeurs  
 								  </label>
 								</div>
-								<input class="btn-danger btn-lg btn-primary btn-block" type="submit" value="Supprimer" name="form_delete">
+								<input class="btn-danger btn-lg btn-primary btn-block" type="submit" value="Supprimer" name="formDeleteData">
 							</form>
 						</div>
 					</div>
