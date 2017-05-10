@@ -95,12 +95,12 @@ class BlocResponsibleController {
 	
 	public function blocResponsibleSeanceTemplates($update_message) {
 		
-		$weeks = $this->_db->select_weeks_term('q' . $this->_term);
+		$weeks = $this->_db->select_weeks_term($this->_term);
 
 		$array_ue = $this->_db->select_courses_bloc_term($this->_bloc, $this->_term);
 		
-		print_r($array_ue);
-		
+		$array_series = $this->_db->select_series_from_bloc($this->_bloc, $this->_term);
+			
 		require_once(PATH_VIEWS . "bloc_responsible_seance_templates.php");
 		
 	}
