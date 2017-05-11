@@ -9,7 +9,7 @@ class AdminController {
 			header ( 'Location: index.php?action=login' );
 			die ();
 		}
-		$update_message = '';
+		$update_message = '';	
 		if (! empty ( $_POST ['form_agenda'] )) {
 			$update_message = $this->formAgenda ();
 		}
@@ -22,23 +22,16 @@ class AdminController {
 		$array_professors = $this->_db->select_professors ();
 		require_once (PATH_VIEWS . 'admin.php');
 	}
-	private function formDeleteData() {
-		if (isset ($_POST['tables'])) {
-			foreach ( $_POST['tables'] as $table ) {
-				$this->_db->delete_table ( $table );
-			}
-			return array (
-					"error_code" => "success",
-					"error_message" => "Toutes les données ont été supprimées." 
-			);
-		}
-		return array (
-				"error_code" => "danger",
-				"error_message" => "Aucune donnée n'a été cochée."
-		);
-	}
+	
+	// inserts a new agenda 
 	private function formAgenda() {
 		if (! empty ( $_FILES ['userfile'] ['name'] )) {
+			if ($this->_db->existing_weeks()) {
+				return array (
+						"error_code" => "danger",
+						"error_message" => "Les données de l'année doivent être supprimées pour upload un nouvel agenda."
+				);
+			}
 			// checks if file extension is properties
 			if (! preg_match ( '/\.properties/', $_FILES ['userfile'] ['name'] )) {
 				return array (
@@ -67,6 +60,8 @@ class AdminController {
 			);
 		}
 	}
+	
+	// inserts professors
 	private function formProfessors() {
 		if (! empty ( $_FILES ['userfile'] ['name'] )) {
 			// checks if file extension is csv
@@ -96,6 +91,8 @@ class AdminController {
 			);
 		}
 	}
+	
+	// upload a file 
 	private function move_upload_file($destination) {
 		move_uploaded_file ( $_FILES ['userfile'] ['tmp_name'], $destination );
 	}
