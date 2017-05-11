@@ -319,6 +319,21 @@ class Db {
 		return $array_seance_template;
 	}
 	
+	
+	public function select_given_seance_templates($bloc, $term) {
+		$query = 'SELECT gs.*, st.*, c.code, c.term, c.bloc FROM given_seances gs, seance_templates st, courses c WHERE gs.seance_template_id = st.seance_template_id AND st.code = c.code AND c.bloc = :bloc AND c.term = :term';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':bloc', $bloc );
+		$ps->bindValue ( ':term', $term );
+		$ps->execute ();
+		$array_seance_template = '';
+		while ( $row = $ps->fetch () ) {
+			$array_seance_template [] = new seance_template ( $row->seance_template_id, $row->name, $row->attendance_type );
+		}
+		return $array_seance_template;
+	}
+	
+	
 	public function select_weeks_term($term) {
 		$query = 'SELECT * FROM weeks WHERE term = :term';
 		$ps = $this->_db->prepare ( $query );
