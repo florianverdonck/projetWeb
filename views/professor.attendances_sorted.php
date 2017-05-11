@@ -31,13 +31,13 @@
 									<?php if (isset($_POST['week'])) {?>								
 										<?php foreach ($weeks as $week) { ?>
 											<option value="<?php echo $week->html_week_id() ?>" <?php if ($_POST['week'] == $week->html_week_id()) echo "selected=\"selected\""?>>
-											<?php echo $week->html_week_number() ?>
+											Semaine n°<?php echo $week->html_week_number() ?>
 											</option>
 										<?php } ?>								
 									<?php } else { ?>
 										<?php foreach ($weeks as $week) { ?>
 											<option value="<?php echo $week->html_week_id() ?>" <?php if ($week->html_week_number() == $current_week->html_week_number()) echo "selected=\"selected\""?>>
-											<?php echo $week->html_week_number() ?>
+											Semaine n°<?php echo $week->html_week_number() ?>
 											</option>
 										<?php } ?>
 									<?php } ?>									
@@ -50,7 +50,8 @@
 								<?php if ($series != '') { ?>
 									<option value=""> Toutes les séries
 									<?php foreach($series as $serie) {?>
-									<option value="<?php echo $serie->html_serie_id()?>" <?php if (isset($_POST['serie']) && $_POST['serie'] == $serie->html_serie_id()) echo "selected=\"selected\""?>><?php echo $serie->html_serie_numero()?></option>
+									<option value="<?php echo $serie->html_serie_id()?>" <?php if (isset($_POST['serie']) && $_POST['serie'] == $serie->html_serie_id()) echo "selected=\"selected\""?>>
+									Série n°<?php echo $serie->html_serie_numero()?></option>
 									<?php }?>
 								<?php } ?>
 								</select>
