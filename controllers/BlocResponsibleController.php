@@ -49,9 +49,6 @@ class BlocResponsibleController {
 	public function run(){
 		
 		
-		print_r($_GET);
-		print_r($_POST);
-		
 		$update_message = "";
  		// user must be an admin or a bloc(s) responsible to access manage a bloc
  		
@@ -106,19 +103,12 @@ class BlocResponsibleController {
 		
 		$array_seances_templates = $this->_db->select_seance_templates_grouped($this->_bloc, $this->_term);
 		
-		echo "<pre>";
-		print_r($array_seances_templates);
-		echo "</pre>";
-		
 		require_once(PATH_VIEWS . "bloc_responsible_seance_templates.php");
 		
 	}
 	
 	
 	public function formAddSeanceTemplate() {
-		
-		print_r($_GET);
-		print_r($_POST);
 		
 	}
 	
@@ -299,7 +289,7 @@ class BlocResponsibleController {
 						
 				$name = $result[1];
 				$code = $result[2];
-				$term = $result[3];
+				$term = str_replace("Q", "", $result[3]);
 				$course_unit_learning_activity = $result[4];
 				$ects = $result[5];
 				
