@@ -64,8 +64,16 @@
 									<?php		
 										}
 									?>
-								    
-								 
+									
+					
+	
+								</div>
+								
+								<div class="btn-group" data-toggle="buttons" id="inputTypeOfPresence">
+								  							  
+											<label class="btn btn-default btn-sm">
+												<input type="radio" name="seriesSelected" value="all">Toutes les séries
+											 </label>
 	
 								</div><br><br>
 	
