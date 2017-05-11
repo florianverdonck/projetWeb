@@ -11,6 +11,7 @@ class ProfessorController {
 		$this->checkPermissions ();
 		
 		// variables for view
+		$current_week = $this->searchCurrentWeek();
 		$sorted_attendances = false;
 		$update_message = $students = $seances_templates = '';
 		$seances_created = $this->_db->existing_seances ();
@@ -71,6 +72,15 @@ class ProfessorController {
 			$students = $this->fetchStudents ();
 		}
 		$sorted_attendances ? require_once (PATH_VIEWS . "professor.attendances_sorted.php") : require_once (PATH_VIEWS . "professor.php");
+	}
+	
+	private function searchCurrentWeek() {
+		$date = date('Y-m-d', strtotime( 'monday this week' ));
+		$monday_date = date_format(new DateTime($date), 'd/m/Y'); // format
+		if (substr($monday_date, 0, 1) == '0') {
+			$monday_date = substr($monday_date, 1);
+		}
+		return $this->_db->select_week_number($monday_date);
 	}
 	
 	private function takeAttendances() {
@@ -154,15 +164,6 @@ class ProfessorController {
 				}
 			}
 		}
-	}
-	
-	private function last_monday($date) {
-		if (! is_numeric ( $date ))
-			$date = strtotime ( $date );
-		if (date ( 'w', $date ) == 1)
-			return $date;
-		else
-			return strtotime ( 'last monday', $date );
 	}
 	
 	// returns error messages if inputs aren't set

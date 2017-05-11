@@ -27,12 +27,20 @@
 								<br><br>
 								<label for="inputWeekSelect">Sélectionnez la semaine </label><br>
 								<select name="week" class="selectpicker" id="inputWeekSelect">	
-								<?php if ($weeks != '') { ?>									
-									<?php foreach ($weeks as $w) { ?>
-									<option value="<?php echo $w->html_week_id() ?>" <?php if (isset($_POST['week']) && $_POST['week'] == $w->html_week_id()) echo "selected=\"selected\""?>>
-									<?php echo $w->html_week_number() ?>
-									</option>
-									<?php } ?>
+								<?php if ($weeks != '') { ?>
+									<?php if (isset($_POST['week'])) {?>								
+										<?php foreach ($weeks as $week) { ?>
+											<option value="<?php echo $week->html_week_id() ?>" <?php if ($_POST['week'] == $week->html_week_id()) echo "selected=\"selected\""?>>
+											<?php echo $week->html_week_number() ?>
+											</option>
+										<?php } ?>								
+									<?php } else { ?>
+										<?php foreach ($weeks as $week) { ?>
+											<option value="<?php echo $week->html_week_id() ?>" <?php if ($week->html_week_number() == $current_week->html_week_number()) echo "selected=\"selected\""?>>
+											<?php echo $week->html_week_number() ?>
+											</option>
+										<?php } ?>
+									<?php } ?>									
 								<?php } ?>
 								</select>
 								<br><br>
