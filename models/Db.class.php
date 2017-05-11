@@ -326,11 +326,11 @@ class Db {
 		$ps->bindValue ( ':bloc', $bloc );
 		$ps->bindValue ( ':term', $term );
 		$ps->execute ();
-		$array_seance_template = '';
+		$array_given_seance_templates = '';
 		while ( $row = $ps->fetch () ) {
-			$array_seance_template [] = new seance_template ( $row->seance_template_id, $row->name, $row->attendance_type );
+			$array_given_seance_templates [] = new GivenSeance ($row->given_seance_id, $row->seance_template_id, $row->serie_id, $row->name, $row->attendance_type, $row->code, $row->term, $row->bloc);
 		}
-		return $array_seance_template;
+		return $array_given_seance_templates;
 	}
 	
 	

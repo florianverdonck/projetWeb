@@ -103,7 +103,12 @@ class BlocResponsibleController {
 		$array_ue = $this->_db->select_courses_bloc_term($this->_bloc, $this->_term);
 		
 		$array_series = $this->_db->select_series_from_bloc($this->_bloc, $this->_term);
-			
+		
+		$array_given_seances = $this->_db->select_given_seance_templates($this->_bloc, $this->_term);
+		
+		echo "<pre>";
+		print_r($array_given_seances);
+		echo "</pre>";
 		require_once(PATH_VIEWS . "bloc_responsible_seance_templates.php");
 		
 	}
