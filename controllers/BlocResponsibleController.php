@@ -49,6 +49,9 @@ class BlocResponsibleController {
 	public function run(){
 		
 		
+		print_r($_GET);
+		print_r($_POST);
+		
 		$update_message = "";
  		// user must be an admin or a bloc(s) responsible to access manage a bloc
  		
@@ -108,6 +111,8 @@ class BlocResponsibleController {
 	
 	public function formAddSeanceTemplate() {
 		
+		print_r($_GET);
+		print_r($_POST);
 		
 	}
 	
