@@ -374,6 +374,21 @@ class Db {
 		return $week;
 	}
 	
+	// select a week according its monday date 
+	public function select_week_number($monday_date) {
+		$query = 'SELECT * FROM weeks
+				WHERE monday_date = :monday_date';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':monday_date', $monday_date );
+		$ps->execute ();
+		$row = $ps->fetch ();
+		$week = '';
+		if (! empty ( $row )) {
+			$week = new Week ( $row->week_id, $row->week_number, $row->term, $row->monday_date );
+		}
+		return $week;
+	}
+	
 	public function select_attendance_sheet($seance_template_id, $week_id) {
 		$query = 'SELECT * FROM attendance_sheets 
 				WHERE seance_template_id = :seance_template_id AND week_id = :week_id';
