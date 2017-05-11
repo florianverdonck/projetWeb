@@ -321,19 +321,21 @@ class Db {
 	
 	
 	public function select_seance_templates_grouped($bloc, $term) {
-		$query = 'SELECT gs.*, st.*, c.name as ue_name, c.code, c.term, c.bloc FROM given_seances gs, seance_templates st, courses c WHERE gs.seance_template_id = st.seance_template_id AND st.code = c.code AND c.bloc = :bloc AND c.term = :term GROUP BY st.seance_template_id';
-		$ps = $this->_db->prepare ( $query );
-		$ps->bindValue ( ':bloc', $bloc );
-		$ps->bindValue ( ':term', $term );
-		$ps->execute ();
-		$array_seance_templates_series = '';
-		$series[] = "";
-		while ( $row = $ps->fetch () ) {
-			$series = $this->select_series_involved_seance($row->seance_template_id);
-			$array_seance_templates_series [] = new SeanceTemplate($row->seance_template_id, $row->name, $row->ue_name, $row->attendance_type, $series);
-		}
-		return $array_seance_templates_series;
-	}
+        $query = 'SELECT DISTINCT gs.seance_template_id, st.seance_template_id as st_seance_template_id, st.code, st.attendance_type, st.name, c.name as ue_name, c.code, c.term, c.bloc
+                FROM given_seances gs, seance_templates st, courses c
+                WHERE gs.seance_template_id = st.seance_template_id AND st.code = c.code AND c.bloc = :bloc AND c.term = :term';
+        $ps = $this->_db->prepare ( $query );
+        $ps->bindValue ( ':bloc', $bloc );
+        $ps->bindValue ( ':term', $term );
+        $ps->execute ();
+        $array_seance_templates_series = '';
+        $series[] = "";
+        while ( $row = $ps->fetch () ) {
+            $series = $this->select_series_involved_seance($row->seance_template_id);
+            $array_seance_templates_series [] = new SeanceTemplate($row->seance_template_id, $row->name, $row->ue_name, $row->attendance_type, $series);
+        }
+        return $array_seance_templates_series;
+    }
 	
 	
 	public function select_series_involved_seance($seance_template_id) {
