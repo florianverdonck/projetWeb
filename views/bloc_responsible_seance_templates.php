@@ -17,7 +17,7 @@
 						<div class="panel-body">
 							<form action="index.php?user=bloc_responsible&action=seance_templates&bloc=<?=1;?>&term=<?=$this->_term;?>" method="POST">
 								<label for="inputUESelect">UE/AA concernée</label><br>
-								<select class="selectpicker" id="inputUESelect">
+								<select class="selectpicker" id="inputUESelect" name="inputUESelect">
 										
 										<?php
 											
@@ -31,7 +31,7 @@
 								</select><br><br>
 								
 								<label for="inputWeekSelect">Numéro de la semaine</label><br>
-								<select class="selectpicker" id="inputWeekSelect">
+								<select class="selectpicker" id="inputWeekSelect" name="inputWeekSelect">
 									<?php foreach ($weeks as $key => $week) { ?>
 										<option value="<?=$week->week_id();?>">Semaine n°<?=$week->week_number();?></option>
 									<?php } ?>
