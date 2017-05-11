@@ -320,17 +320,35 @@ class Db {
 	}
 	
 	
-	public function select_given_seance_templates($bloc, $term) {
-		$query = 'SELECT gs.*, st.*, c.code, c.term, c.bloc FROM given_seances gs, seance_templates st, courses c WHERE gs.seance_template_id = st.seance_template_id AND st.code = c.code AND c.bloc = :bloc AND c.term = :term';
+	public function select_seance_templates_grouped($bloc, $term) {
+		$query = 'SELECT gs.*, st.*, c.name as ue_name, c.code, c.term, c.bloc FROM given_seances gs, seance_templates st, courses c WHERE gs.seance_template_id = st.seance_template_id AND st.code = c.code AND c.bloc = :bloc AND c.term = :term GROUP BY st.seance_template_id';
 		$ps = $this->_db->prepare ( $query );
 		$ps->bindValue ( ':bloc', $bloc );
 		$ps->bindValue ( ':term', $term );
 		$ps->execute ();
-		$array_given_seance_templates = '';
+		$array_seance_templates_series = '';
+		$series[] = "";
 		while ( $row = $ps->fetch () ) {
-			$array_given_seance_templates [] = new GivenSeance ($row->given_seance_id, $row->seance_template_id, $row->serie_id, $row->name, $row->attendance_type, $row->code, $row->term, $row->bloc);
+			$series = $this->select_series_involved_seance($row->seance_template_id);
+			$array_seance_templates_series [] = new SeanceTemplate($row->seance_template_id, $row->name, $row->ue_name, $row->attendance_type, $series);
 		}
-		return $array_given_seance_templates;
+		return $array_seance_templates_series;
+	}
+	
+	
+	public function select_series_involved_seance($seance_template_id) {
+		$query = 	'SELECT ser.serie_numero
+					FROM series ser, given_seances gs
+					WHERE gs.seance_template_id = :seance_template_id
+					AND gs.serie_id = ser.serie_id';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':seance_template_id', $seance_template_id );
+		$ps->execute ();
+		$array_series = '';
+		while ( $row = $ps->fetch () ) {
+			$array_series [] = $row->serie_numero;
+		}
+		return $array_series;
 	}
 	
 	

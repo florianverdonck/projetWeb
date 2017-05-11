@@ -95,72 +95,44 @@
 									<th>Nom<span class="hidden-xs"> de la séance</span></th>
 									<th>UE/AA<span class="hidden-xs"> concernée</span></th>
 									<th><span class="hidden-xs">Type de</span> présence</th>
+									<th><span class="hidden-xs">Séries</span> impliquées</th>
 								</tr>
 							</thead>
 							<tbody>
+								
+								<?php
+									
+									foreach ($array_seances_templates as $key => $seance_template) {
+										
+								?>
 								<tr>
-									<td colspan="4" class="weekSeparator"><span class="label label-primary">Semaine 1</span></td>
+									<td><?=$seance_template->html_seance_template_id();?></td>
+									<td><?=$seance_template->html_name();?></td>
+									<td><?=$seance_template->html_ue_name();?></td>
+									<td><?=$seance_template->html_attendance_type();?></td>
+									<td>
+										<?php
+											
+											foreach ($seance_template->series() as $key => $serie) {
+												
+										?>
+										
+											<span class="label label-default"><?=$serie;?></span>
+										
+										<?php
+												
+											}
+											
+										?>
+									</td>
 								</tr>
-								<tr>
-									<td>1</td>
-									<td>Algo 1 p 1</td>
-									<td>Algorithmique</td>
-									<td>XO</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>Algo 1 p 2</td>
-									<td>Algorithmique</td>
-									<td>XO</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>Math 1</td>
-									<td>Mathématiques Q1</td>
-									<td>XO</td>
-								</tr>
-								<tr>
-									<td colspan="4" class="weekSeparator"><span class="label label-primary">Semaine 2</span></td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Algo 1 p 1</td>
-									<td>Algorithmique</td>
-									<td>XO</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>Algo 1 p 2</td>
-									<td>Algorithmique</td>
-									<td>XO</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>Math 1</td>
-									<td>Mathématiques Q1</td>
-									<td>XO</td>
-								</tr>
-								<tr>
-									<td colspan="4" class="weekSeparator"><span class="label label-primary">Semaine 3</span></td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Algo 1 p 1</td>
-									<td>Algorithmique</td>
-									<td>XO</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>Algo 1 p 2</td>
-									<td>Algorithmique</td>
-									<td>XO</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>Math 1</td>
-									<td>Mathématiques Q1</td>
-									<td>XO</td>
-								</tr>
+								
+								<?php
+									
+									}
+										
+								?>
+								
 							</tbody>
 					</div>
 				</div>
