@@ -92,6 +92,22 @@ class AdminController {
 		}
 	}
 	
+	private function formDeleteData() {
+		if (isset ($_POST['tables'])) {
+			foreach ( $_POST['tables'] as $table ) {
+				$this->_db->delete_table ( $table );
+			}
+			return array (
+					"error_code" => "success",
+					"error_message" => "Toutes les données ont été supprimées."
+			);
+		}
+		return array (
+				"error_code" => "danger",
+				"error_message" => "Aucune donnée n'a été cochée."
+		);
+	}
+	
 	// upload a file 
 	private function move_upload_file($destination) {
 		move_uploaded_file ( $_FILES ['userfile'] ['tmp_name'], $destination );
