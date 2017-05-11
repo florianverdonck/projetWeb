@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
+-- version 4.6.4
+-- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 05 Mai 2017 à 10:29
--- Version du serveur :  5.6.17
--- Version de PHP :  5.5.12
+-- Généré le :  Jeu 11 Mai 2017 à 09:32
+-- Version du serveur :  5.7.14
+-- Version de PHP :  5.6.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de données :  `attendances`
@@ -26,16 +26,227 @@ SET time_zone = "+00:00";
 -- Structure de la table `attendances`
 --
 
-CREATE TABLE IF NOT EXISTS `attendances` (
-  `attendance_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `attendances` (
+  `attendance_id` int(11) NOT NULL,
   `attendance` varchar(15) NOT NULL,
   `student_id` int(11) NOT NULL,
   `attendance_sheet_id` int(11) NOT NULL,
-  `sick_note` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`attendance_id`),
-  KEY `student_id` (`student_id`),
-  KEY `attendance_sheet_id` (`attendance_sheet_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `sick_note` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `attendances`
+--
+
+INSERT INTO `attendances` (`attendance_id`, `attendance`, `student_id`, `attendance_sheet_id`, `sick_note`) VALUES
+(1, 'absent', 3031, 7, NULL),
+(2, 'absent', 3032, 7, NULL),
+(3, 'absent', 3033, 7, NULL),
+(4, 'absent', 3034, 7, NULL),
+(5, 'absent', 3035, 7, NULL),
+(6, 'absent', 3036, 7, NULL),
+(7, 'absent', 3037, 7, NULL),
+(8, 'absent', 3038, 7, NULL),
+(9, 'absent', 3039, 7, NULL),
+(10, 'absent', 3040, 7, NULL),
+(11, 'absent', 3041, 7, NULL),
+(12, 'absent', 3042, 7, NULL),
+(13, 'absent', 3043, 7, NULL),
+(14, 'absent', 3044, 7, NULL),
+(15, 'absent', 3045, 7, NULL),
+(16, 'absent', 3046, 7, NULL),
+(17, 'absent', 3047, 7, NULL),
+(18, 'absent', 3048, 7, NULL),
+(19, 'absent', 3049, 7, NULL),
+(20, 'absent', 3050, 7, NULL),
+(21, 'absent', 3051, 7, NULL),
+(22, 'absent', 3052, 7, NULL),
+(23, 'absent', 3053, 7, NULL),
+(24, 'absent', 3054, 7, NULL),
+(25, 'absent', 3055, 7, NULL),
+(26, 'absent', 3056, 7, NULL),
+(27, 'absent', 3057, 7, NULL),
+(28, 'absent', 3058, 7, NULL),
+(29, 'absent', 3059, 7, NULL),
+(30, 'absent', 3060, 7, NULL),
+(31, 'absent', 3061, 7, NULL),
+(32, 'absent', 3062, 7, NULL),
+(33, 'absent', 3063, 7, NULL),
+(34, 'absent', 3064, 7, NULL),
+(35, 'absent', 3065, 7, NULL),
+(36, 'absent', 3066, 7, NULL),
+(37, 'absent', 3067, 7, NULL),
+(38, 'absent', 3068, 7, NULL),
+(39, 'absent', 3069, 7, NULL),
+(40, 'absent', 3070, 7, NULL),
+(41, 'absent', 3071, 7, NULL),
+(42, 'absent', 3072, 7, NULL),
+(43, 'absent', 3074, 7, NULL),
+(44, 'absent', 3075, 7, NULL),
+(45, 'absent', 3076, 7, NULL),
+(46, 'absent', 3077, 7, NULL),
+(47, 'absent', 3078, 7, NULL),
+(48, 'absent', 3079, 7, NULL),
+(49, 'absent', 3080, 7, NULL),
+(50, 'absent', 3081, 7, NULL),
+(51, 'absent', 3082, 7, NULL),
+(52, 'absent', 3083, 7, NULL),
+(53, 'absent', 3084, 7, NULL),
+(54, 'absent', 3085, 7, NULL),
+(55, 'absent', 3086, 7, NULL),
+(56, 'absent', 3087, 7, NULL),
+(57, 'absent', 3088, 7, NULL),
+(58, 'absent', 3089, 7, NULL),
+(59, 'absent', 3090, 7, NULL),
+(60, 'absent', 3091, 7, NULL),
+(61, 'absent', 3092, 7, NULL),
+(62, 'absent', 3093, 7, NULL),
+(63, 'absent', 3094, 7, NULL),
+(64, 'absent', 3073, 7, NULL),
+(65, 'absent', 3095, 7, NULL),
+(66, 'absent', 3096, 7, NULL),
+(67, 'absent', 3097, 7, NULL),
+(68, 'absent', 3098, 7, NULL),
+(69, 'absent', 3099, 7, NULL),
+(70, 'absent', 3100, 7, NULL),
+(71, 'absent', 3101, 7, NULL),
+(72, 'absent', 3102, 7, NULL),
+(73, 'absent', 3103, 7, NULL),
+(74, 'absent', 3104, 7, NULL),
+(75, 'absent', 3105, 7, NULL),
+(76, 'absent', 3106, 7, NULL),
+(77, 'absent', 3107, 7, NULL),
+(78, 'absent', 3108, 7, NULL),
+(79, 'absent', 3109, 7, NULL),
+(80, 'absent', 3110, 7, NULL),
+(81, 'absent', 3111, 7, NULL),
+(82, 'absent', 3112, 7, NULL),
+(83, 'absent', 3113, 7, NULL),
+(84, 'absent', 3114, 7, NULL),
+(85, 'absent', 3115, 7, NULL),
+(86, 'absent', 3116, 7, NULL),
+(87, 'absent', 3117, 7, NULL),
+(88, 'absent', 3118, 7, NULL),
+(89, 'absent', 3119, 7, NULL),
+(90, 'absent', 3120, 7, NULL),
+(91, 'absent', 3121, 7, NULL),
+(92, 'absent', 3122, 7, NULL),
+(93, 'absent', 3123, 7, NULL),
+(94, 'absent', 3124, 7, NULL),
+(95, 'absent', 3125, 7, NULL),
+(96, 'absent', 3126, 7, NULL),
+(97, 'absent', 3127, 7, NULL),
+(98, 'absent', 3128, 7, NULL),
+(99, 'absent', 3129, 7, NULL),
+(100, 'absent', 3130, 7, NULL),
+(101, 'absent', 3131, 7, NULL),
+(102, 'absent', 3132, 7, NULL),
+(103, 'absent', 3133, 7, NULL),
+(104, 'absent', 3134, 7, NULL),
+(105, 'absent', 3135, 7, NULL),
+(106, 'absent', 3136, 7, NULL),
+(107, 'absent', 3137, 7, NULL),
+(108, 'absent', 3138, 7, NULL),
+(109, 'absent', 3139, 7, NULL),
+(110, 'absent', 3140, 7, NULL),
+(111, 'absent', 3141, 7, NULL),
+(112, 'absent', 3142, 7, NULL),
+(113, 'absent', 3143, 7, NULL),
+(114, 'absent', 3144, 7, NULL),
+(115, 'absent', 3145, 7, NULL),
+(116, 'absent', 3146, 7, NULL),
+(117, 'absent', 3147, 7, NULL),
+(118, 'absent', 3148, 7, NULL),
+(119, 'absent', 3149, 7, NULL),
+(120, 'absent', 3150, 7, NULL),
+(121, 'absent', 3151, 7, NULL),
+(122, 'absent', 3152, 7, NULL),
+(123, 'absent', 3153, 7, NULL),
+(124, 'absent', 3154, 7, NULL),
+(125, 'absent', 3155, 7, NULL),
+(126, 'absent', 3156, 7, NULL),
+(127, 'absent', 3157, 7, NULL),
+(128, 'absent', 3158, 7, NULL),
+(129, 'absent', 3159, 7, NULL),
+(130, 'absent', 3160, 7, NULL),
+(131, 'absent', 3161, 7, NULL),
+(132, 'absent', 3162, 7, NULL),
+(133, 'absent', 3163, 7, NULL),
+(134, 'absent', 3164, 7, NULL),
+(135, 'absent', 3165, 7, NULL),
+(136, 'absent', 3166, 7, NULL),
+(137, 'absent', 3167, 7, NULL),
+(138, 'absent', 3168, 7, NULL),
+(139, 'absent', 3169, 7, NULL),
+(140, 'absent', 3170, 7, NULL),
+(141, 'absent', 3171, 7, NULL),
+(142, 'absent', 3172, 7, NULL),
+(143, 'absent', 3173, 7, NULL),
+(144, 'absent', 3174, 7, NULL),
+(145, 'absent', 3175, 7, NULL),
+(146, 'absent', 3176, 7, NULL),
+(147, 'absent', 3177, 7, NULL),
+(148, 'absent', 3178, 7, NULL),
+(149, 'absent', 3179, 7, NULL),
+(150, 'absent', 3180, 7, NULL),
+(151, 'absent', 3181, 7, NULL),
+(152, 'absent', 3182, 7, NULL),
+(153, 'absent', 3183, 7, NULL),
+(154, 'absent', 3184, 7, NULL),
+(155, 'absent', 3185, 7, NULL),
+(156, 'absent', 3186, 7, NULL),
+(157, 'absent', 3187, 7, NULL),
+(158, 'absent', 3188, 7, NULL),
+(159, 'absent', 3189, 7, NULL),
+(160, 'absent', 3190, 7, NULL),
+(161, 'absent', 3191, 7, NULL),
+(162, 'absent', 3237, 7, NULL),
+(163, 'absent', 3192, 7, NULL),
+(164, 'absent', 3193, 7, NULL),
+(165, 'absent', 3194, 7, NULL),
+(166, 'absent', 3195, 7, NULL),
+(167, 'absent', 3196, 7, NULL),
+(168, 'absent', 3197, 7, NULL),
+(169, 'absent', 3198, 7, NULL),
+(170, 'absent', 3199, 7, NULL),
+(171, 'absent', 3200, 7, NULL),
+(172, 'absent', 3201, 7, NULL),
+(173, 'absent', 3202, 7, NULL),
+(174, 'absent', 3203, 7, NULL),
+(175, 'absent', 3204, 7, NULL),
+(176, 'absent', 3205, 7, NULL),
+(177, 'absent', 3206, 7, NULL),
+(178, 'absent', 3207, 7, NULL),
+(179, 'absent', 3238, 7, NULL),
+(180, 'absent', 3208, 7, NULL),
+(181, 'absent', 3209, 7, NULL),
+(182, 'absent', 3210, 7, NULL),
+(183, 'absent', 3211, 7, NULL),
+(184, 'absent', 3212, 7, NULL),
+(185, 'absent', 3213, 7, NULL),
+(186, 'absent', 3214, 7, NULL),
+(187, 'absent', 3215, 7, NULL),
+(188, 'absent', 3216, 7, NULL),
+(189, 'absent', 3217, 7, NULL),
+(190, 'absent', 3218, 7, NULL),
+(191, 'absent', 3219, 7, NULL),
+(192, 'absent', 3220, 7, NULL),
+(193, 'absent', 3221, 7, NULL),
+(194, 'absent', 3222, 7, NULL),
+(195, 'absent', 3223, 7, NULL),
+(196, 'absent', 3224, 7, NULL),
+(197, 'absent', 3225, 7, NULL),
+(198, 'absent', 3226, 7, NULL),
+(199, 'absent', 3227, 7, NULL),
+(200, 'absent', 3228, 7, NULL),
+(201, 'absent', 3236, 7, NULL),
+(202, 'absent', 3229, 7, NULL),
+(203, 'absent', 3230, 7, NULL),
+(204, 'absent', 3231, 7, NULL),
+(205, 'absent', 3232, 7, NULL),
+(206, 'absent', 3233, 7, NULL),
+(207, 'absent', 3234, 7, NULL),
+(208, 'absent', 3235, 7, NULL);
 
 -- --------------------------------------------------------
 
@@ -43,16 +254,19 @@ CREATE TABLE IF NOT EXISTS `attendances` (
 -- Structure de la table `attendance_sheets`
 --
 
-CREATE TABLE IF NOT EXISTS `attendance_sheets` (
-  `attendance_sheet_id` int(11) NOT NULL AUTO_INCREMENT,
-  `seance_templates_id` int(11) NOT NULL,
+CREATE TABLE `attendance_sheets` (
+  `attendance_sheet_id` int(11) NOT NULL,
+  `seance_template_id` int(11) NOT NULL,
   `mail` varchar(50) NOT NULL,
-  `week_id` int(11) NOT NULL,
-  PRIMARY KEY (`attendance_sheet_id`),
-  KEY `given_seance_id` (`seance_templates_id`),
-  KEY `mail` (`mail`),
-  KEY `week_number` (`week_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+  `week_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `attendance_sheets`
+--
+
+INSERT INTO `attendance_sheets` (`attendance_sheet_id`, `seance_template_id`, `mail`, `week_id`) VALUES
+(7, 1, 'gregory.seront@vinci.be', 231);
 
 -- --------------------------------------------------------
 
@@ -60,15 +274,14 @@ CREATE TABLE IF NOT EXISTS `attendance_sheets` (
 -- Structure de la table `courses`
 --
 
-CREATE TABLE IF NOT EXISTS `courses` (
+CREATE TABLE `courses` (
   `code` varchar(25) NOT NULL,
   `name` varchar(50) NOT NULL,
   `term` int(11) NOT NULL,
   `ECTs` int(11) NOT NULL,
   `bloc` int(11) NOT NULL,
   `abbreviation` varchar(20) DEFAULT NULL,
-  `course_unit_learning_activity` varchar(2) NOT NULL,
-  PRIMARY KEY (`code`)
+  `course_unit_learning_activity` varchar(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -87,14 +300,11 @@ INSERT INTO `courses` (`code`, `name`, `term`, `ECTs`, `bloc`, `abbreviation`, `
 -- Structure de la table `given_seances`
 --
 
-CREATE TABLE IF NOT EXISTS `given_seances` (
-  `given_seance_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `given_seances` (
+  `given_seance_id` int(11) NOT NULL,
   `seance_template_id` int(11) NOT NULL,
-  `serie_id` int(11) NOT NULL,
-  PRIMARY KEY (`given_seance_id`),
-  KEY `seance_template_id` (`seance_template_id`),
-  KEY `serie_id` (`serie_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+  `serie_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `given_seances`
@@ -121,12 +331,11 @@ INSERT INTO `given_seances` (`given_seance_id`, `seance_template_id`, `serie_id`
 -- Structure de la table `professors`
 --
 
-CREATE TABLE IF NOT EXISTS `professors` (
+CREATE TABLE `professors` (
   `mail` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
   `first_name` varchar(50) NOT NULL,
-  `responsible` varchar(15) NOT NULL,
-  PRIMARY KEY (`mail`)
+  `responsible` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -161,14 +370,12 @@ INSERT INTO `professors` (`mail`, `name`, `first_name`, `responsible`) VALUES
 -- Structure de la table `seance_templates`
 --
 
-CREATE TABLE IF NOT EXISTS `seance_templates` (
-  `seance_template_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `seance_templates` (
+  `seance_template_id` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `attendance_type` varchar(10) NOT NULL,
-  `code` varchar(25) NOT NULL,
-  PRIMARY KEY (`seance_template_id`),
-  KEY `code` (`code`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+  `code` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `seance_templates`
@@ -189,13 +396,12 @@ INSERT INTO `seance_templates` (`seance_template_id`, `name`, `attendance_type`,
 -- Structure de la table `series`
 --
 
-CREATE TABLE IF NOT EXISTS `series` (
-  `serie_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `series` (
+  `serie_id` int(11) NOT NULL,
   `term` int(11) NOT NULL,
   `serie_numero` int(50) NOT NULL,
-  `bloc` int(11) NOT NULL,
-  PRIMARY KEY (`serie_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+  `bloc` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `series`
@@ -216,17 +422,14 @@ INSERT INTO `series` (`serie_id`, `term`, `serie_numero`, `bloc`) VALUES
 -- Structure de la table `students`
 --
 
-CREATE TABLE IF NOT EXISTS `students` (
-  `student_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `students` (
+  `student_id` int(11) NOT NULL,
   `mail` varchar(100) NOT NULL,
   `bloc` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `first_name` varchar(50) NOT NULL,
-  `serie_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`student_id`),
-  UNIQUE KEY `mail` (`mail`),
-  KEY `serie_id` (`serie_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3241 ;
+  `serie_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `students`
@@ -419,7 +622,7 @@ INSERT INTO `students` (`student_id`, `mail`, `bloc`, `name`, `first_name`, `ser
 (3075, 'arnaud.de boeck@student.vinci.be', 1, 'DE BOECK', 'Arnaud', NULL),
 (3076, 'benjamin.de bosscher@student.vinci.be', 1, 'De Bosscher', 'Benjamin', NULL),
 (3077, 'hugues.de mathelin de papigny@student.vinci.be', 1, 'de Mathelin de Papigny', 'Hugues', NULL),
-(3078, 'augustin.de meeûs d''argenteuil@student.vinci.be', 1, 'de MEEÛS d''ARGENTEUIL', 'Augustin', NULL),
+(3078, 'augustin.de meeûs d\'argenteuil@student.vinci.be', 1, 'de MEEÛS d\'ARGENTEUIL', 'Augustin', NULL),
 (3079, 'antoine.de roose@student.vinci.be', 1, 'DE ROOSE', 'Antoine', NULL),
 (3080, 'andy.de smedt@student.vinci.be', 1, 'De Smedt', 'Andy', NULL),
 (3081, 'nestor.debiesme@student.vinci.be', 1, 'Debiesme', 'Nestor', NULL),
@@ -438,7 +641,7 @@ INSERT INTO `students` (`student_id`, `mail`, `bloc`, `name`, `first_name`, `ser
 (3094, 'jean.dubuisson@student.vinci.be', 1, 'DUBUISSON', 'Jean', NULL),
 (3095, 'othmane.echagdali zahri@student.vinci.be', 1, 'ECHAGDALI ZAHRI', 'Othmane', NULL),
 (3096, 'hicham.el asri@student.vinci.be', 1, 'EL ASRI', 'Hicham', NULL),
-(3097, 'ismaël.el f''kih ben ahmed@student.vinci.be', 1, 'El F''Kih Ben Ahmed', 'Ismaël', NULL),
+(3097, 'ismaël.el f\'kih ben ahmed@student.vinci.be', 1, 'El F\'Kih Ben Ahmed', 'Ismaël', NULL),
 (3098, 'yassine.el hadouchi@student.vinci.be', 1, 'EL HADOUCHI', 'Yassine', NULL),
 (3099, 'mohammed.el khattabi@student.vinci.be', 1, 'EL KHATTABI', 'Mohammed', NULL),
 (3100, 'zineb.el mokadem@student.vinci.be', 1, 'EL MOKADEM', 'Zineb', NULL),
@@ -480,7 +683,7 @@ INSERT INTO `students` (`student_id`, `mail`, `bloc`, `name`, `first_name`, `ser
 (3136, 'egide.kabanza@student.vinci.be', 1, 'KABANZA', 'Egide', NULL),
 (3137, 'rubain.kamegneson wabo@student.vinci.be', 1, 'KAMEGNESON WABO', 'Rubain', NULL),
 (3138, 'burim.kastrati@student.vinci.be', 1, 'KASTRATI', 'Burim', NULL),
-(3139, 'bouchra.kh'' leeh@student.vinci.be', 1, 'KH'' LEEH', 'Bouchra', NULL),
+(3139, 'bouchra.kh\' leeh@student.vinci.be', 1, 'KH\' LEEH', 'Bouchra', NULL),
 (3140, 'gaël.kifoumbi @student.vinci.be', 1, 'KIFOUMBI ', 'Gaël', NULL),
 (3141, 'kamil.kowalczyk@student.vinci.be', 1, 'KOWALCZYK', 'Kamil', NULL),
 (3142, 'dejvi.kurti@student.vinci.be', 1, 'KURTI', 'Dejvi', NULL),
@@ -587,46 +790,152 @@ INSERT INTO `students` (`student_id`, `mail`, `bloc`, `name`, `first_name`, `ser
 -- Structure de la table `weeks`
 --
 
-CREATE TABLE IF NOT EXISTS `weeks` (
-  `week_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `weeks` (
+  `week_id` int(11) NOT NULL,
   `week_number` varchar(9) NOT NULL,
   `term` varchar(2) NOT NULL,
-  `monday_date` varchar(20) NOT NULL,
-  PRIMARY KEY (`week_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=220 ;
+  `monday_date` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `weeks`
 --
 
 INSERT INTO `weeks` (`week_id`, `week_number`, `term`, `monday_date`) VALUES
-(194, 'semaine1', 'q1', '19/09/2016'),
-(195, 'semaine2', 'q1', '26/09/2016'),
-(196, 'semaine3', 'q1', '3/10/2016'),
-(197, 'semaine4', 'q1', '10/10/2016'),
-(198, 'semaine5', 'q1', '17/10/2016'),
-(199, 'semaine6', 'q1', '24/10/2016'),
-(200, 'semaine7', 'q2', '7/11/2016'),
-(201, 'semaine8', 'q1', '14/11/2016'),
-(202, 'semaine9', 'q1', '21/11/2016'),
-(203, 'semaine10', 'q1', '28/11/2016'),
-(204, 'semaine11', 'q1', '5/11/2016'),
-(205, 'semaine12', 'q1', '12/11/2016'),
-(206, 'semaine13', 'q1', '19/11/2016'),
-(207, 'semaine1', 'q2', '6/02/2017'),
-(208, 'semaine2', 'q2', '13/02/2017'),
-(209, 'semaine3', 'q2', '20/02/2017'),
-(210, 'semaine4', 'q2', '27/02/2017'),
-(211, 'semaine5', 'q2', '6/03/2017'),
-(212, 'semaine6', 'q2', '13/03/2017'),
-(213, 'semaine7', 'q2', '20/03/2017'),
-(214, 'semaine8', 'q2', '27/03/2017'),
-(215, 'semaine9', 'q2', '17/04/2017'),
-(216, 'semaine10', 'q2', '24/04/2017'),
-(217, 'semaine11', 'q2', '1/05/2017'),
-(218, 'semaine12', 'q2', '8/05/2017'),
-(219, 'semaine13', 'q2', '15/05/2017');
+(220, '1', '1', '19/09/2016'),
+(221, '2', '1', '26/09/2016'),
+(222, '3', '1', '3/10/2016'),
+(223, '4', '1', '10/10/2016'),
+(224, '5', '1', '17/10/2016'),
+(225, '6', '1', '24/10/2016'),
+(226, '7', '1', '7/11/2016'),
+(227, '8', '1', '14/11/2016'),
+(228, '9', '1', '21/11/2016'),
+(229, '10', '1', '28/11/2016'),
+(230, '11', '1', '5/11/2016'),
+(231, '12', '1', '12/11/2016'),
+(232, '13', '1', '19/11/2016'),
+(233, '1', '2', '6/02/2017'),
+(234, '2', '2', '13/02/2017'),
+(235, '3', '2', '20/02/2017'),
+(236, '4', '2', '27/02/2017'),
+(237, '5', '2', '6/03/2017'),
+(238, '6', '2', '13/03/2017'),
+(239, '7', '2', '20/03/2017'),
+(240, '8', '2', '27/03/2017'),
+(241, '9', '2', '17/04/2017'),
+(242, '10', '2', '24/04/2017'),
+(243, '11', '2', '1/05/2017'),
+(244, '12', '2', '8/05/2017'),
+(245, '13', '2', '15/05/2017');
 
+--
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `attendances`
+--
+ALTER TABLE `attendances`
+  ADD PRIMARY KEY (`attendance_id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `attendance_sheet_id` (`attendance_sheet_id`);
+
+--
+-- Index pour la table `attendance_sheets`
+--
+ALTER TABLE `attendance_sheets`
+  ADD PRIMARY KEY (`attendance_sheet_id`),
+  ADD KEY `given_seance_id` (`seance_template_id`),
+  ADD KEY `mail` (`mail`),
+  ADD KEY `week_number` (`week_id`);
+
+--
+-- Index pour la table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`code`);
+
+--
+-- Index pour la table `given_seances`
+--
+ALTER TABLE `given_seances`
+  ADD PRIMARY KEY (`given_seance_id`),
+  ADD KEY `seance_template_id` (`seance_template_id`),
+  ADD KEY `serie_id` (`serie_id`);
+
+--
+-- Index pour la table `professors`
+--
+ALTER TABLE `professors`
+  ADD PRIMARY KEY (`mail`);
+
+--
+-- Index pour la table `seance_templates`
+--
+ALTER TABLE `seance_templates`
+  ADD PRIMARY KEY (`seance_template_id`),
+  ADD KEY `code` (`code`);
+
+--
+-- Index pour la table `series`
+--
+ALTER TABLE `series`
+  ADD PRIMARY KEY (`serie_id`);
+
+--
+-- Index pour la table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`student_id`),
+  ADD UNIQUE KEY `mail` (`mail`),
+  ADD KEY `serie_id` (`serie_id`);
+
+--
+-- Index pour la table `weeks`
+--
+ALTER TABLE `weeks`
+  ADD PRIMARY KEY (`week_id`);
+
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `attendances`
+--
+ALTER TABLE `attendances`
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
+--
+-- AUTO_INCREMENT pour la table `attendance_sheets`
+--
+ALTER TABLE `attendance_sheets`
+  MODIFY `attendance_sheet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT pour la table `given_seances`
+--
+ALTER TABLE `given_seances`
+  MODIFY `given_seance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+--
+-- AUTO_INCREMENT pour la table `seance_templates`
+--
+ALTER TABLE `seance_templates`
+  MODIFY `seance_template_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT pour la table `series`
+--
+ALTER TABLE `series`
+  MODIFY `serie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT pour la table `students`
+--
+ALTER TABLE `students`
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3241;
+--
+-- AUTO_INCREMENT pour la table `weeks`
+--
+ALTER TABLE `weeks`
+  MODIFY `week_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=246;
 --
 -- Contraintes pour les tables exportées
 --
@@ -642,7 +951,7 @@ ALTER TABLE `attendances`
 -- Contraintes pour la table `attendance_sheets`
 --
 ALTER TABLE `attendance_sheets`
-  ADD CONSTRAINT `fk_given_seance_id` FOREIGN KEY (`seance_templates_id`) REFERENCES `seance_templates` (`seance_template_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_given_seance_id` FOREIGN KEY (`seance_template_id`) REFERENCES `seance_templates` (`seance_template_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_mail` FOREIGN KEY (`mail`) REFERENCES `professors` (`mail`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_week_id` FOREIGN KEY (`week_id`) REFERENCES `weeks` (`week_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
