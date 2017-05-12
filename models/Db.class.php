@@ -340,6 +340,47 @@ class Db {
 	}
 	
 	
+	public function select_seance_templates_student($student_id, $term) {
+		
+		// Reverse lookup for SeancesTemplates in which student has taken part into
+		
+		$query = 	'SELECT st.*, c.name as ue_name
+					FROM seance_templates st, attendance_sheets att_sh, attendances att, courses c
+					WHERE st.code = c.code
+					AND st.seance_template_id = att_sh.seance_template_id
+					AND att.attendance_sheet_id = att_sh.attendance_sheet_id
+					AND att.student_id = :student_id
+					AND c.term = :term';
+					
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':student_id', $student_id );
+		$ps->bindValue ( ':term', $term );
+		$ps->execute ();
+		$array_seance_template = '';
+		while ( $row = $ps->fetch () ) {
+			$array_seance_template [] = new SeanceTemplate($row->seance_template_id, $row->name, $row->ue_name, $row->attendance_type, 1);
+		}
+		return $array_seance_template;
+	}
+	
+	
+	public function select_student_attendances($student_id, $week_id, $ue_code, $attendance) {
+		$query = 	'SELECT att.*, c.name as course_name, st.name as seance_template_name FROM seance_templates st, attendances att, attendance_sheets att_sh, weeks wk, courses c, students stu WHERE stu.student_id = att.student_id AND att.attendance_sheet_id = att_sh.attendance_sheet_id AND att_sh.seance_template_id = st.seance_template_id AND st.code = c.code AND stu.student_id = :student_id AND att_sh.week_id = :week_id AND c.code = :ue_code AND att.attendance =:attendance';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':student_id', $student_id);
+		$ps->bindValue ( ':week', $week_id);
+		$ps->bindValue ( ':ue_code', $ue_code);
+		$ps->bindValue ( ':attendance', $attendance);
+		print_r($ps);
+		$row = $ps->fetch ();
+		$attendances = '';
+		while ( $row = $ps->fetch () ) {
+			$attendances[] = new Attendance ( $row->attendance_id, $row->attendance_sheet_id, $row->student_id, $row->attendance, $row->sick_note, $row->course_name, $row->seance_template_name);
+		}
+		return $attendances;
+	}
+	
+	
 	public function select_seance_templates_grouped($bloc, $term) {
         $query = 'SELECT DISTINCT gs.seance_template_id, st.seance_template_id as st_seance_template_id, st.code, st.attendance_type, st.name, c.name as ue_name, c.code, c.term, c.bloc
                 FROM given_seances gs, seance_templates st, courses c
@@ -618,4 +659,5 @@ class Db {
 		$ps = $this->_db->prepare ( $query );
 		return $ps->execute ();
 	}
+	
 }
