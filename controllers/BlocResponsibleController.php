@@ -73,6 +73,10 @@ class BlocResponsibleController {
 			$update_message = $this->formAutoFillSeries();
 		}
 		
+		if (isset($_POST['formCreateSeries'])) {
+			$update_message = $this->formCreateSeries();
+		}
+		
 		if (isset($_POST['formDeleteSerie'])) {
 			$update_message = $this->formDeleteSerie();
 		}
@@ -90,6 +94,7 @@ class BlocResponsibleController {
 				$this->blocResponsibleSeanceTemplates($update_message);
 				break;
 			default:
+			
 				require_once(PATH_VIEWS . "bloc_responsible.php");
 				break;
 		}
@@ -156,20 +161,6 @@ class BlocResponsibleController {
 			
 		}
 		
-		
-/*
-	
-		[inputUESelect] =>
-		[inputWeekSelect] => 220
-		[presenceType] => x
-		[seriesSelected] => all
-	
-		insert_seance_template($name, $attendance_type, $code);
-		
-		get_last_seance_template_id();
-		
-		insert_given_seance($seance_template_id, $serie_id)
-*/
 	}
 	
 	
@@ -191,8 +182,10 @@ class BlocResponsibleController {
 			$numberOfSeries = 0;
 		}
 		
-		foreach ($series as $key => $serie) {
-			$studentsInSerie[$serie->html_serie_id()] = $this->_db->select_students_serie_id($serie->html_serie_id());
+		if ($series != null) {
+			foreach ($series as $key => $serie) {
+				$studentsInSerie[$serie->html_serie_id()] = $this->_db->select_students_serie_id($serie->html_serie_id());
+			}
 		}
 		
 		$maxNumberOfStudentsSerie = 0;
@@ -254,7 +247,49 @@ class BlocResponsibleController {
 					$seriePlicPloc++;
 				}
 			}
+			
+			return array (
+				"error_code" => "success",
+				"error_message" => "Les séries vides ont été créées avec succès."
+			);
+			
+		} else {
+			return array (
+				"error_code" => "warning",
+				"error_message" => "Il existe déjà des séries pour ce BLOC et QUADRI"
+			);
+
 		}
+	}
+	
+	
+	public function formCreateSeries() {
+		
+		if (!$this->_db->existing_series($this->_bloc, $this->_term)) {
+			
+			$numberOfSeriesToCreate = $_POST['formCreateSeries'];
+			$serieIndexCreation = 1;
+			
+			while ($serieIndexCreation <= $numberOfSeriesToCreate) {
+				
+				$this->_db->insert_serie($this->_term, $this->_bloc, $serieIndexCreation);
+				
+				$serieIndexCreation++;
+			}
+			
+			return array (
+				"error_code" => "success",
+				"error_message" => "Les séries vides ont été créées avec succès."
+			);
+			
+		} else {
+			return array (
+				"error_code" => "warning",
+				"error_message" => "Il existe déjà des séries pour ce BLOC et QUADRI"
+			);
+		}
+		
+		
 	}
 	
 	
@@ -361,7 +396,16 @@ class BlocResponsibleController {
 	
 	public function formUE() {
 		
-		if ($this->_db->ue_file_already_imported($this->_bloc)) {
+		if (!isset($_POST['inputBloc'])) {
+			return Array(
+						"error_code"=>"warning",
+						"error_message"=>"Aucun bloc n'a été sélectionné"
+				);
+
+		}
+		
+		
+		if (!$this->_db->ue_file_already_imported($_POST['inputBloc'])) {
 			if (!empty($_FILES['inputUEFile']['name'])) {
 				if (!preg_match ( '/^programme_bloc' . $_POST['inputBloc'] . '.csv$/', $_FILES['inputUEFile']['name'])) {
 					return Array(
