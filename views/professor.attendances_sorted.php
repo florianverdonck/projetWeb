@@ -65,8 +65,8 @@
 									<label class="btn btn-default <?php if ($_POST['attendance_type'] == 'XO') echo "active"?> btn-sm">
 										<input type="radio" name="attendance_type" value="XO" <?php if ($_POST['attendance_type'] == 'XO') echo "checked=\"checked\""?>>XO
 									</label>
-									<label class="btn btn-default <?php if ($_POST['attendance_type'] == 'Noted') echo "active"?> btn-sm">
-										<input type="radio" name="attendance_type" value="Noted" <?php if ($_POST['attendance_type'] == 'Noted') echo "checked=\"checked\""?>>Noté
+									<label class="btn btn-default <?php if ($_POST['attendance_type'] == 'noted') echo "active"?> btn-sm">
+										<input type="radio" name="attendance_type" value="noted" <?php if ($_POST['attendance_type'] == 'noted') echo "checked=\"checked\""?>>Noté
 									</label>
 									<label class="btn btn-default btn-sm">
 										<input type="radio" name="attendance_type" value="default">Défaut
@@ -163,7 +163,7 @@
 												  <label class="btn btn-default <?php if ($attendance == 'absent') echo "active"?> btn-sm">
 												    <input value="absent" type="radio" name="attendance['<?php echo $student_id?>']" <?php if ($attendance == 'absent') echo "checked=\"checked\""?>><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
 												  </label>
-												 <?php } elseif ($_POST['attendance_type'] == 'Noted') { ?>	
+												 <?php } elseif ($_POST['attendance_type'] == 'noted') { ?>	
 												    <input value="<?php if (preg_match('/[0-9]+/', $attendance)) { echo $attendance; } ?>" type="text" class="form-control" name="attendance['<?php echo $student_id?>']">
 												 <?php } ?>	
 											 <?php } ?>						  
