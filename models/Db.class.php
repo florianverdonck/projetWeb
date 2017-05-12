@@ -326,7 +326,8 @@ class Db {
 	
 	public function select_seance_templates($bloc, $term) {
 		$query = 'SELECT st.* FROM seance_templates st, courses c
-				WHERE st.code = c.code AND c.term = :term AND c.bloc = :bloc';
+				WHERE st.code = c.code AND c.term = :term AND c.bloc = :bloc
+				ORDER BY st.name';
 		$ps = $this->_db->prepare ( $query );
 		$ps->bindValue ( ':bloc', $bloc );
 		$ps->bindValue ( ':term', $term );
