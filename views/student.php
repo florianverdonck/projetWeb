@@ -12,35 +12,43 @@
 							<h3 class="panel-title">Filtrez ici pour voir vos présences</h3>
 						</div>
 						<div class="panel-body">
-							<form class="" action="index.php?page=student" method="post">
+							<form class="" action="index.php?user=student" method="post">
 								<label for="inputWeekSelect">Sélectionnez la semaine </label><br>
-								<select class="selectpicker" id="inputWeekSelect">
-									<option>Semaine n°1</option>
-									<option>Semaine n°2</option>
-									<option>Semaine n°3</option>
-									<option>Semaine n°4</option>
-									<option>Semaine n°5</option>
-									<option>Semaine n°6</option>
-									<option>Semaine n°7</option>
-									<option>Semaine n°8</option>
-									<option>Semaine n°9</option>
+								<select class="selectpicker" id="inputWeekSelect" name="inputWeekSelect">
+										<option value="not_specified">
+											Toutes les semaines
+										</option>
+									
+									<?php foreach ($weeks as $week) { ?>
+										<option value="<?php echo $week->html_week_id() ?>">
+											Semaine n°<?php echo $week->html_week_number() ?>
+										</option>
+									<?php } ?>	
 								</select>
 								<br><br>
-								<label for="seanceTemplateSelect">Sélectionnez la séance type </label><br>
-								<select class="selectpicker" id="seanceTemplateSelect">
-									<option>Algo I</option>
-									<option>Algo II</option>
-									<option>Math EX I</option>
+								<label for="seanceTemplateSelect">Sélectionnez l'UE/AA</label><br>
+								<select class="selectpicker" id="inputUESelect" name="inputUESelect">
+									
+										<option value="not_specified">
+											Toutes les UE/AA
+										</option>
+									
+									<?php foreach ($seanceTemplates as $seance) { ?>
+											<option value="<?=$seance->html_seance_template_id();?>">
+											<?=$seance->html_ue_name();?>
+											</option>
+										<?php } ?>	
 								</select>
 								<br><br>
 								<label for="typeOfPresenceSelect">Sélectionnez le type de présence </label><br>
-								<select class="selectpicker" id="typeOfPresenceSelect">
-									<option>Présent</option>
-									<option>Absent</option>
-									<option>Certificat</option>
+								<select class="selectpicker" id="inputPresenceSelect" name="inputPresenceSelect">
+									<option value="not_specified">Tout type de présence</option>
+									<option value="present">Présent</option>
+									<option value="not_present">Absent</option>
+									<option value="sick_note">Certificat</option>
 								</select>
 								<br><br>
-								<button class="btn btn-lg btn-primary btn-block" type="submit">Filtrer</button>
+								<button class="btn btn-lg btn-primary btn-block" type="submit" name="formSeancesFilter">Filtrer</button>
 							</form>
 						</div>
 					</div>

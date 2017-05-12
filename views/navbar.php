@@ -43,20 +43,39 @@
         </li>
         <?php } ?> <!-- student or professor -->
         
-        <?php if ($_GET['user'] == 'bloc_responsible' && isset($_GET['action']) && ($_GET['action']=='series' || $_GET['action']=='seance_templates')) { ?>
+        <?php
+	        
+	        
+	        if (($_GET['user'] == 'bloc_responsible' && isset($_GET['action'])
+	        		&& ($_GET['action']=='series' || $_GET['action']=='seance_templates'))
+	        		
+	        	|| $_GET['user'] == 'student') {
+		        	
+		     if ($_GET['user'] == 'student') $_GET['action'] = 'attendance';
+	      ?>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bloc / Quadri<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+	          <?php if ($_GET['user'] != 'student') { ?>Bloc / <?php } ?>Quadri
+	          <span class="caret"></span>
+	      </a>
+          
+          
+          
           <ul class="dropdown-menu">
+	          
+	        <?php if ($_GET['user'] != 'student') { ?>
+            
             	<li><a href="#">Blocs</a></li>
-	            <li><a href="index.php?user=bloc_responsible&action=<?=$_GET['action'];?>&bloc=1&term=1">--> Bloc n°1</a></li> 
-	           	<li><a href="index.php?user=bloc_responsible&action=<?=$_GET['action'];?>&bloc=2&term=1">--> Bloc n°2</a></li>
-	           	<li><a href="index.php?user=bloc_responsible&action=<?=$_GET['action'];?>&bloc=3&term=1">--> Bloc n°3</a></li>
+	            <li><a href="index.php?user=<?=$_GET['user'];?>&action=<?=$_GET['action'];?>&bloc=1&term=1">--> Bloc n°1</a></li> 
+	           	<li><a href="index.php?user=<?=$_GET['user'];?>&action=<?=$_GET['action'];?>&bloc=2&term=1">--> Bloc n°2</a></li>
+	           	<li><a href="index.php?user=<?=$_GET['user'];?>&action=<?=$_GET['action'];?>&bloc=3&term=1">--> Bloc n°3</a></li>
 	        
 	        <li role="separator" class="divider"></li>
 	        
+	        <?php } ?>
 	        	<li><a href="#">Quadrimestre</a></li>
-	            <li><a href="index.php?user=bloc_responsible&action=<?=$_GET['action'];?>&bloc=<?=$this->_bloc;?>&term=1">--> Quadrimestre 1</a></li> 
-	           	<li><a href="index.php?user=bloc_responsible&action=<?=$_GET['action'];?>&bloc=<?=$this->_bloc;?>&term=2">--> Quadrimestre 2</a></li>                     
+	            <li><a href="index.php?user=<?=$_GET['user'];?>&action=<?=$_GET['action'];?>&bloc=<?=$this->_bloc;?>&term=1">--> Quadrimestre 1</a></li> 
+	           	<li><a href="index.php?user=<?=$_GET['user'];?>&action=<?=$_GET['action'];?>&bloc=<?=$this->_bloc;?>&term=2">--> Quadrimestre 2</a></li>                     
           </ul>
         </li>
         
