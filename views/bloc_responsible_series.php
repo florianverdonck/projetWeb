@@ -190,9 +190,15 @@
 														<?php } ?>
 													</tr>
 													<tr>
-														<th scope="row">Répartir les étudiants</th>
+														<th scope="row">Répartir automatiquement</th>
 														<?php for ($seriesIterator = 1; $seriesIterator<=12; $seriesIterator++) { ?>
 														<td><button class="btn btn-xs btn-primary" name="formAutoFillSeries" value="<?=$seriesIterator?>" type="submit"><?=$seriesIterator?></button></td>
+														<?php } ?>
+													</tr>
+													<tr>
+														<th scope="row">Créer séries vides</th>
+														<?php for ($seriesIterator = 1; $seriesIterator<=12; $seriesIterator++) { ?>
+														<td><button class="btn btn-xs btn-primary" name="formCreateSeries" value="<?=$seriesIterator?>" type="submit"><?=$seriesIterator?></button></td>
 														<?php } ?>
 													</tr>
 												</tbody>
