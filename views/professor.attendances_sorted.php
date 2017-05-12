@@ -1,9 +1,9 @@
 <?php $page="professor"; ?>
 <!DOCTYPE html>
 <html lang="fr">
-	<?php include_once(PATH_VIEWS . "header.php"); ?>
+	<?php require_once(PATH_VIEWS . "header.php"); ?>
 	<body>
-		<?php include_once(PATH_VIEWS . "navbar.php"); ?>
+		<?php require_once(PATH_VIEWS . "navbar.php"); ?>
 		<div class="container">
 			<div class="row">
 				<div class="pt30 hidden-xs"></div>
@@ -56,8 +56,8 @@
 								<?php } ?>
 								</select>
 								<br><br>
-								<label for="inputAttendanceType">Sélectionnez le type de présence </label><br>
-								<div class="btn-group" data-toggle="buttons" id="inputAttendanceType">
+								<label>Sélectionnez le type de présence </label><br>
+								<div class="btn-group" data-toggle="buttons">
 									<?php if (isset($_POST['attendance_type'])) { ?>
 									<label class="btn btn-default <?php if ($_POST['attendance_type'] == 'X') echo "active"?> btn-sm">
 										<input type="radio" name="attendance_type" value="X" <?php if ($_POST['attendance_type'] == 'X') echo "checked=\"checked\""?>>X
@@ -105,7 +105,7 @@
 									<input type="hidden" name="serie" value="<?php if (isset($_POST['serie'])) echo $_POST['serie']?>">
 									<input type="hidden" name="attendance_type" value="<?php if (isset($_POST['attendance_type'])) echo $_POST['attendance_type']?>">
 									<label for="student">Entrez le nom ou prénom de l'élève </label><br>
-									<input name="keyword" type="text" class="form-control">
+									<input id="student" name="keyword" type="text" class="form-control">
 									<br>
 									<input class="btn btn-lg btn-primary btn-block" type="submit" value="Rechercher" name="form_search_student">	
 								</form>							
@@ -187,7 +187,7 @@
 							</table>
 							<?php if (!empty($_POST['seance']) && !empty($_POST['week'])) {?>	
 							<div class="panel-body">
-								<label for="basic-url">Ajoutez un élève à la liste</label>
+								<label>Ajoutez un élève à la liste</label>
 								<div class="input-group">
 								 	<input name="student_mail" type="text" class="form-control" aria-describedby="basic-addon3">
   									<span class="input-group-addon" id="basic-addon3">@student.vinci.be</span>
@@ -205,6 +205,6 @@
 			</div>
 		</div>
 		<!-- /container -->
-		<?php include_once(PATH_VIEWS . "js_files.php"); ?>
+		<?php require_once(PATH_VIEWS . "js_files.php"); ?>
 	</body>
 </html>
