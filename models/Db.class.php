@@ -524,12 +524,18 @@ class Db {
 	}
 	
 	public function existing_serie($serie_id) {
-		$query = 'SELECT * from series WHERE bloc = :bloc AND term = :term';
+		$query = 'SELECT * from series WHERE serie_id = :serie_id';
 		$ps = $this->_db->prepare ( $query );
-		$ps->bindValue ( ':bloc', $bloc );
-		$ps->bindValue ( ':term', $term );
+		$ps->bindValue ( ':serie_id', $serie_id );
 		$ps->execute ();
 		return $ps->rowcount () == 1;
+	}
+	
+	public function delete_serie($serie_id) {
+		$query = 'DELETE FROM series WHERE serie_id = :serie_id';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':serie_id', $serie_id );
+		$ps->execute ();
 	}
 	
 	// check if agenda is created

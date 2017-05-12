@@ -252,13 +252,27 @@ class BlocResponsibleController {
 	
 	
 	public function formDeleteSerie() {
-		
+		$serie = $_POST['formDeleteSerie'];
 		if ($_POST['formDeleteSerie'] >= 0) {
+			if ($this->_db->existing_serie($serie)) {
+				$this->_db->delete_serie($serie);
+				return array (
+				"error_code" => "success",
+				"error_message" => "La série a bien été supprimée"
+			);
+			} else {
+				return array (
+				"error_code" => "warning",
+				"error_message" => "La série n'a pas pu être supprimée, son id n'existe pas dans la base de donnée"
+			);
+			}	
+		} else {
 			
-			if ($this->_db->exist)
-			
-			$this->_db->delete_serie(
-				
+			// param missing
+			return array (
+				"error_code" => "warning",
+				"error_message" => "La série n'a pas pu être supprimée, un paramètre est manquant"
+			);
 		}
 		
 	}
