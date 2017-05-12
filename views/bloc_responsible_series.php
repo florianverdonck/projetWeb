@@ -9,13 +9,15 @@
 				<form action="index.php?user=bloc_responsible&action=series&bloc=<?=$this->_bloc;?>&trim=<?=$this->_term;?>" method="post">
 				<?php if ($numberOfSeries > 0) { ?>
 				<div class="col-md-10" id="series">
+
 					<?php
-						
+							$serieCounter = 1;
 							// Loop on each serie available in database and create a "col-md-3" for each
-							for ($serie = 1; $serie <= $numberOfSeries; $serie++) {
+							foreach ($studentsInSerie as $serie_id => $studentsInThis) {
+								
 								
 								// If it's a 1, 5, 9, ... serie, it should begin a new row ! Mark it as opened so we are sure we close it at the end
-								if (((($serie-1)%4)) == 0) { $opened = true; ?>
+								if (((($serieCounter-1)%4)) == 0) { $opened = true; ?>
 								
 								<!-- BALISE ROW OUVERTE -->
 								<div class="row">
@@ -26,9 +28,13 @@
 								<div class="col-md-3 col-sm-6">
 									<div class="panel panel-primary">
 										<div class="panel-heading">
-											<input type="submit" name="formDeleteSerie" value="<?=$series[$serie-1]->html_serie_id();?>">
-											<i class="glyphicon glyphicon-remove pull-right"></i>
-											<h3 class="panel-title">Série <?php echo $serie; ?></h3>
+											
+											   <button type="submit" class="submit-with-icon pull-right" name="formDeleteSerie" value="<?=$serie_id?>">
+											     <span class="glyphicon glyphicon-remove"></span>
+											   </button>
+											
+											
+											<h3 class="panel-title">Série <?php echo $serieCounter; ?></h3>
 											
 										</div>
 										<table class="table">
@@ -39,10 +45,10 @@
 												</tr>
 											</thead>
 											<tbody>
-												<?php if($studentsInSerie[$serie] != null) { foreach ($studentsInSerie[$serie] as $key => $value){ ?>
+												<?php if($studentsInThis != null) { foreach ($studentsInThis as $key => $student){ ?>
 												<tr>
 													<th scope="row"><?=$key+1;?></th>
-													<td><?=$value->name() . " " . $value->first_name();?></td>
+													<td><?=$student->name() . " " . $student->first_name();?></td>
 												</tr>
 												<?php } } else { ?>
 												<tr>
@@ -61,7 +67,7 @@
 									
 									// If it's a 4, 8, ... serie, we should close the "row" opened previously, and mark it as closed !
 									
-									if ((($serie)%4) == 0) { $opened = false; ?>
+									if ((($serieCounter)%4) == 0) { $opened = false; ?>
 								
 									</div> <!-- FERMETURE DE ROW -->
 							
@@ -70,7 +76,7 @@
 							<?php
 								
 							// Mark the end of the FOR looping over series	
-								
+								$serieCounter++;
 							}
 							
 							?>

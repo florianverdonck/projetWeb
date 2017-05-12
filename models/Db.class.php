@@ -520,7 +520,7 @@ class Db {
 		$ps->bindValue ( ':bloc', $bloc );
 		$ps->bindValue ( ':term', $term );
 		$ps->execute ();
-		return $ps->rowcount () == 1;
+		return $ps->rowcount() > 0;
 	}
 	
 	public function existing_serie($serie_id) {

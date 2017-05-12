@@ -180,18 +180,19 @@ class BlocResponsibleController {
 		
 		$studentsNotInSeries = $this->_db->select_students_not_in_series_from_bloc($this->_bloc);
 		
-		$studentsInSerie[] = "";
+		$studentsInSerie = array();
 		
 		$series = $this->_db->select_series_from_bloc($this->_bloc, $this->_term);
 		$numberOfSeries = 0;
+		
 		if (is_array($series)) {
 			$numberOfSeries = count($series);
 		} else {
 			$numberOfSeries = 0;
 		}
 		
-		for ($serie = 1; $serie <= $numberOfSeries; $serie++) {
-			$studentsInSerie[] = $this->_db->select_students_serie_bloc($serie, $this->_bloc, $this->_term);
+		foreach ($series as $key => $serie) {
+			$studentsInSerie[$serie->html_serie_id()] = $this->_db->select_students_serie_id($serie->html_serie_id());
 		}
 		
 		$maxNumberOfStudentsSerie = 0;
@@ -203,6 +204,12 @@ class BlocResponsibleController {
 			}
 		}
 		
+		
+		//studentsSorted = $this->_db->select_students_sorted_in_series($this->_bloc, $this->_term);
+		
+		
+		
+
 		require_once(PATH_VIEWS . "bloc_responsible_series.php");
 		
 	}
