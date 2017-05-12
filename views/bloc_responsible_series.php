@@ -6,11 +6,10 @@
 		<?php include_once(PATH_VIEWS . "navbar.php"); ?>
 		<div class="container">
 			<div class="row">
+				<form action="index.php?user=bloc_responsible&action=series&bloc=<?=$this->_bloc;?>&trim=<?=$this->_term;?>" method="post">
 				<?php if ($numberOfSeries > 0) { ?>
 				<div class="col-md-10" id="series">
 					<?php
-						
-						
 						
 							// Loop on each serie available in database and create a "col-md-3" for each
 							for ($serie = 1; $serie <= $numberOfSeries; $serie++) {
@@ -27,7 +26,10 @@
 								<div class="col-md-3 col-sm-6">
 									<div class="panel panel-primary">
 										<div class="panel-heading">
+											<input type="submit" name="formDeleteSerie" value="<?=$series[$serie-1]->html_serie_id();?>">
+											<i class="glyphicon glyphicon-remove pull-right"></i>
 											<h3 class="panel-title">Série <?php echo $serie; ?></h3>
+											
 										</div>
 										<table class="table">
 											<thead>
@@ -81,7 +83,7 @@
 								</div> <!-- FERMETURE DE ROW AVANT L'HEURE -->
 							
 							<?php } ?>
-												
+				</form>							
 			</div>
 			<div class="col-md-2 col-sm-12">
 				<div class="col-md-2 col-sm-12 affix mobileNotFixed">

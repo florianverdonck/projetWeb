@@ -16,31 +16,26 @@
 						</div>
 						<div class="panel-body">
 							<form action="index.php?user=bloc_responsible&action=seance_templates&bloc=<?=1;?>&term=<?=$this->_term;?>" method="POST">
+
 								<label for="inputUESelect">UE/AA concernée</label><br>
-								<select class="selectpicker" id="inputUESelect" name="inputUESelect">
-										
-										<?php
-											
-											foreach ($array_ue as $key => $ue) {
-										
-										?>		
-												<option value="<?=$ue->code();?>"><?=$ue->name();?></option>	
-										<?php		
-											}
-										?>
+								<select class="selectpicker" id="inputUESelect" name="inputUESelect">										
+									<?php  if ($array_ue != null) { foreach ($array_ue as $key => $ue) { ?>		
+										<option value="<?=$ue->code();?>"><?=$ue->name();?></option>	
+									<?php		
+										} }
+									?>
 								</select><br><br>
 								
-								<label for="inputWeekSelect">Numéro de la semaine</label><br>
-								<select class="selectpicker" id="inputWeekSelect" name="inputWeekSelect">
-									<?php foreach ($weeks as $key => $week) { ?>
-										<option value="<?=$week->week_id();?>">Semaine n°<?=$week->week_number();?></option>
-									<?php } ?>
-								</select><br><br>
+								<div class="form-group">
+							        <label>Nom de la séance type</label>
+							        <input type="text" name="inputSeanceName" class="form-control" />
+							    </div>
+								
 															
 								<label for="inputTypeOfPresence">Type de présence par défaut</label><br>
 								<div class="btn-group" data-toggle="buttons" id="inputTypeOfPresence">
 								  <label class="btn btn-default active btn-sm">
-								    <input type="radio" name="presenceType" value="x">X
+								    <input type="radio" name="presenceType" value="x" checked>X
 								  </label>
 								  <label class="btn btn-default btn-sm">
 								    <input type="radio" name="presenceType" value="xo">XO
@@ -52,32 +47,30 @@
 								
 								<label for="inputTypeOfPresence">Séries concernées</label><br>
 								<div class="btn-group" data-toggle="buttons" id="inputTypeOfPresence">
+								  			
+								  			<label class="btn btn-default btn-sm active">
+												<input type="checkbox" autocomplete="off" name="seriesSelected[]" value="all" checked>Toutes les séries
+											</label>
 								  							  
 								  	<?php
+									  		if ($array_series != null) {
 										
 											foreach ($array_series as $key => $serie) {
 										
 										?>		
 											<label class="btn btn-default btn-sm">
-												<input type="radio" name="seriesSelected" value="<?=$serie->serie_id();?>"><?=$serie->serie_numero();?>
+												<input type="checkbox" autocomplete="off" name="seriesSelected[]" value="<?=$serie->serie_id();?>"><?=$serie->serie_numero();?>
 											 </label>
 									<?php		
-										}
+										} }
 									?>
 									
-					
+											
 	
 								</div>
-								
-								<div class="btn-group" data-toggle="buttons" id="inputTypeOfPresence">
-								  							  
-											<label class="btn btn-default btn-sm">
-												<input type="radio" name="seriesSelected" value="all">Toutes les séries
-											 </label>
+								<br><br><br>
 	
-								</div><br><br>
-	
-								<button class="btn btn-lg btn-primary btn-block" type="submit">Ajouter la séance type</button>
+								<button class="btn btn-lg btn-primary btn-block" type="submit" name="formAddSeanceTemplate">Ajouter la séance type</button>
 							</form>
 						</div>
 					</div>
@@ -91,7 +84,6 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>#</th>
 									<th>Nom<span class="hidden-xs"> de la séance</span></th>
 									<th>UE/AA<span class="hidden-xs"> concernée</span></th>
 									<th><span class="hidden-xs">Type de</span> présence</th>
@@ -102,11 +94,12 @@
 								
 								<?php
 									
+									if ($array_seances_templates != null) {
+									
 									foreach ($array_seances_templates as $key => $seance_template) {
 										
 								?>
 								<tr>
-									<td><?=$seance_template->html_seance_template_id();?></td>
 									<td><?=$seance_template->html_name();?></td>
 									<td><?=$seance_template->html_ue_name();?></td>
 									<td><?=$seance_template->html_attendance_type();?></td>
@@ -129,7 +122,7 @@
 								
 								<?php
 									
-									}
+									} }
 										
 								?>
 								

@@ -73,6 +73,10 @@ class BlocResponsibleController {
 			$update_message = $this->formAutoFillSeries();
 		}
 		
+		if (isset($_POST['formDeleteSerie'])) {
+			$update_message = $this->formDeleteSerie();
+		}
+		
 		if (isset($_POST['formAddSeanceTemplate'])) {
 			$update_message = $this->formAddSeanceTemplate();
 		}
@@ -110,6 +114,62 @@ class BlocResponsibleController {
 	
 	public function formAddSeanceTemplate() {
 		
+		
+		if (isset($_POST['inputUESelect']) && isset($_POST['inputSeanceName']) && isset($_POST['presenceType']) && isset($_POST['seriesSelected'])) {
+			
+			$UE = htmlspecialchars($_POST['inputUESelect']);
+			$name = htmlspecialchars($_POST['inputSeanceName']);
+			$presenceType = htmlspecialchars($_POST['presenceType']);
+			$series = $_POST['seriesSelected'];
+			
+			$this->_db->insert_seance_template($name, $presenceType, $UE);
+			
+			$seanceTemplateID = $this->_db->get_last_seance_template_id();
+			
+			if ($_POST['seriesSelected'][0] == 'all') {
+				// User chooses to create given seances for all series, so we get change $series array
+				$series = $this->_db->select_series_from_bloc($this->_bloc, $this->_term);
+				
+				foreach ($series as $key => $serie) {
+					$series[$key] = $serie->serie_id();
+				}
+				
+			}
+			
+			foreach ($series as $key => $serie) {
+				
+				$this->_db->insert_given_seance($seanceTemplateID, $serie);
+				
+			}
+			
+			return array (
+				"error_code" => "success",
+				"error_message" => "La séance type a bien été ajoutée"
+			);
+			
+		} else {
+			
+			return array (
+				"error_code" => "warning",
+				"error_message" => "La séance type n'a pas pu être ajoutée, des paramètres sont manquants"
+			);
+			
+		}
+		
+		
+/*
+	
+		[inputUESelect] =>
+		[inputWeekSelect] => 220
+		[presenceType] => x
+		[seriesSelected] => all
+	
+		insert_seance_template($name, $attendance_type, $code);
+		
+		get_last_seance_template_id();
+		
+		insert_given_seance($seance_template_id, $serie_id)
+*/
 	}
 	
 	
@@ -191,6 +251,18 @@ class BlocResponsibleController {
 	}
 	
 	
+	public function formDeleteSerie() {
+		
+		if ($_POST['formDeleteSerie'] >= 0) {
+			
+			if ($this->_db->exist)
+			
+			$this->_db->delete_serie(
+				
+		}
+		
+	}
+	
 	public function formInsertSerie() {
 		
 		if (isset($_POST['studentMail']) && isset($_POST['destinationSerie'])) {
@@ -268,52 +340,60 @@ class BlocResponsibleController {
 	
 	public function formUE() {
 		
-		if (!empty($_FILES['inputUEFile']['name'])) {
-			if (!preg_match ( '/^programme_bloc' . $_POST['inputBloc'] . '.csv$/', $_FILES['inputUEFile']['name'])) {
-				return Array(
-						"error_code"=>"danger",
-						"error_message"=>"Le fichier " . $_FILES['inputUEFile']['name'] . " ne dispose pas du bon format."
-				);
-			}
-			$origine = $_FILES['inputUEFile']['tmp_name'];
-			$destination = 'conf/programme_bloc' . $_POST['inputBloc'] . '.csv';
-			move_uploaded_file($origine, $destination);
-			
-			$insertCounter = 0;
-			
-			$UEfile = file($destination);
-			
-			foreach ($UEfile as $key => $UE){
-				
-				preg_match( '/^(.*);(.*);(.*);(.*);(.*);(.*)$/', $UE, $result);
-						
-				$name = $result[1];
-				$code = $result[2];
-				$term = str_replace("Q", "", $result[3]);
-				$course_unit_learning_activity = $result[4];
-				$ects = $result[5];
-				
-				if (preg_match('/,/',$ects)) {
-					$ects = str_replace(",", ".", $ects);
+		if ($this->_db->ue_file_already_imported($this->_bloc)) {
+			if (!empty($_FILES['inputUEFile']['name'])) {
+				if (!preg_match ( '/^programme_bloc' . $_POST['inputBloc'] . '.csv$/', $_FILES['inputUEFile']['name'])) {
+					return Array(
+							"error_code"=>"danger",
+							"error_message"=>"Le fichier " . $_FILES['inputUEFile']['name'] . " ne dispose pas du bon format."
+					);
 				}
+				$origine = $_FILES['inputUEFile']['tmp_name'];
+				$destination = 'conf/programme_bloc' . $_POST['inputBloc'] . '.csv';
+				move_uploaded_file($origine, $destination);
 				
-				$abbreviation = $result[6];
-				$bloc = $_POST['inputBloc'];
+				$insertCounter = 0;
 				
-				if ($key != 0) {
-					if (!$this->_db->existing_course($code)) {
-						
-						$this->_db->insert_course($code, $name, $term, trim($ects), $bloc, $abbreviation, $course_unit_learning_activity);
-						$insertCounter++;
+				$UEfile = file($destination);
+				
+				foreach ($UEfile as $key => $UE){
+					
+					preg_match( '/^(.*);(.*);(.*);(.*);(.*);(.*)$/', $UE, $result);
+							
+					$name = $result[1];
+					$code = $result[2];
+					$term = str_replace("Q", "", $result[3]);
+					$course_unit_learning_activity = $result[4];
+					$ects = $result[5];
+					
+					if (preg_match('/,/',$ects)) {
+						$ects = str_replace(",", ".", $ects);
+					}
+					
+					$abbreviation = $result[6];
+					$bloc = $_POST['inputBloc'];
+					
+					if ($key != 0) {
+						if (!$this->_db->existing_course($code)) {
+							
+							$this->_db->insert_course($code, $name, $term, trim($ects), $bloc, $abbreviation, $course_unit_learning_activity);
+							$insertCounter++;
+						}
 					}
 				}
+				
+				return Array(
+						"error_code"=>"success",
+						"error_message"=>"Le nouveau fichier de programme du bloc " . $_POST['inputBloc'] . " a bien été pris en compte. " . $insertCounter . " entrées ont été ajoutées."
+				);
 			}
-			
+		} else {
 			return Array(
-					"error_code"=>"success",
-					"error_message"=>"Le nouveau fichier de programme du bloc " . $_POST['inputBloc'] . " a bien été pris en compte. " . $insertCounter . " entrées ont été ajoutées."
-			);
+						"error_code"=>"danger",
+						"error_message"=>"Impossible d'importer le programme du bloc car il existe déjà. Veuillez le supprimer d'abord."
+				);
 		}
+
 	}
 
 }

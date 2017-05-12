@@ -92,6 +92,25 @@ class Db {
 		$ps->bindValue ( ':code', $code );
 		return $ps->execute ();
 	}
+		
+	public function get_last_seance_template_id() {
+		$query = 'SELECT MAX(seance_template_id) as lastID FROM seance_templates';
+		$ps = $this->_db->prepare ( $query );
+		$ps->execute();
+		$lastID = $ps->fetch();
+		return $lastID->lastID;
+	}
+	
+		
+	public function insert_given_seance($seance_template_id, $serie_id) {
+		$query = 'INSERT INTO given_seances (seance_template_id, serie_id)
+				VALUES (:seance_template_id, :serie_id)';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':seance_template_id', $seance_template_id );
+		$ps->bindValue ( ':serie_id', $serie_id );
+		return $ps->execute ();
+	}
+	
 	
 	public function insert_attendance_sheet($seance_template_id, $mail, $week_id) {
 		$query = 'INSERT INTO attendance_sheets (seance_template_id, mail, week_id)
@@ -112,7 +131,7 @@ class Db {
 		$ps->bindValue ( ':attendance', $attendance );
 		return $ps->execute ();
 	}
-	
+
 	public function select_professors() {
 		$query = 'SELECT mail, name, first_name, responsible FROM professors';
 		$ps = $this->_db->prepare ( $query );
@@ -479,6 +498,14 @@ class Db {
 		return $ps->rowcount () == 1;
 	}
 	
+	public function ue_file_already_imported($bloc) {
+		$query = 'SELECT * FROM courses WHERE bloc = :bloc';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':bloc', $bloc );
+		$ps->execute();
+		return $ps->rowcount () == 1;
+	}
+	
 	public function existing_student($mail) {
 		$query = 'SELECT mail FROM students WHERE mail = :mail';
 		$ps = $this->_db->prepare ( $query );
@@ -488,6 +515,15 @@ class Db {
 	}
 	
 	public function existing_series($bloc, $term) {
+		$query = 'SELECT * from series WHERE bloc = :bloc AND term = :term';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':bloc', $bloc );
+		$ps->bindValue ( ':term', $term );
+		$ps->execute ();
+		return $ps->rowcount () == 1;
+	}
+	
+	public function existing_serie($serie_id) {
 		$query = 'SELECT * from series WHERE bloc = :bloc AND term = :term';
 		$ps = $this->_db->prepare ( $query );
 		$ps->bindValue ( ':bloc', $bloc );
