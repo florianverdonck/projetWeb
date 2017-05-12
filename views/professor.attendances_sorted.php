@@ -79,7 +79,7 @@
 										<input type="radio" name="attendance_type" value="XO">XO
 									</label>
 									<label class="btn btn-default btn-sm">
-										<input type="radio" name="attendance_type" value="Noted">Noté
+										<input type="radio" name="attendance_type" value="noted">Noté
 									</label>
 									<label class="btn btn-default active btn-sm">
 										<input type="radio" name="attendance_type" value="default" checked="checked">Défaut
