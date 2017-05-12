@@ -503,7 +503,7 @@ class Db {
 		$ps = $this->_db->prepare ( $query );
 		$ps->bindValue ( ':bloc', $bloc );
 		$ps->execute();
-		return $ps->rowcount () == 1;
+		return $ps->rowcount()>0;
 	}
 	
 	public function existing_student($mail) {
