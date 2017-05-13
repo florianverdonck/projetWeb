@@ -7,7 +7,8 @@ class Attendance {
 	private $_sick_note;
 	private $_course_name;
 	private $_seance_template_name;
-	public function __construct($attendance_id, $attendance_sheet_id, $student_id, $attendance, $sick_note, $course_name="", $seance_template_name="") {
+	private $_week_number;
+	public function __construct($attendance_id, $attendance_sheet_id, $student_id, $attendance, $sick_note, $course_name="", $seance_template_name="", $week_number="") {
 		$this->_attendance_id = $attendance_id;
 		$this->_attendance_sheet_id = $attendance_sheet_id;
 		$this->_student_id = $student_id;
