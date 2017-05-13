@@ -182,7 +182,7 @@ class Db {
 		$ps->execute ();
 		$array_students = "";
 		while ( $row = $ps->fetch () ) {
-			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
+			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc, $row->student_id);
 		}
 		return $array_students;
 	}
@@ -196,7 +196,7 @@ class Db {
 		$ps->execute ();
 		$array_students = "";
 		while ( $row = $ps->fetch () ) {
-			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
+			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc, $row->student_id);
 		}
 		return $array_students;
 	}
@@ -208,7 +208,7 @@ class Db {
 		$ps->execute();
 		$array_students = "";
 		while ($row = $ps->fetch () ) {
-			$array_students[] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
+			$array_students[] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc, $row->student_id );
 		}
 		return $array_students;
 	}
@@ -256,7 +256,7 @@ class Db {
 		$ps->execute ();
 		$array_students = "";
 		while ( $row = $ps->fetch () ) {
-			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
+			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc, $row->student_id );
 		}
 		return $array_students;
 	}
@@ -272,7 +272,7 @@ class Db {
 		$ps->execute ();
 		$array_students = "";
 		while ( $row = $ps->fetch () ) {
-			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
+			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc, $row->student_id );
 		}
 		return $array_students;
 	}
@@ -308,7 +308,7 @@ class Db {
 		$ps->execute ();
 		$array_students = '';
 		while ( $row = $ps->fetch () ) {
-			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc, $row->attendance, $row->sick_note );
+			$array_students [] = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc, $row->student_id, $row->attendance, $row->sick_note );
 		}
 		return $array_students;
 	}
@@ -458,7 +458,7 @@ class Db {
 		$row = $ps->fetch ();
 		$student = '';
 		if (! empty ( $row )) {
-			$student = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc );
+			$student = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc, $row->serie_id );
 		}
 		return $student;
 	}

@@ -11,9 +11,9 @@ class ProfessorController {
 		$this->checkPermissions ();
 		
 		// variables for view
-		$current_week = $this->searchCurrentWeek();
+		$current_week = $this->searchCurrentWeek ();
 		$sorted_attendances = false;
-		$update_message = $students = $seances_templates = '';
+		$update_message = $students = $seances_templates = $new_student = '';
 		$seances_created = $this->_db->existing_seances ();
 		
 		// Loads a more in depth form based on previous inputs
@@ -48,42 +48,41 @@ class ProfessorController {
 		
 		// Takes attendances for listed students
 		if (! empty ( $_POST ['form_take_attendances'] )) {
-			$update_message = $this->takeAttendances ();
+			$update_message = $this->takeAttendances ( $new_student );
 			$students = $this->fetchStudents ();
 		}
 		
-		// Allows the professor to add a student which isn't from the current serie
+		// Allows the professor to add a student which isn't from the current bloc or serie
 		if (! empty ( $_POST ['form_add_student_attendance'] )) {
 			
-			$update_message = $this->formAddErrorMessage ( $students );
-			if ($update_message ['error_code'] == 'success') {
-				$update_message = $this->addStudentAnotherBloc ();
+			$update_message = $this->formAddErrorMessage ();
+			if ($update_message ['error_code'] != 'danger') {
+				list ( $update_message, $new_student ) = $this->addStudentAnotherBloc ();
 			}
+			
 			$students = $this->fetchStudents ();
 		}
 		
-		if (! empty ( $_POST['form_search_student'])) {
-			if (empty ($_POST['keyword'])) {
+		if (! empty ( $_POST ['form_search_student'] )) {
+			if (empty ( $_POST ['keyword'] )) {
 				$update_message = array (
 						"error_code" => "danger",
-						"error_message" => "Veuillez écrire un mot clé pour la recherche."
+						"error_message" => "Veuillez écrire un mot clé pour la recherche." 
 				);
 			}
 			$students = $this->fetchStudents ();
 		}
 		$sorted_attendances ? require_once (PATH_VIEWS . "professor.attendances_sorted.php") : require_once (PATH_VIEWS . "professor.php");
 	}
-	
 	private function searchCurrentWeek() {
-		$date = date('Y-m-d', strtotime( 'monday this week' ));
-		$monday_date = date_format(new DateTime($date), 'd/m/Y'); // format
-		if (substr($monday_date, 0, 1) == '0') {
-			$monday_date = substr($monday_date, 1);
+		$date = date ( 'Y-m-d', strtotime ( 'monday this week' ) );
+		$monday_date = date_format ( new DateTime ( $date ), 'd/m/Y' ); // format
+		if (substr ( $monday_date, 0, 1 ) == '0') {
+			$monday_date = substr ( $monday_date, 1 );
 		}
-		return $this->_db->select_week_number($monday_date);
+		return $this->_db->select_week_number ( $monday_date );
 	}
-	
-	private function takeAttendances() {
+	private function takeAttendances($new_student) {
 		$attendance_sheet_id = $this->getAttendanceSheetId ();
 		if (isset ( $_POST ['attendance'] )) {
 			foreach ( $_POST ['attendance'] as $student => $attendance ) {
@@ -97,62 +96,93 @@ class ProfessorController {
 				$this->_db->update_sick_note ( $attendance_sheet_id, $st, $sick_note );
 			}
 		}
+		if (isset ( $new_student )) {
+			return array (
+					"error_code" => "success",
+					"error_message" => "Les présences ont été enregistrées. Pour consulter l'élève ajouté, sélectionnez \"toutes les séries\"." 
+			);
+		}
 		return array (
 				"error_code" => "success",
 				"error_message" => "Les présences ont été enregistrées." 
 		);
 	}
-	
 	private function getAttendanceSheetId() {
 		$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $_POST ['week'] );
 		return $attendance_sheet->attendance_sheet_id ();
 	}
-	
 	private function checkPermissions() {
 		if (empty ( $_SESSION ['authenticated'] ) || $_SESSION ['authenticated'] == 'student') {
 			header ( 'Location: index.php?action=login' );
 			die ();
 		}
 	}
-	
 	private function addStudentAnotherBloc() {
 		$mail_eleve = $_POST ['student_mail'] . '@student.vinci.be';
 		$student = $this->_db->select_student ( $mail_eleve );
 		$student_id = $student->student_id ();
 		$attendance_sheet_id = $this->getAttendanceSheetId ();
-		if (! $this->_db->existing_attendance ( $attendance_sheet_id, $student_id )) {
-			if ($_POST ['attendance_type'] == 'Noted') {
-				$this->_db->insert_attendance ( $attendance_sheet_id, $student_id, 0 );
-			} else {
-				$this->_db->insert_attendance ( $attendance_sheet_id, $student_id, 'absent' );
+		if ($_POST ['serie'] != $student->serie_id () && $_POST ['bloc'] != $student->bloc ()) {
+			if (! $this->_db->existing_attendance ( $attendance_sheet_id, $student_id )) {
+				if ($_POST ['attendance_type'] == 'noted') {
+					$this->_db->insert_attendance ( $attendance_sheet_id, $student_id, 0 );
+					return array (
+							array (
+									"error_code" => "success",
+									"error_message" => "L'élève a été ajouté avec une note de 0." 
+							),
+							'' 
+					);
+				} else {
+					$this->_db->insert_attendance ( $attendance_sheet_id, $student_id, 'present' );
+					return array (
+							array (
+									"error_code" => "success",
+									"error_message" => "L'élève a été ajouté dans la liste en tant que présent." 
+							),
+							'' 
+					);
+				}
 			}
-			$this->_db->select_students_from_attendances ( $attendance_sheet_id );
 			return array (
-					"error_code" => "success",
-					"error_message" => "L'élève a été ajouté dans la liste en tant qu'absent." 
-			);
-		} else {
-			return array (
-					"error_code" => "danger",
-					"error_message" => "L'élève est déjà présent dans la liste." 
+					array (
+							"error_code" => "danger",
+							"error_message" => "Cet élève du bloc " . $student->html_bloc () . " a déjà été ajouté. Pour le mettre à jour, sélectionnez \"toutes les séries\"." 
+					),
+					'' 
 			);
 		}
+		if ($_POST ['serie'] != $student->serie_id ()) {
+			return array (
+					array (
+							"error_code" => "success",
+							"error_message" => "Cet élève d'une autre série a été ajouté en tant que présent." 
+					),
+					$student 
+			) // displays this student from another serie
+;
+		}
+		return array (
+				array (
+						"error_code" => "danger",
+						"error_message" => "Cet élève est déjà présent dans la liste." 
+				),
+				'' 
+		);
 	}
-	
 	private function fetchStudents() {
-		$attendance_sheet_id = $this->getAttendanceSheetId ();	
-		if ($_POST['serie'] == '' && ! isset ( $_POST ['keyword'] )) {			
+		$attendance_sheet_id = $this->getAttendanceSheetId ();
+		if ($_POST ['serie'] == '' && ! isset ( $_POST ['keyword'] )) {
 			return $this->_db->select_students_from_attendances ( $attendance_sheet_id );
 		}
-		if ($_POST['serie'] != '' && ! isset ( $_POST ['keyword'] )) {			
+		if ($_POST ['serie'] != '' && ! isset ( $_POST ['keyword'] )) {
 			return $this->_db->select_students_from_attendances ( $attendance_sheet_id, $_POST ['serie'] );
 		}
-		if ($_POST['serie'] == '' && isset ( $_POST ['keyword'] )) {
-			return $this->_db->select_students_from_attendances ( $attendance_sheet_id, $_POST['serie'], $_POST ['keyword'] );
-		}		
+		if ($_POST ['serie'] == '' && isset ( $_POST ['keyword'] )) {
+			return $this->_db->select_students_from_attendances ( $attendance_sheet_id, $_POST ['serie'], $_POST ['keyword'] );
+		}
 		return $this->_db->select_students_from_attendances ( $attendance_sheet_id, $_POST ['serie'], $_POST ['keyword'] );
 	}
-	
 	private function setAllStudentsAbsent($students) {
 		$attendance_sheet_id = $this->getAttendanceSheetId ();
 		if (! empty ( $students )) {
@@ -167,7 +197,7 @@ class ProfessorController {
 	}
 	
 	// returns error messages if inputs aren't set
-	private function formAddErrorMessage($students) {
+	private function formAddErrorMessage() {
 		if (empty ( $_POST ['student_mail'] )) {
 			return array (
 					"error_code" => "danger",
@@ -180,10 +210,6 @@ class ProfessorController {
 					"error_message" => "Le mail ne correspond a aucun élève." 
 			);
 		}
-		return array (
-				"error_code" => "success",
-				"error_message" => "L'élève a été correctement ajouté" 
-		);
 	}
 	
 	// returns error messages if sort form inputs are not correctly set
