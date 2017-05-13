@@ -96,7 +96,7 @@ class ProfessorController {
 				$this->_db->update_sick_note ( $attendance_sheet_id, $st, $sick_note );
 			}
 		}
-		if (isset ( $new_student )) {
+		if ($new_student != '') {
 			return array (
 					"error_code" => "success",
 					"error_message" => "Les présences ont été enregistrées. Pour consulter l'élève ajouté, sélectionnez \"toutes les séries\"." 
