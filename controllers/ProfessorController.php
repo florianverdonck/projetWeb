@@ -41,6 +41,7 @@ class ProfessorController {
 					$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $_POST ['week'] );
 					$seance_template_id = $attendance_sheet->seance_template_id ();
 					$_POST ['attendance_type'] = $this->_db->select_attendance_type ( $seance_template_id );
+					var_dump($_POST['attendance_type']);
 				}
 				$students = $this->fetchStudents ();
 			}
@@ -57,7 +58,7 @@ class ProfessorController {
 			
 			$update_message = $this->formAddErrorMessage ();
 			if ($update_message ['error_code'] != 'danger') {
-				list ( $update_message, $new_student ) = $this->addStudentAnotherBloc ();
+				list ( $update_message, $new_student ) = $this->addStudent ();
 			}
 			
 			$students = $this->fetchStudents ();
@@ -74,6 +75,8 @@ class ProfessorController {
 		}
 		$sorted_attendances ? require_once (PATH_VIEWS . "professor.attendances_sorted.php") : require_once (PATH_VIEWS . "professor.php");
 	}
+	
+	// select the current week number
 	private function searchCurrentWeek() {
 		$date = date ( 'Y-m-d', strtotime ( 'monday this week' ) );
 		$monday_date = date_format ( new DateTime ( $date ), 'd/m/Y' ); // format
@@ -84,10 +87,22 @@ class ProfessorController {
 	}
 	private function takeAttendances($new_student) {
 		$attendance_sheet_id = $this->getAttendanceSheetId ();
+		$error_message = "Les présences/certificats ont été enregistrés.";
 		if (isset ( $_POST ['attendance'] )) {
 			foreach ( $_POST ['attendance'] as $student => $attendance ) {
-				$st = substr ( ( string ) $student, 1, 4 );
-				$this->_db->update_attendance ( $attendance_sheet_id, $st, $attendance );
+				$not_numeric_values = 0;
+				if (($_POST ['attendance_type'] == 'noted') && ! is_numeric ( $attendance )) {
+					$not_numeric_values ++; // number of wrong values
+				} else {
+					$st = substr ( ( string ) $student, 1, 4 );
+					$this->_db->update_attendance ( $attendance_sheet_id, $st, $attendance );
+				}
+				if ($not_numeric_values > 1) {
+					$error_message .= " $not_numeric_values étudiants ont une note non numérique, leur note n'a pas été mise à jour.";
+				}
+				if ($not_numeric_values == 1) {
+					$error_message .= " $not_numeric_values étudiant a une note non numérique, sa note n'a pas été mise à jour.";
+				}
 			}
 		}
 		if (isset ( $_POST ['sick_note'] )) {
@@ -97,14 +112,11 @@ class ProfessorController {
 			}
 		}
 		if ($new_student != '') {
-			return array (
-					"error_code" => "success",
-					"error_message" => "Les présences ont été enregistrées. Pour consulter l'élève ajouté, sélectionnez \"toutes les séries\"." 
-			);
+			$error_message .= " Pour consulter l'élève ajouté, sélectionnez \"toutes les séries\".";
 		}
 		return array (
 				"error_code" => "success",
-				"error_message" => "Les présences ont été enregistrées." 
+				"error_message" => $error_message 
 		);
 	}
 	private function getAttendanceSheetId() {
@@ -117,12 +129,13 @@ class ProfessorController {
 			die ();
 		}
 	}
-	private function addStudentAnotherBloc() {
+	private function addStudent() {
 		$mail_eleve = $_POST ['student_mail'] . '@student.vinci.be';
 		$student = $this->_db->select_student ( $mail_eleve );
 		$student_id = $student->student_id ();
 		$attendance_sheet_id = $this->getAttendanceSheetId ();
-		if ($_POST ['serie'] != $student->serie_id () && $_POST ['bloc'] != $student->bloc ()) {
+		
+		if ($_POST ['bloc'] != $student->bloc ()) {
 			if (! $this->_db->existing_attendance ( $attendance_sheet_id, $student_id )) {
 				if ($_POST ['attendance_type'] == 'noted') {
 					$this->_db->insert_attendance ( $attendance_sheet_id, $student_id, 0 );
@@ -152,6 +165,7 @@ class ProfessorController {
 					'' 
 			);
 		}
+		
 		if ($_POST ['serie'] != $student->serie_id ()) {
 			return array (
 					array (
@@ -159,8 +173,7 @@ class ProfessorController {
 							"error_message" => "Cet élève d'une autre série a été ajouté en tant que présent." 
 					),
 					$student 
-			) // displays this student from another serie
-;
+			);
 		}
 		return array (
 				array (
@@ -170,6 +183,8 @@ class ProfessorController {
 				'' 
 		);
 	}
+	
+	// various ways to fetch students according to what user want
 	private function fetchStudents() {
 		$attendance_sheet_id = $this->getAttendanceSheetId ();
 		if ($_POST ['serie'] == '' && ! isset ( $_POST ['keyword'] )) {
@@ -183,11 +198,13 @@ class ProfessorController {
 		}
 		return $this->_db->select_students_from_attendances ( $attendance_sheet_id, $_POST ['serie'], $_POST ['keyword'] );
 	}
+
 	private function setAllStudentsAbsent($students) {
 		$attendance_sheet_id = $this->getAttendanceSheetId ();
-		if (! empty ( $students )) {
+		if (! empty ( $students )) {				
 			foreach ( $students as $student ) {
-				if ($_POST ['attendance_type'] == 'Noted') {
+				if ($_POST ['attendance_type'] == 'noted') {
+					var_dump($_POST ['attendance_type']);
 					$this->_db->insert_attendance ( $attendance_sheet_id, $student->student_id (), 0 );
 				} else {
 					$this->_db->insert_attendance ( $attendance_sheet_id, $student->student_id (), 'absent' );

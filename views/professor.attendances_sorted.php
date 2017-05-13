@@ -58,20 +58,6 @@
 								<br><br>
 								<label>Sélectionnez le type de présence </label><br>
 								<div class="btn-group" data-toggle="buttons">
-									<?php if (isset($_POST['attendance_type'])) { ?>
-									<label class="btn btn-default <?php if ($_POST['attendance_type'] == 'X') echo "active"?> btn-sm">
-										<input type="radio" name="attendance_type" value="X" <?php if ($_POST['attendance_type'] == 'X') echo "checked=\"checked\""?>>X
-									</label>
-									<label class="btn btn-default <?php if ($_POST['attendance_type'] == 'XO') echo "active"?> btn-sm">
-										<input type="radio" name="attendance_type" value="XO" <?php if ($_POST['attendance_type'] == 'XO') echo "checked=\"checked\""?>>XO
-									</label>
-									<label class="btn btn-default <?php if ($_POST['attendance_type'] == 'noted') echo "active"?> btn-sm">
-										<input type="radio" name="attendance_type" value="noted" <?php if ($_POST['attendance_type'] == 'noted') echo "checked=\"checked\""?>>Noté
-									</label>
-									<label class="btn btn-default btn-sm">
-										<input type="radio" name="attendance_type" value="default">Défaut
-									</label>
-									<?php } else { ?>
 									<label class="btn btn-default btn-sm">
 										<input type="radio" name="attendance_type" value="X">X
 									</label>
@@ -83,8 +69,7 @@
 									</label>
 									<label class="btn btn-default active btn-sm">
 										<input type="radio" name="attendance_type" value="default" checked="checked">Défaut
-									</label>
-									<?php } ?>
+									</label>				
 								</div>								
 								<br><br>
 								<input class="btn btn-lg btn-primary btn-block" type="submit" value="Filtrer" name="form_sort_attendances">
@@ -94,7 +79,7 @@
 					<?php if (!empty($_POST['seance']) && !empty($_POST['week'])) {?>	
 					<div class="panel panel-primary">
 						<div class="panel-heading">
-							<h3 class="panel-title">Recherchez un élève</h3>
+							<h3 class="panel-title">Recherchez un élève par mot-clé</h3>
 						</div>
 						<div class="panel-body">
 								<form action="index.php?user=professor" method="post"> 									
@@ -226,7 +211,7 @@
 								<?php } ?>
 								</tbody>
 							</table>
-							<?php if (!empty($_POST['seance']) && !empty($_POST['week'])) {?>	
+							<?php if (!empty($_POST['seance']) && !empty($_POST['week']) && !empty(isset($_POST['serie']))) {?>	
 							<div class="panel-body">
 								<label>Ajoutez un élève présent d'un autre bloc ou série</label>
 								<div class="input-group">
