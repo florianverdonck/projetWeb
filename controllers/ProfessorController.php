@@ -97,12 +97,12 @@ class ProfessorController {
 					$st = substr ( ( string ) $student, 1, 4 );
 					$this->_db->update_attendance ( $attendance_sheet_id, $st, $attendance );
 				}
-				if ($not_numeric_values > 1) {
-					$error_message .= " $not_numeric_values étudiants ont une note non numérique, leur note n'a pas été mise à jour.";
-				}
-				if ($not_numeric_values == 1) {
-					$error_message .= " $not_numeric_values étudiant a une note non numérique, sa note n'a pas été mise à jour.";
-				}
+			}
+			if ($not_numeric_values > 1) {
+				$error_message .= " $not_numeric_values étudiants ont une note non numérique, leur note n'a pas été mise à jour.";
+			}
+			if ($not_numeric_values == 1) {
+				$error_message .= " $not_numeric_values étudiant a une note non numérique, sa note n'a pas été mise à jour.";
 			}
 		}
 		if (isset ( $_POST ['sick_note'] )) {
