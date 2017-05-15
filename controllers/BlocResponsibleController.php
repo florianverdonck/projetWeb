@@ -401,9 +401,15 @@ class BlocResponsibleController {
 						"error_code"=>"warning",
 						"error_message"=>"Aucun bloc n'a été sélectionné"
 				);
-
 		}
 		
+		
+		if ($this->_professor->responsible() != "blocs" && ("bloc" . $_POST['inputBloc']) != $this->_professor->responsible()) {
+				return Array(
+						"error_code"=>"warning",
+						"error_message"=>"Vous n'avez pas les permissions requises pour importer le programme de ce bloc."
+				);
+		}
 		
 		if (!$this->_db->ue_file_already_imported($_POST['inputBloc'])) {
 			if (!empty($_FILES['inputUEFile']['name'])) {

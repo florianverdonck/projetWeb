@@ -40,7 +40,7 @@
 											Toutes les UE/AA
 										</option>
 									
-									<?php foreach ($courses as $key => $course) { ?>
+										<?php foreach ($courses as $key => $course) { ?>
 											<option value="<?=$key?>">
 											<?=$course?>
 											</option>
@@ -93,7 +93,7 @@
 												$sickNoteButtonStatus = "active";
 											}
 											
-											if ($attendance->html_attendance() == "active") {
+											if ($attendance->html_attendance() == "present") {
 												$presentButtonStatus = "active";
 											} else if ($attendance->html_attendance() == "absent") {
 												$absentButtonStatus = "active";
