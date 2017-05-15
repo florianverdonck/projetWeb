@@ -340,7 +340,7 @@ class Db {
 	}
 	
 	
-	public function select_seance_templates_student($student_id, $term) {
+	public function select_seance_templates_student($student_id) {
 		
 		// Reverse lookup for SeancesTemplates in which student has taken part into
 		
@@ -349,12 +349,10 @@ class Db {
 					WHERE st.code = c.code
 					AND st.seance_template_id = att_sh.seance_template_id
 					AND att.attendance_sheet_id = att_sh.attendance_sheet_id
-					AND att.student_id = :student_id
-					AND c.term = :term';
+					AND att.student_id = :student_id';
 					
 		$ps = $this->_db->prepare ( $query );
 		$ps->bindValue ( ':student_id', $student_id );
-		$ps->bindValue ( ':term', $term );
 		$ps->execute ();
 		$array_seance_template = '';
 		while ( $row = $ps->fetch () ) {
@@ -363,29 +361,82 @@ class Db {
 		return $array_seance_template;
 	}
 	
+	public function select_courses_student($student_id) {
+		
+		// Reverse lookup for SeancesTemplates in which student has taken part into
+		
+		$query = 	'SELECT distinct(c.name), c.code
+					FROM seance_templates st, attendance_sheets att_sh, attendances att, courses c
+					WHERE st.code = c.code
+					AND st.seance_template_id = att_sh.seance_template_id
+					AND att.attendance_sheet_id = att_sh.attendance_sheet_id
+					AND att.student_id = :student_id';
+					
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':student_id', $student_id );
+		$ps->execute ();
+		$array_courses = '';
+		while ( $row = $ps->fetch () ) {
+			$array_courses[$row->code] = $row->name;
+		}
+		return $array_courses;
+	}
 	
-	public function select_student_attendances($student_id, $week_id, $ue_code, $attendance) {
-		$query = 	'SELECT att.*, wk.week_number, c.name as course_name, st.name as seance_template_name
+	
+	public function select_student_attendances($student_id, $ue_code, $attendance, $week_id) {
+		
+		$query = 	"SELECT att.*, wk.week_number, st.name as seance_template_name
 					FROM seance_templates st, attendances att, attendance_sheets att_sh, courses c, weeks wk
 					WHERE att.attendance_sheet_id = att_sh.attendance_sheet_id
 					AND att_sh.week_id = wk.week_id
 					AND att_sh.seance_template_id = st.seance_template_id
 					AND st.code = c.code
-					AND att.student_id = :student_id
-					AND c.code = :ue_code
-					AND att.attendance = :attendance
-					AND wk.week_id = :week_id';
-		$ps = $this->_db->prepare ( $query );
-		$ps->bindValue ( ':student_id', $student_id);
-		$ps->bindValue ( ':week_id', $week_id);
-		$ps->bindValue ( ':ue_code', $ue_code);
-		$ps->bindValue ( ':attendance', $attendance);
-		$row = $ps->fetch ();
-		$attendances = '';
-		while ( $row = $ps->fetch () ) {
-			$attendances[] = new Attendance ( $row->attendance_id, $row->attendance_sheet_id, $row->student_id, $row->attendance, $row->sick_note, $row->course_name, $row->seance_template_name, $row->week_id);
+					AND att.student_id = :student_id ";
+					
+		$query_ue = "AND c.code = :ue_code ";
+		$query_att = "AND att.attendance = :attendance ";
+		$query_week = "AND wk.week_id = :week_id";
+		
+		if ($ue_code != "not_specified") {
+			$query .= $query_ue;
 		}
+		if ($attendance != "not_specified") {
+			$query .= $query_att;
+		}
+		if ($week_id != "not_specified") {
+			$query .= $query_week;
+		}
+		
+		$query .= " ORDER BY wk.week_number";
+		
+		$ps = $this->_db->prepare($query);
+		
+		$ps->bindValue ( ':student_id', $student_id );
+		
+		
+		if ($ue_code != "not_specified") {
+			$ps->bindValue ( ':ue_code', $ue_code );
+		}
+		if ($attendance != "not_specified") {
+			echo "presence : " . $attendance;
+			$ps->bindValue ( ':attendance', $attendance );
+		}
+		if ($week_id != "not_specified") {
+			$ps->bindValue ( ':week_id', $week_id );
+		}
+		
+		$ps->execute ();
+		
+		$attendances = [];
+		
+		
+		while ( $row = $ps->fetch () ) {
+			
+			$attendances[] = new Attendance($row->attendance_id, $row->attendance_sheet_id, $row->student_id, $row->attendance, $row->sick_note, $row->seance_template_name, $row->week_number);
+		}
+		
 		return $attendances;
+		
 	}
 	
 	

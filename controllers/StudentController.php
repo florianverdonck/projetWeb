@@ -12,7 +12,10 @@ class StudentController {
 		$this->_bloc = $this->_student->html_bloc();
 	}
 			
-	public function run(){	
+	public function run(){
+		
+		$attendances = [];
+		
 		// user must be a student
 		if (empty ( $_SESSION ['authenticated']) || $_SESSION['authenticated'] != 'student') {
 			header ( 'Location: index.php?action=login' );
@@ -23,20 +26,21 @@ class StudentController {
 			$_GET['term'] = 1;
 		}
 		
-		
-		print_r($_POST);
-		print_r($_GET);
-		
 		if (isset($_POST['formSeancesFilter'])) {
-			$update_message = $this->formSeancesFilter();
+			$attendances = $this->formSeancesFilter();
+		} else {
+			$attendances = $this->_db->select_student_attendances($this->_student->html_student_id(),"not_specified","not_specified","not_specified");
 		}
 		
 		
 		$this->_term = $_GET['term'];
 		
-		$weeks = $this->_db->select_weeks_term($this->_term);
+		$weeks_term1 = $this->_db->select_weeks_term(1);
+		$weeks_term2 = $this->_db->select_weeks_term(2);
 		
-		$seanceTemplates = $this->_db->select_seance_templates_student($this->_student->html_student_id(), $this->_term);
+		$seanceTemplates = $this->_db->select_seance_templates_student($this->_student->html_student_id());
+		
+		$courses = $this->_db->select_courses_student($this->_student->html_student_id());
 
 		require_once(PATH_VIEWS . "student.php");
 	}	
@@ -46,23 +50,14 @@ class StudentController {
 		
 		if (isset($_POST['inputWeekSelect']) && isset($_POST['inputUESelect']) && isset($_POST['inputPresenceSelect'])) {
 			
+			$student_id = $this->_student->html_student_id();
 			$week = $_POST['inputWeekSelect'];
 			$ue = $_POST['inputUESelect'];
 			$attendance = $_POST['inputPresenceSelect'];
-
 			
-			if ($week == "not_specified") $week = "week_number";
-			if ($ue == "not_specified") $ue = "code";
-			if ($attendance == "not_specified") $attendance = "attendance";
-			
-			$attendances = $this->_db->select_student_attendances($this->_student->html_student_id(), "att_sh.week_id", "c.code", "att.attendances");
-			
-			
-			print_r($attendances);
-
-		} else {
-			echo "manque param";
+			return $this->_db->select_student_attendances($student_id, $ue, $attendance, $week);
 		}
+			
 	}
 	
 }
