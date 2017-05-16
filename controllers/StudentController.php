@@ -8,7 +8,13 @@ class StudentController {
 	
 	public function __construct($db) {
 		$this->_db = $db;
-		$this->_student = unserialize($_SESSION['user']);
+		
+		if (isset($_GET['viewStudent']) && $this->_db->existing_student_from_id($_GET['viewStudent'])) {
+			$this->_student = $this->_db->select_student_from_id($_GET['viewStudent']);
+		} else {
+			$this->_student = unserialize($_SESSION['user']);
+		}
+		
 		$this->_bloc = $this->_student->html_bloc();
 	}
 			
@@ -17,13 +23,9 @@ class StudentController {
 		$attendances = [];
 		
 		// user must be a student
-		if (empty ( $_SESSION ['authenticated']) || $_SESSION['authenticated'] != 'student') {
+		if (empty ( $_SESSION ['authenticated'])) {
 			header ( 'Location: index.php?action=login' );
 			die ();
-		}
-		
-		if (!isset($_GET['term'])) {
-			$_GET['term'] = 1;
 		}
 		
 		if (isset($_POST['formSeancesFilter'])) {
@@ -31,9 +33,6 @@ class StudentController {
 		} else {
 			$attendances = $this->_db->select_student_attendances($this->_student->html_student_id(),"not_specified","not_specified","not_specified");
 		}
-		
-		
-		$this->_term = $_GET['term'];
 		
 		$weeks_term1 = $this->_db->select_weeks_term(1);
 		$weeks_term2 = $this->_db->select_weeks_term(2);

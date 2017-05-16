@@ -514,6 +514,20 @@ class Db {
 		return $student;
 	}
 	
+	public function select_student_from_id($student_id) {
+		$query = 'SELECT * FROM students
+				WHERE student_id = :student_id';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':student_id', $student_id );
+		$ps->execute ();
+		$row = $ps->fetch ();
+		$student = '';
+		if (! empty ( $row )) {
+			$student = new Student ( $row->student_id, $row->mail, $row->name, $row->first_name, $row->bloc, $row->serie_id );
+		}
+		return $student;
+	}
+	
 	public function select_week($week_number, $term) {
 		$query = 'SELECT * FROM weeks
 				WHERE week_number = :week_number AND term = :term';
@@ -613,6 +627,14 @@ class Db {
 		$ps->bindValue ( ':mail', $mail );
 		$ps->execute ();
 		return $ps->rowcount () == 1;
+	}
+	
+	public function existing_student_from_id($student_id) {
+		$query = 'SELECT mail FROM students WHERE student_id = :student_id';
+		$ps = $this->_db->prepare ( $query );
+		$ps->bindValue ( ':student_id', $student_id );
+		$ps->execute ();
+		return $ps->rowcount() == 1;
 	}
 	
 	public function existing_series($bloc, $term) {

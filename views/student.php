@@ -62,7 +62,7 @@
 				<div class="col-md-8">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
-							<h3 class="panel-title">Table de présences</h3>
+							<h3 class="panel-title">Table de présences <?php if (isset($_GET['viewStudent'])) { ?>de <?= $this->_student->html_first_name() . " " . $this->_student->html_name(); }?></h3>
 						</div>
 						<table class="table">
 							<thead>
