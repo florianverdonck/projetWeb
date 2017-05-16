@@ -6,7 +6,6 @@
 		<?php require_once(PATH_VIEWS . "navbar.php"); ?>
 		<div class="container">
 			<div class="row">
-				<div class="pt30 hidden-xs"></div>
 				<div class="col-md-4">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
@@ -113,6 +112,7 @@
 							<table class="table">
 								<thead>
 									<tr>
+										<th>Détails</th>								
 										<th>Nom<span class="hidden-xs"> de famille</span></th>
 										<th>Pré<span class="hidden-xs">nom</span></th>
 										<?php if (isset($_POST['attendance_type']) && $_POST['attendance_type'] == 'noted') { ?>
@@ -127,6 +127,7 @@
 								<?php if ($students != null) {?>
 									<?php foreach ($students as $student) { ?>		
 									<tr>
+										<td><a href="index.php?user=student&viewStudent=<?php echo $student->html_student_id()?>"> <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></td>
 										<td><?php echo $student->html_name()?></td>
 										<td><?php echo substr($student->html_first_name(), 0, 1)?><span class="hidden-xs"><?php echo substr($student->html_first_name(), 1, strlen($student->html_first_name()))?></span>
 										</td>
@@ -169,6 +170,7 @@
 									<?php } ?>
 								<?php } if ($new_student != null) { ?>
 									<tr>
+										<td><a href="index.php?user=student&viewStudent=<?php echo $student->html_student_id()?>"> <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></td>
 										<td><?php echo $new_student->html_name()?></td>
 										<td><?php echo substr($new_student->html_first_name(), 0, 1)?><span class="hidden-xs"><?php echo substr($new_student->html_first_name(), 1, strlen($new_student->html_first_name()))?></span>
 										</td>
@@ -176,7 +178,7 @@
 											<div class="btn-group" data-toggle="buttons">
 											<?php if (isset($_POST['attendance_type'])) { ?>
 											<?php $attendance = $new_student->html_attendance();
-												  $student_id = $new_student->html_student_id();   ?>
+												  $student_id = $new_student->html_student_id();  ?>
 												<?php if ($_POST['attendance_type'] == 'XO'){ ?>
 												  <label class="btn btn-default active btn-sm">
 												    <input value="active" type="radio" name="attendance['<?php echo $student_id?>']" checked="checked" ><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Actif</span>
