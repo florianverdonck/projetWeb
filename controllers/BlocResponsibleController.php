@@ -94,7 +94,9 @@ class BlocResponsibleController {
 				$this->blocResponsibleSeanceTemplates($update_message);
 				break;
 			default:
-			
+				$numberOfStudents = $this->_db->number_of_students();
+				$numberOfSeries = $this->_db->number_of_series();
+				$numberOfSeances = $this->_db->number_of_seance();
 				require_once(PATH_VIEWS . "bloc_responsible.php");
 				break;
 		}
@@ -231,20 +233,22 @@ class BlocResponsibleController {
 			$serie = 1;
 			$seriePlicPloc = 1;
 	
-			foreach ($students as $key => $student) {
-				if ($studentsLeftInThisSerie == 0) {
-					// Il ne reste plus d'étudiants à insérer
-					// On réintialise le compteur
-					$studentsLeftInThisSerie = $numberStudentsSerie;
-					$serie++;
-				}
-				
-				if ($serie <= $numberSeries) {
-					$this->_db->update_student_serie($student->mail(), $series[$serie-1]->serie_id());
-					$studentsLeftInThisSerie--;
-				} else {
-					$this->_db->update_student_serie($student->mail(), $series[$seriePlicPloc-1]->serie_id());
-					$seriePlicPloc++;
+			if ($student != null) {
+				foreach ($students as $key => $student) {
+					if ($studentsLeftInThisSerie == 0) {
+						// Il ne reste plus d'étudiants à insérer
+						// On réintialise le compteur
+						$studentsLeftInThisSerie = $numberStudentsSerie;
+						$serie++;
+					}
+					
+					if ($serie <= $numberSeries) {
+						$this->_db->update_student_serie($student->mail(), $series[$serie-1]->serie_id());
+						$studentsLeftInThisSerie--;
+					} else {
+						$this->_db->update_student_serie($student->mail(), $series[$seriePlicPloc-1]->serie_id());
+						$seriePlicPloc++;
+					}
 				}
 			}
 			

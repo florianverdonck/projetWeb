@@ -48,10 +48,10 @@
 						</div>
 						<div class="panel-body">
 							<label for="labelNumberOfStudents">Nombre d'étudiants</label><br>
-							<p id="labelNumberOfStudents">Il y a <span class="badge">42</span> étudiants</p><br>
+							<p id="labelNumberOfStudents">Il y a <span class="badge"><?=$numberOfStudents?></span> étudiants</p><br>
 							
 							<label for="labelNumberOfSeries">Nombre de séries</label><br>
-							<p id="labelNumberOfSeries">Il y a <span class="badge">5</span> séries</p><br>
+							<p id="labelNumberOfSeries">Il y a <span class="badge"><?=$numberOfSeries?></span> séries</p><br>
 							
 							<a href="index.php?user=bloc_responsible&action=series"><button class="btn btn-lg btn-primary btn-block" type="submit">Modifier les séries</button></a>
 						</div>
@@ -65,10 +65,9 @@
 						</div>
 						<div class="panel-body">
 							<label for="labelNumberOfSeanceTemplates">Nombre de séances types</label><br>
-							<p id="labelNumberOfSeanceTemplates">Il y a <span class="badge">42</span> séances types</p><br>
+							<p id="labelNumberOfSeanceTemplates">Il y a <span class="badge"><?=$numberOfSeances?></span> séances types</p><br>
 							
-							<label for="labelEndOfSeanceTemplates">Date de la dernière séance type</label><br>
-							<p id="labelEndOfSeanceTemplates">Algo II le 5 janvier</p><br>
+							<br><br><br><br>
 							
 							<a href="index.php?user=bloc_responsible&action=seance_templates"><button class="btn btn-lg btn-primary btn-block" type="submit">Modifier les séances types</button></a>
 						</div>

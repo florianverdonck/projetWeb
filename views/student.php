@@ -12,7 +12,7 @@
 							<h3 class="panel-title">Filtrez ici pour voir vos présences</h3>
 						</div>
 						<div class="panel-body">
-							<form class="" action="index.php?user=student" method="post">
+							<form class="" action="index.php?user=student<?php if (isset($_GET["viewStudent"])) { echo "&viewStudent=" . $_GET["viewStudent"]; }?>" method="post">
 								
 								<label for="inputWeekSelect">Sélectionnez la semaine </label><br>
 								<select class="selectpicker" id="inputWeekSelect" name="inputWeekSelect">
@@ -84,41 +84,18 @@
 										
 										<?php
 											
-											$noted = false;
-											$presentButtonStatus = "";
-											$absentButtonStatus = "";
 											$sickNoteButtonStatus = "";
 											
 											if ($attendance->html_sick_note()=="justified") {
 												$sickNoteButtonStatus = "active";
 											}
 											
-											if ($attendance->html_attendance() == "present") {
-												$presentButtonStatus = "active";
-											} else if ($attendance->html_attendance() == "absent") {
-												$absentButtonStatus = "active";
-											} else {
-												$noted = true;
-											}
-											
 										?>
-										
-										<?php if (!$noted) { ?>
-										<div class="btn-group" data-toggle="buttons">
-										  <label class="btn btn-default <?=$presentButtonStatus?> btn-sm">
-										    <input type="radio" name="options"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><span class="hidden-xs"> Présent</span>
-										  </label>
-										  <label class="btn btn-default <?=$absentButtonStatus?> btn-sm">
-										    <input type="radio" name="options" checked><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><span class="hidden-xs"> Absent</span>
-										  </label>
-										</div>
-										<?php } else { ?>
-										
+																				
 										<div class="input-group">
 										  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="<?=$attendance->html_attendance()?>">
 										</div>
 										
-										<?php } ?>
 									</td>
 									<td>
 										<div class="btn-group" data-toggle="buttons">

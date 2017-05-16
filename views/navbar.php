@@ -47,9 +47,7 @@
 	        
 	        
 	        if (($_GET['user'] == 'bloc_responsible' && isset($_GET['action'])
-	        		&& ($_GET['action']=='series' || $_GET['action']=='seance_templates'))
-	        		
-	        	|| $_GET['user'] == 'student') {
+	        		&& ($_GET['action']=='series' || $_GET['action']=='seance_templates'))) {
 		        	
 		     if ($_GET['user'] == 'student') $_GET['action'] = 'attendance';
 	      ?>

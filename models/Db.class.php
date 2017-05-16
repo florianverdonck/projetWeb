@@ -741,4 +741,35 @@ class Db {
 		return $ps->execute ();
 	}
 	
+	
+	//
+	
+	
+	public function number_of_students() {
+		$query = 'SELECT count(*) as number_of_students FROM students';
+		$ps = $this->_db->prepare ( $query );
+		$ps->execute ();
+		$row = $ps->fetch ();
+		$return = $row->number_of_students;
+		return $return;
+	}
+	
+	public function number_of_series() {
+		$query = 'SELECT count(*) as number_of_series FROM series';
+		$ps = $this->_db->prepare ( $query );
+		$ps->execute ();
+		$row = $ps->fetch ();
+		$return = $row->number_of_series;
+		return $return;
+	}
+	
+	public function number_of_seance() {
+		$query = 'SELECT count(*) as number_of_seances FROM seance_templates';
+		$ps = $this->_db->prepare ( $query );
+		$ps->execute ();
+		$row = $ps->fetch ();
+		$return = $row->number_of_seances;
+		return $return;
+	}
+	
 }
