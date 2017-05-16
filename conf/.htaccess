@@ -1,4 +1,4 @@
-AuthName "Conf directory"
 AuthType Basic
-AuthUserFile /wamp64/www/projetWeb/conf/.htpasswd
-Require valid-user
+AuthName "restricted area"
+AuthUserFile C:\Progs\wamp\www\projetWeb\conf\.htpasswd
+require valid-user
