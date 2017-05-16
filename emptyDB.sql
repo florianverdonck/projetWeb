@@ -1,14 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.10
--- http://www.phpmyadmin.net
+-- version 4.6.4
+-- https://www.phpmyadmin.net/
 --
--- Client :  localhost:8889
--- Généré le :  Mar 16 Mai 2017 à 11:20
--- Version du serveur :  5.5.42
--- Version de PHP :  7.0.0
+-- Client :  127.0.0.1
+-- Généré le :  Mar 16 Mai 2017 à 18:23
+-- Version du serveur :  5.7.14
+-- Version de PHP :  5.6.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de données :  `attendances`
@@ -81,6 +87,13 @@ CREATE TABLE `professors` (
   `first_name` varchar(50) NOT NULL,
   `responsible` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `professors`
+--
+
+INSERT INTO `professors` (`mail`, `name`, `first_name`, `responsible`) VALUES
+('gregory.seront@vinci.be', 'Seront', 'Gregory', 'true');
 
 -- --------------------------------------------------------
 
@@ -280,3 +293,7 @@ ALTER TABLE `seance_templates`
 --
 ALTER TABLE `students`
   ADD CONSTRAINT `fk_serie_id` FOREIGN KEY (`serie_id`) REFERENCES `series` (`serie_id`) ON DELETE SET NULL ON UPDATE NO ACTION;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
