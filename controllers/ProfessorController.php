@@ -41,7 +41,6 @@ class ProfessorController {
 					$attendance_sheet = $this->_db->select_attendance_sheet ( $_POST ['seance'], $_POST ['week'] );
 					$seance_template_id = $attendance_sheet->seance_template_id ();
 					$_POST ['attendance_type'] = $this->_db->select_attendance_type ( $seance_template_id );
-					var_dump($_POST['attendance_type']);
 				}
 				$students = $this->fetchStudents ();
 			}
@@ -89,20 +88,20 @@ class ProfessorController {
 		$attendance_sheet_id = $this->getAttendanceSheetId ();
 		$error_message = "Les présences/certificats ont été enregistrés.";
 		if (isset ( $_POST ['attendance'] )) {
+			$wrong_values = 0;
 			foreach ( $_POST ['attendance'] as $student => $attendance ) {
-				$not_numeric_values = 0;
-				if (($_POST ['attendance_type'] == 'noted') && ! is_numeric ( $attendance )) {
-					$not_numeric_values ++; // number of wrong values
+				if ($_POST ['attendance_type'] == 'noted' && ( ! is_numeric ( $attendance ) || $attendance < 0 || $attendance > 20)) {
+					$wrong_values++; 
 				} else {
 					$st = substr ( ( string ) $student, 1, 4 );
 					$this->_db->update_attendance ( $attendance_sheet_id, $st, $attendance );
 				}
 			}
-			if ($not_numeric_values > 1) {
-				$error_message .= " $not_numeric_values étudiants ont une note non numérique, leur note n'a pas été mise à jour.";
+			if ($wrong_values > 1) {
+				$error_message .= " $wrong_values eudiants ont une note invalide, leur note n'a pas été mise à jour.";
 			}
-			if ($not_numeric_values == 1) {
-				$error_message .= " $not_numeric_values étudiant a une note non numérique, sa note n'a pas été mise à jour.";
+			if ($wrong_values == 1) {
+				$error_message .= " $wrong_values etudiant a une note invalide, sa note n'a pas été mise à jour.";
 			}
 		}
 		if (isset ( $_POST ['sick_note'] )) {
@@ -151,7 +150,7 @@ class ProfessorController {
 					return array (
 							array (
 									"error_code" => "success",
-									"error_message" => "L'élève a été ajouté dans la liste en tant que présent." 
+									"error_message" => "L'élève a été ajouté dans la liste." 
 							),
 							'' 
 					);
@@ -166,11 +165,11 @@ class ProfessorController {
 			);
 		}
 		
-		if ($_POST ['serie'] != $student->serie_id ()) {
+		if ($_POST ['serie'] != $student->serie_id () && $_POST['serie'] != '') {
 			return array (
 					array (
 							"error_code" => "success",
-							"error_message" => "Cet élève d'une autre série a été ajouté en tant que présent." 
+							"error_message" => "L'élève d'une autre série a été ajouté." 
 					),
 					$student 
 			);
@@ -204,7 +203,6 @@ class ProfessorController {
 		if (! empty ( $students )) {				
 			foreach ( $students as $student ) {
 				if ($_POST ['attendance_type'] == 'noted') {
-					var_dump($_POST ['attendance_type']);
 					$this->_db->insert_attendance ( $attendance_sheet_id, $student->student_id (), 0 );
 				} else {
 					$this->_db->insert_attendance ( $attendance_sheet_id, $student->student_id (), 'absent' );
