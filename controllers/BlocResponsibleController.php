@@ -211,7 +211,7 @@ class BlocResponsibleController {
 	
 	
 	public function formAutoFillSeries() {
-		
+
 		if (!$this->_db->existing_series($this->_bloc, $this->_term)) {
 		
 			$numberSeries = htmlspecialchars($_POST['formAutoFillSeries']);
@@ -233,7 +233,7 @@ class BlocResponsibleController {
 			$serie = 1;
 			$seriePlicPloc = 1;
 	
-			if ($student != null) {
+			if ($students != null) {
 				foreach ($students as $key => $student) {
 					if ($studentsLeftInThisSerie == 0) {
 						// Il ne reste plus d'étudiants à insérer

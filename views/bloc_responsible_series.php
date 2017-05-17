@@ -6,7 +6,7 @@
 		<?php include_once(PATH_VIEWS . "navbar.php"); ?>
 		<div class="container">
 			<div class="row">
-				<form action="index.php?user=bloc_responsible&action=series&bloc=<?=$this->_bloc;?>&trim=<?=$this->_term;?>" method="post">
+				<form action="index.php?user=bloc_responsible&action=series&bloc=<?=$this->_bloc;?>&term=<?=$this->_term;?>" method="post">
 				<?php if ($numberOfSeries > 0) { ?>
 				<div class="col-md-10" id="series">
 
