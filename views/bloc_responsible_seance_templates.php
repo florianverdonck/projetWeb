@@ -35,10 +35,10 @@
 								<label for="inputTypeOfPresence">Type de présence par défaut</label><br>
 								<div class="btn-group" data-toggle="buttons" id="inputTypeOfPresence">
 								  <label class="btn btn-default active btn-sm">
-								    <input type="radio" name="presenceType" value="x" checked>X
+								    <input type="radio" name="presenceType" value="X" checked>X
 								  </label>
 								  <label class="btn btn-default btn-sm">
-								    <input type="radio" name="presenceType" value="xo">XO
+								    <input type="radio" name="presenceType" value="XO">XO
 								  </label>
 								  <label class="btn btn-default btn-sm">
 								    <input type="radio" name="presenceType" value="noted">Noté</span>

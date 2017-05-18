@@ -31,7 +31,7 @@ INSERT INTO `professors` (`mail`, `name`, `first_name`, `responsible`) VALUES
 ('colette.demuylder@vinci.be', 'De Muylder', 'Colette', 'false'),
 ('donatien.grolaux@vinci.be', 'Grolaux', 'Donatien', 'bloc3'),
 ('emmeline.leconte@vinci.be', 'Leconte', 'Emmeline', 'blocs'),
-('gregory.seront@vinci.be', 'Seront', 'Gregory', 'true'),
+#('gregory.seront@vinci.be', 'Seront', 'Gregory', 'true'),
 ('jeanluc.collinet@ipl.be', 'Collinet', 'Jean-Luc', 'bloc1'),
 ('jose.vandermeulen@vinci.be', 'Vandermeulen', 'José', 'false'),
 ('julien.federinov@vinci.be', 'Federinov', 'Julien', 'false'),
