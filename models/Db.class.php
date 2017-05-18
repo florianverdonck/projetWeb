@@ -418,7 +418,6 @@ class Db {
 			$ps->bindValue ( ':ue_code', $ue_code );
 		}
 		if ($attendance != "not_specified") {
-			echo "presence : " . $attendance;
 			$ps->bindValue ( ':attendance', $attendance );
 		}
 		if ($week_id != "not_specified") {
