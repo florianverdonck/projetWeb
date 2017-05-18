@@ -50,7 +50,7 @@
 								<label for="typeOfPresenceSelect">Sélectionnez le type de présence </label><br>
 								<select class="selectpicker" id="inputPresenceSelect" name="inputPresenceSelect">
 									<option value="not_specified">Tout type de présence</option>
-									<option value="active">Présent</option>
+									<option value="present">Présent</option>
 									<option value="absent">Absent</option>
 								</select>
 								<br><br>
