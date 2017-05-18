@@ -1,7 +1,5 @@
 <?php
-
-require_once(PATH_MODELS . "CSVParser.php");
-
+	
 class BlocResponsibleController {
 
 	private $_db;
