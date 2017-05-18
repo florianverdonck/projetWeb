@@ -82,7 +82,7 @@ class BlocsResponsibleController {
 					}
 				}
 				
-				if ($table == 'series') {
+				if ($table == 'courses') {
 					$this->_db->delete_table ('seance_templates');
 				}
 				
