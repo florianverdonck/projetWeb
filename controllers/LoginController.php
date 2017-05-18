@@ -39,7 +39,7 @@ class LoginController {
 			$this->setAuthentificationStudent ($student);
 		}
 		
-		if (preg_match('/@vinci\.be$/', $mail) || preg_match('/@ipl\.be$/', $mail)) { // is a professor
+		if (preg_match('/@(vinci|ipl)\.be$/', $mail)) { // is a professor
 			$professor = $this->_db->select_professor($mail);
 			if (empty($professor)) { // professor doesn't exist
 				return $this->connectionErrorMessage ( );
