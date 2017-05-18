@@ -677,6 +677,13 @@ class Db {
 		return $ps->rowcount () > 0;
 	}
 	
+	public function existing_professors() {
+		$query = 'SELECT * FROM professors';
+		$ps = $this->_db->prepare ( $query );
+		$ps->execute ();
+		return $ps->rowcount () > 0;
+	}
+	
 	public function existing_attendance_sheet($seance_template_id, $week_id) {
 		$query = 'SELECT * FROM attendance_sheets
 				WHERE seance_template_id = :seance_template_id AND week_id = :week_id';

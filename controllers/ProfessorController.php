@@ -18,11 +18,18 @@ class ProfessorController {
 		
 		// Loads a more in depth form based on previous inputs
 		if (isset ( $_POST ['bloc'] ) && isset ( $_POST ['term'] )) {
-			$seances_templates = $this->_db->select_seance_templates ( $_POST ['bloc'], $_POST ['term'] );
-			$series = $this->_db->select_series_from_bloc_term ( $_POST ['bloc'], $_POST ['term'] );
-			$term_for_week = $_POST ['term'];
-			$weeks = $this->_db->select_weeks_term ( $term_for_week );
-			$sorted_attendances = true;
+			if ($this->_db->existing_professors()) { // can't take attendances if there is no professor 
+				$seances_templates = $this->_db->select_seance_templates ( $_POST ['bloc'], $_POST ['term'] );
+				$series = $this->_db->select_series_from_bloc_term ( $_POST ['bloc'], $_POST ['term'] );
+				$term_for_week = $_POST ['term'];
+				$weeks = $this->_db->select_weeks_term ( $term_for_week );
+				$sorted_attendances = true;
+			} else {
+				$update_message = array (
+						"error_code" => "danger",
+						"error_message" => "Sans professeur, l'accès aux présences est impossible."
+				);
+			}
 		}
 		
 		// Sorts students by seance, serie, term and bloc
