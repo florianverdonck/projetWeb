@@ -31,7 +31,7 @@
 								<label class="control-label">Selectionnez les données à supprimer</label>
 								<div class="checkbox">
 								  <label>
-								    <input type="checkbox" value="attendance_sheets" name="tables[]"> Les présences  
+								    <input type="checkbox" value="attendances" name="tables[]"> Les présences  
 								  </label>
 								</div>
 								<div class="checkbox">
@@ -49,15 +49,21 @@
 								    <input type="checkbox" value="weeks" name="tables[]"> L'agenda  
 								  </label>
 								</div>
+								<div class="checkbox">
+								  <label>
+								    <input type="checkbox" value="courses" name="tables[]"> UE/AA  
+								  </label>
+								</div>
 								<div class="checkbox ">
 								  <label>
 								    <input class="styled" type="checkbox" value="professors" name="tables[]"> Les professeurs  
 								  </label>
 								</div>
-								<input class="btn-danger btn-lg btn-primary btn-block" type="submit" value="Supprimer" name="formDeleteData">
+								<input class="btn-danger btn-lg btn-primary btn-block" type="submit" value="Supprimer" name="formDelete">
 							</form>
 						</div>
 					</div>
+
 				</div>
 				<div class="col-md-8">
 					<div class="panel panel-primary">

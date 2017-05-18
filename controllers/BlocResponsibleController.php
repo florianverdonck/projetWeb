@@ -94,6 +94,10 @@ class BlocResponsibleController {
 				$this->blocResponsibleSeanceTemplates($update_message);
 				break;
 			default:
+				$ueBlocButtonsStatusVisual = ["null", "", "", ""];
+				$ueBlocButtonsStatusCheck = ["null", "", "", ""];
+				$ueBlocButtonsStatusVisual[$_GET['bloc']] = "active";
+				$ueBlocButtonsStatusCheck[$_GET['bloc']] = "checked";
 				$numberOfStudents = $this->_db->number_of_students();
 				$numberOfSeries = $this->_db->number_of_series();
 				$numberOfSeances = $this->_db->number_of_seance();
@@ -254,7 +258,7 @@ class BlocResponsibleController {
 			
 			return array (
 				"error_code" => "success",
-				"error_message" => "Les séries vides ont été créées avec succès."
+				"error_message" => "Les séries pré-remplies ont été créées avec succès."
 			);
 			
 		} else {

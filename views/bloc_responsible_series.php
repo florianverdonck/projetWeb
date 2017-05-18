@@ -114,7 +114,7 @@
 								<label for="inputWeekSelect">Placer dans</label><br>
 								<select class="selectpicker dropup" data-dropup-auto="false" id="inputWeekSelect" name="destinationSerie">
 									<?php foreach ($series as $key => $serie){ ?>
-									<option value="<?=$serie->serie_id()?>">Série <?=$serie->serie_numero()?></option>
+									<option value="<?=$serie->serie_id()?>" <?php if(isset($_POST['destinationSerie'])) { if ($_POST['destinationSerie']==$serie->serie_id()) { echo "selected"; } } ?>>Série <?=$serie->serie_numero()?></option>
 									<?php } ?>
 								</select>
 								<br><br>

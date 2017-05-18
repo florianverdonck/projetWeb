@@ -63,6 +63,11 @@
 								    <input type="checkbox" value="weeks" name="tables[]"> L'agenda  
 								  </label>
 								</div>
+								<div class="checkbox">
+								  <label>
+								    <input type="checkbox" value="courses" name="tables[]"> UE/AA  
+								  </label>
+								</div>
 								<div class="checkbox ">
 								  <label>
 								    <input class="styled" type="checkbox" value="professors" name="tables[]"> Les professeurs  

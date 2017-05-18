@@ -16,8 +16,8 @@ class BlocsResponsibleController {
 		if (isset($_POST['formStudentsUpload'])) {
 			$update_message = $this->formStudentsUpload();
 		}
-		if (isset($_POST['formDeleteData'])) {
-			$update_message = $this->formDeleteData ();
+		if (isset($_POST['formDelete'])) {
+			$update_message = $this->formDelete();
 		}
 
 		$action = (isset ( $_GET ['bloc'] )) ? htmlentities ( $_GET ['bloc'] ) : 'default';
@@ -41,19 +41,60 @@ class BlocsResponsibleController {
 		}
 	}
 
-	private function formDeleteData() {
-		if (isset ($_POST['tables'])) {
-			foreach ( $_POST['tables'] as $table ) {
+	private function formDelete() {
+		
+		if (isset ( $_POST ['tables'] )) {
+			foreach ( $_POST ['tables'] as $table ) {
 				$this->_db->delete_table ( $table );
+				
+				if ($table == 'courses') {
+					$files = [
+					    'conf/programme_bloc1.csv',
+					    'conf/programme_bloc2.csv',
+					    'conf/programme_bloc3.csv'
+					];
+					
+					foreach ($files as $file) {
+					    if (file_exists($file)) {
+					        unlink($file);
+					    }
+					}
+				}
+				
+				if ($table == 'students') {
+					$file = "conf/etudiants.csv";
+					if (file_exists($file)) {
+					    unlink($file);
+					}
+				}
+				
+				if ($table == 'professors') {
+					$file = "conf/professeurs.csv";
+					if (file_exists($file)) {
+					    unlink($file);
+					}
+				}
+				
+				if ($table == 'weeks') {
+					$file = "conf/agenda.properties";
+					if (file_exists($file)) {
+					    unlink($file);
+					}
+				}
+				
+				if ($table == 'series') {
+					$this->_db->delete_table ('seance_templates');
+				}
+				
 			}
 			return array (
 					"error_code" => "success",
-					"error_message" => "Toutes les données ont été supprimées."
+					"error_message" => "Toutes les données ont été supprimées." 
 			);
 		}
 		return array (
 				"error_code" => "danger",
-				"error_message" => "Aucune donnée n'a été cochée."
+				"error_message" => "Aucune donnée n'a été cochée." 
 		);
 	}
 	

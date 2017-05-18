@@ -21,14 +21,14 @@
 							<form action="index.php?user=bloc_responsible" method="POST" enctype='multipart/form-data'>
 								<label for="inputBlocSelect">Sélectionnez le bloc </label><br>
 								<div class="btn-group" data-toggle="buttons" id="inputBlocSelect">
-								  <label class="btn btn-default active btn-sm">
-								    <input type="radio" name="inputBloc" value="1" checked>Bloc 1
+								  <label class="btn btn-default <?=$ueBlocButtonsStatusVisual[1]?> btn-sm">
+								    <input type="radio" name="inputBloc" value="1" <?=$ueBlocButtonsStatusCheck[1]?>>Bloc 1
 								  </label>
-								  <label class="btn btn-default btn-sm">
-								    <input type="radio" name="inputBloc" value="2">Bloc 2
+								  <label class="btn btn-default <?=$ueBlocButtonsStatusVisual[2]?> btn-sm">
+								    <input type="radio" name="inputBloc" value="2" <?=$ueBlocButtonsStatusCheck[2]?>>Bloc 2
 								  </label>
-								  <label class="btn btn-default btn-sm">
-								    <input type="radio" name="inputBloc" value="3">Bloc 3</span>
+								  <label class="btn btn-default <?=$ueBlocButtonsStatusVisual[3]?> btn-sm">
+								    <input type="radio" name="inputBloc" value="3" <?=$ueBlocButtonsStatusCheck[3]?>>Bloc 3
 								  </label>
 								</div><br><br>
 								
